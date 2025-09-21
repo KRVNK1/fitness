@@ -18,9 +18,12 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'phone',
+        'role',
     ];
 
     /**
@@ -44,5 +47,31 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function trainerInfo()
+    {
+        return $this->hasOne(TrainerInfo::class);
+    }
+
+    public function memberships()
+    {
+        return $this->hasOne(Membership::class);
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    // Связь для тренеров с их расписанием
+    public function workoutSchedules()
+    {
+        return $this->hasMany(WorkoutSchedule::class, 'trainer_id');
     }
 }
