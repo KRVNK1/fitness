@@ -74,4 +74,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(WorkoutSchedule::class, 'trainer_id');
     }
+
+    // Связь для пользователей с их заявками
+    public function trainerRequests()
+    {
+        return $this->hasMany(TrainerRequest::class, 'user_id');
+    }
+
+    // Связь для тренеров для одобрения заявок
+    public function incomingRequests()
+    {
+        return $this->hasMany(TrainerRequest::class, 'trainer_id');
+    }
 }
