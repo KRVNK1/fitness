@@ -18,7 +18,6 @@ class MembershipSeeder extends Seeder
                 'slug'          => 'light',
                 'description'   => 'Базовый доступ в тренажерный зал',
                 'price'         => 1990,
-                'duration_days' => 30,
                 'is_active'     => true,
                 'features'      => [
                     ['text' => "Безлимитный доступ в клуб", 'included' => true],
@@ -34,7 +33,6 @@ class MembershipSeeder extends Seeder
                 'slug'          => 'smart',
                 'description'   => 'Зал + групповые занятия',
                 'price'         => 2400,
-                'duration_days' => 30,
                 'is_active'     => true,
                 'features'      => [
                     ['text' => "Безлимитный доступ в клуб", 'included' => true],
@@ -50,7 +48,6 @@ class MembershipSeeder extends Seeder
                 'slug'          => 'infinity',
                 'description'   => 'Полный доступ с персональными тренировками',
                 'price'         => 2800,
-                'duration_days' => 30,
                 'is_active'     => true,
                 'features'      => [
                     ['text' => "Безлимитный доступ в клуб", 'included' => true],
@@ -64,7 +61,12 @@ class MembershipSeeder extends Seeder
         ];
 
         foreach ($membershipTypes as $type) {
-            MembershipType::firstOrCreate($type);
+            MembershipType::firstOrCreate(
+                [
+                    'slug' => $type['slug'],
+                ],
+                $type
+            );
         }
     }
 }
