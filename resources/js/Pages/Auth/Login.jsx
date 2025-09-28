@@ -1,7 +1,7 @@
 "use client"
 
-import Header from "../../components/Header"
-import Footer from "../../components/Footer"
+import Header from "../../Components/layout/Header"
+import Footer from "../../Components/layout/Footer"
 import { useForm } from "@inertiajs/react"
 
 export default function Login({ status }) {

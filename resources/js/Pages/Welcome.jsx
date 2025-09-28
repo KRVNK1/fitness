@@ -1,8 +1,8 @@
-import Header from "@/Components/Header"
-import Footer from "@/Components/Footer"
+import Header from "@/Components/layout/Header"
+import Footer from "@/Components/layout/Footer"
 import { Head } from "@inertiajs/react"
 import { useEffect, useState } from "react"
-import PricingPlan from "@/Components/PricingPlan"
+import PricingPlan from "@/Components/features/PricingPlan"
 
 export default function Welcome({ auth, membershipTypes }) {
     const [spaImage, setSpaImage] = useState("https://i.ibb.co/7dw1kS5F/fin-sauna.webp")
@@ -45,7 +45,7 @@ export default function Welcome({ auth, membershipTypes }) {
             link: `/membership/create/${membershipType.slug}`,
             features: membershipType.features,
         }
-    }) || []
+    })
 
     useEffect(() => {
         const initMap = () => {

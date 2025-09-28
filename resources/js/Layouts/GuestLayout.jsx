@@ -1,6 +1,6 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Footer from '@/Components/Footer';
-import Header from '@/Components/Header';
+import ApplicationLogo from '@/Components/ui/ApplicationLogo';
+import Footer from '@/Components/layout/Footer';
+import Header from '@/Components/layout/Header';
 import { Link } from '@inertiajs/react';
 
 export default function GuestLayout({ children }) {

@@ -1,5 +1,5 @@
-import Footer from "@/Components/Footer";
-import Header from "@/Components/Header";
+import Footer from "@/Components/layout/Footer";
+import Header from "@/Components/layout/Header";
 import { useState } from "react";
 import { router } from "@inertiajs/react";
 
