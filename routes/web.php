@@ -13,6 +13,7 @@ Route::get('/dashboard', function () {
 
 Route::prefix('workouts')->name('workouts.')->group(function () {
     Route::get('/', [WorkoutScheduleController::class, 'index'])->name('index');
+    Route::get('/{id}', [WorkoutScheduleController::class, 'show'])->name('show');
 });
 
 require __DIR__.'/auth.php';

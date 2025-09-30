@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\WorkoutSchedule;
 
-use App\Enums\Workout\Schedule\WorkoutScheduleEnum;
 use App\Http\Controllers\Controller;
 use App\Models\WorkoutCategory;
 use App\Models\WorkoutType;
@@ -48,6 +47,17 @@ class WorkoutScheduleController extends Controller
             'categoryFilter' => $categoryFilter,
             'intensityFilter' => $intensityFilter,
             'durationFilter' => $durationFilter
+        ]);
+    }
+
+    public function show($id) {
+        $workout = WorkoutType::findOrFail($id);
+
+        
+        // dd($workout);
+
+        return Inertia::render('WorkoutSchedule/Show', [
+            'workout' => $workout,
         ]);
     }
 }
