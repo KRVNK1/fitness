@@ -3,6 +3,7 @@ import Footer from "@/Components/layout/Footer"
 import Header from "@/Components/layout/Header"
 import WorkoutFilters from "@/Components/features/WorkoutFilters"
 import WorkoutCard from "@/Components/features/WorkoutCard"
+import { Head } from "@inertiajs/react"
 
 export default function Index({ auth, workouts, categories, intensivityLevels, durations }) {
     const [filteredWorkouts, setFilteredWorkouts] = useState(workouts.data || [])
@@ -41,6 +42,8 @@ export default function Index({ auth, workouts, categories, intensivityLevels, d
 
     return (
         <>
+            <Head title="IRKFITNESS - Тренировки" />
+
             <Header user={auth.user} />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

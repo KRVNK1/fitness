@@ -31,7 +31,6 @@ export default function Welcome({ auth, membershipTypes }) {
         },
     }
 
-    // Создаем массив планов на основе данных из БД и статических стилей
     const plans = membershipTypes.map((membershipType) => {
         const style = planStyles[membershipType.slug]
         return {
