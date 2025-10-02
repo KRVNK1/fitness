@@ -48,5 +48,77 @@ class TrainerSeeder extends Seeder
                 'role'       => UserEnum::TRAINER,
             ]
         );
+
+        User::firstOrCreate(
+            [
+                'email'      => 'sidorov.sergey@bk.ru',
+            ],
+            [
+                'first_name' => 'Сергей',
+                'last_name'  => 'Сидоров',
+                'password'   => '123123123',
+                'role'       => UserEnum::TRAINER,
+            ]
+        );
+
+        User::firstOrCreate(
+            [
+                'email'      => 'dmitriev.fitness@bk.ru',
+            ],
+            [
+                'first_name' => 'Дмитрий',
+                'last_name'  => 'Дмитриев',
+                'password'   => '123123123',
+                'role'       => UserEnum::TRAINER,
+            ]
+        );
+
+        User::firstOrCreate(
+            [
+                'email'      => 'volkov.coach@bk.ru',
+            ],
+            [
+                'first_name' => 'Алексей',
+                'last_name'  => 'Волков',
+                'password'   => '123123123',
+                'role'       => UserEnum::TRAINER,
+            ]
+        );
+
+        User::firstOrCreate(
+            [
+                'email'      => 'smirnova.olga@bk.ru',
+            ],
+            [
+                'first_name' => 'Ольга',
+                'last_name'  => 'Смирнова',
+                'password'   => '123123123',
+                'role'       => UserEnum::TRAINER,
+            ]
+        );
+
+        User::firstOrCreate(
+            [
+                'email'      => 'kuznetsova.ekaterina@bk.ru',
+            ],
+            [
+                'first_name' => 'Екатерина',
+                'last_name'  => 'Кузнецова',
+                'password'   => '123123123',
+                'role'       => UserEnum::TRAINER,
+            ]
+        );
+
+        User::firstOrCreate(
+            [
+                'email'      => 'fedorova.trainer@bk.ru',
+            ],
+            [
+                'first_name' => 'Мария',
+                'last_name'  => 'Федорова',
+                'password'   => '123123123',
+                'role'       => UserEnum::TRAINER,
+            ]
+        );
     }
 }

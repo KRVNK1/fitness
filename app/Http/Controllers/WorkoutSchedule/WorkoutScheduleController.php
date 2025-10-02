@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WorkoutSchedule;
 
 use App\Http\Controllers\Controller;
 use App\Models\WorkoutCategory;
+use App\Models\WorkoutSchedule;
 use App\Models\WorkoutType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -51,13 +52,21 @@ class WorkoutScheduleController extends Controller
     }
 
     public function show($id) {
-        $workout = WorkoutType::findOrFail($id);
 
-        
+        $workout = WorkoutType::with(['workoutCategory'])->findOrFail($id);
+
+        $schedules = WorkoutSchedule::where('workout_type_id', $id)
+            ->with(['trainer'])
+            ->where('start_time', '>=', now())
+            ->orderBy('start_time')
+            ->take(10)
+            ->get();
+
         // dd($workout);
 
         return Inertia::render('WorkoutSchedule/Show', [
             'workout' => $workout,
+            'schedules' => $schedules
         ]);
     }
 }
