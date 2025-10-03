@@ -2,16 +2,9 @@ import Header from "@/Components/layout/Header";
 import Footer from "@/Components/layout/Footer";
 import WorkoutScheduleItem from "@/Components/features/WorkoutScheduleItem";
 import { Link } from "@inertiajs/react";
+import IntensityDots from "@/Components/ui/IntensityDots";
 
 export default function Show({ auth, workout, schedules }) {
-
-    const renderIntensityDots = (level) => {
-        return Array.from({ length: 5 }, (_, i) => (
-            <div key={i} className={`w-2 h-2 rounded-full ${i < level ? "bg-purple-500" : "bg-gray-200"}`} />
-        ))
-    }
-
-    console.log(workout)
     return (
         <>
             <Header user={auth.user} />
@@ -41,7 +34,9 @@ export default function Show({ auth, workout, schedules }) {
                             <div className="text-2xl font-bold text-purple-600">{workout.duration_minutes} мин.</div>
                             <span className="text-sm text-gray-500">Интенсивность:</span>
                             {workout.intensivity_level && (
-                                <div className="flex space-x-1">{renderIntensityDots(workout.intensivity_level)}</div>
+                                <div className="flex space-x-1 justify-end">
+                                    <IntensityDots level={workout.intensivity_level} />
+                                </div>
                             )}
                         </div>
                     </div>

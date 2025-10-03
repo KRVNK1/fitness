@@ -82,9 +82,19 @@ export default function Welcome({ auth, membershipTypes }) {
     }
 
     const spaButtons = [
-        { text: "Финская сауна", image: "https://i.ibb.co/7dw1kS5F/fin-sauna.webp" },
-        { text: "Турецкий хаммам", image: "https://i.ibb.co/gZVXRqHT/turkish-hammam.webp" },
-        { text: "Соляная комната", image: "https://i.ibb.co/PZrkFWqh/solyanaya-komnata.webp" },
+        {
+            text: "Финская сауна",
+            image: "https://i.ibb.co/7dw1kS5F/fin-sauna.webp"
+        },
+
+        {
+            text: "Турецкий хаммам",
+            image: "https://i.ibb.co/gZVXRqHT/turkish-hammam.webp"
+        },
+        {
+            text: "Соляная комната",
+            image: "https://i.ibb.co/PZrkFWqh/solyanaya-komnata.webp"
+        },
     ]
 
     return (
