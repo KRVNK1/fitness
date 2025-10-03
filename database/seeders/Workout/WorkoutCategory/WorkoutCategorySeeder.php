@@ -22,10 +22,6 @@ class WorkoutCategorySeeder extends Seeder
                 'slug' => 'cardio-training',
             ],
             [
-                'name' => 'Групповые программы',
-                'slug' => 'group-programs',
-            ],
-            [
                 'name' => 'Йога и растяжка',
                 'slug' => 'yoga-stretching',
             ],
@@ -38,8 +34,8 @@ class WorkoutCategorySeeder extends Seeder
                 'slug' => 'dance-classes',
             ],
             [
-                'name' => 'Боевые искусства',
-                'slug' => 'martial-arts',
+                'name' => 'Разум и тело',
+                'slug' => 'mind-body',
             ],
             [
                 'name' => 'Водные программы',
