@@ -1,10 +1,8 @@
-"use client"
-
 import { useState } from "react"
 
 export default function Header({ user }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)
   }

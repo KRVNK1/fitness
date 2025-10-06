@@ -22,9 +22,11 @@ export function CardTitle({ className = "", children, ...props }) {
     )
 }
 
-export function CardContent({ className = "",  ...props }) {
+export function CardContent({ className = "", children, ...props }) {
     return (
-        <div className={`p-6 pt-0 ${className}`} {...props}></div>
+        <div className={`p-6 pt-0 ${className}`} {...props}>
+            {children}
+        </div>
     )
 }
 

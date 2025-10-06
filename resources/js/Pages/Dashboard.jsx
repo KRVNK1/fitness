@@ -31,7 +31,7 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
         e.preventDefault()
         profileForm.put(route("profile.update"), {
             onSuccess: () => {
-                
+
             },
         })
     }
@@ -86,8 +86,6 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
 
         return <Badge variant={variants[status] || "secondary"}>{labels[status] || status}</Badge>
     }
-
-    console.log(recentBookings)
 
     return (
         <>
@@ -181,7 +179,7 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
                                                                 {booking.duration} мин
                                                             </span>
                                                             <span className="flex items-center gap-1">
-                                                                
+
                                                             </span>
                                                         </div>
                                                         <p className="text-sm">{formatDate(booking.start_time)}</p>
