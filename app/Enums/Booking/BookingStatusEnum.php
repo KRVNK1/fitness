@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Enums\Membership;
+namespace App\Enums\Booking;
 
 class BookingStatusEnum
 {
-    public const BOOKED = 'booked';
-    public const ATTENDED = 'attended';
-    public const MISSED = 'missed';
-    public const CANCELED = 'canceled';
+    public const BOOKED = 'booked'; // забронировано
+    public const ATTENDED = 'attended'; // присутствовал
+    public const MISSED = 'missed'; // отсутствовал
+    public const CANCELED = 'canceled'; // отменено
 }

@@ -1,6 +1,20 @@
-import { format } from 'date-fns';
+import { format } from "date-fns"
+import { useForm } from "@inertiajs/react"
+import { useState } from "react"
 
 export default function WorkoutScheduleItem({ schedule }) {
+    const [isBooking, setIsBooking] = useState(false)
+
+    const { post } = useForm({
+        workout_schedule_id: schedule.id,
+    })
+
+    const handleBooking = () => {
+        setIsBooking(true)
+        post(route("bookings.store"), {
+            onFinish: () => setIsBooking(false),
+        })
+    }
 
     return (
         <div className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 mb-4">
@@ -27,12 +41,15 @@ export default function WorkoutScheduleItem({ schedule }) {
             <div className="flex items-center space-x-4">
                 <div className="text-right">
                     <div className="text-sm text-gray-500">Свободно мест</div>
-                    <div className={`font-semibold ${schedule.available_slots - schedule.booked_slots > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    <div className={`font-semibold ${schedule.available_slots - schedule.booked_slots > 0 ? "text-green-600" : "text-red-600"}`} >
                         {schedule.available_slots - schedule.booked_slots} из {schedule.available_slots}
                     </div>
                 </div>
                 {schedule.available_slots - schedule.booked_slots > 0 ? (
-                    <button className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">
+                    <button
+                        onClick={handleBooking}
+                        className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors disabled:bg-purple-400 disabled:cursor-not-allowed"
+                    >
                         Записаться
                     </button>
                 ) : (

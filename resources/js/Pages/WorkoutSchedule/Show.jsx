@@ -15,7 +15,7 @@ export default function Show({ auth, workout, schedules }) {
                 <div className="mb-6">
                     <Link href="/workouts" className="inline-flex items-center text-purple-600 hover:text-purple-700">
                         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
                         Назад к тренировкам
                     </Link>

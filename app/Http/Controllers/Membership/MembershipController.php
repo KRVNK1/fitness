@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Membership;
 
+use App\Enums\Membership\MembershipStatusEnum;
 use App\Enums\Payment\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Membership;
@@ -134,26 +135,22 @@ class MembershipController extends Controller
             $payment = $this->yookassa->getPaymentInfo($transaction->id); // вот это комментить на локалке
 
             if ($payment->getStatus() === 'succeeded') { // вот это комментить на локалке
-                DB::transaction(function () use ($transaction) {
-                    // Обновляем статус транзакции
-                    $transaction->update(['status' => PaymentStatusEnum::CONFIRMED]);
+                $transaction->update(['status' => PaymentStatusEnum::CONFIRMED]);
 
-                    // Создаем новый абонемент
-                    $startDate = now();
-                    $endDate = $startDate->copy()->addMonths($transaction->months);
+                $startDate = now();
+                $endDate = $startDate->copy()->addMonths($transaction->months);
 
-                    Membership::create([
-                        'user_id'            => $transaction->user_id,
-                        'membership_type_id' => $transaction->membership_type_id,
-                        'start_date'         => $startDate,
-                        'end_date'           => $endDate,
-                        'status'             => 'active',
-                    ]);
-                });
-
-                return Inertia::render('Memberships/Success', [
-                    'transaction' => $transaction
+                Membership::create([
+                    'user_id'            => $transaction->user_id,
+                    'membership_type_id' => $transaction->membership_type_id,
+                    'start_date'         => $startDate,
+                    'end_date'           => $endDate,
+                    'status'             => MembershipStatusEnum::ACTIVE,
                 ]);
+
+            return Inertia::render('Memberships/Success', [
+                'transaction' => $transaction
+            ]);
             }
         } catch (\Exception $e) {
             return view('memberships.error', ['error' => $e->getMessage()]);

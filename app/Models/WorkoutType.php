@@ -19,4 +19,9 @@ class WorkoutType extends Model
     {
         return $this->belongsTo(WorkoutCategory::class);
     }
+
+    public function workoutSchedule()
+    {
+        return $this->hasMany(WorkoutSchedule::class);
+    }
 }

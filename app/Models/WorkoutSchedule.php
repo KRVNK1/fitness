@@ -26,6 +26,10 @@ class WorkoutSchedule extends Model
         return $this->belongsTo(WorkoutCategory::class);
     }
 
+    public function workoutType() {
+        return $this->belongsTo(WorkoutType::class);
+    }
+
     public function trainer()
     {
         return $this->belongsTo(User::class, 'trainer_id');
