@@ -12,7 +12,6 @@ class MembershipType extends Model
         'description',
         'price',
         'duration_days',
-        'is_active',
     ];
 
     protected $casts = [

@@ -5,13 +5,13 @@ namespace App\Http\Controllers\Membership;
 use App\Enums\Membership\MembershipStatusEnum;
 use App\Enums\Payment\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Membership\MembershipRequest;
 use App\Models\Membership;
 use App\Models\MembershipType;
 use App\Models\Transaction;
 use App\Service\Payment\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use YooKassa\Client;
 use YooKassa\Model\Notification\NotificationEventType;
@@ -36,7 +36,7 @@ class MembershipController extends Controller
      */
     public function index()
     {
-        $membershipTypes = MembershipType::where('is_active', true)->get();
+        $membershipTypes = MembershipType::get();
 
         return Inertia::render('Welcome', [
             'membershipTypes' => $membershipTypes
@@ -48,9 +48,7 @@ class MembershipController extends Controller
      */
     public function create($slug)
     {
-        $membershipType = MembershipType::where('is_active', true)
-            ->where('slug', $slug)
-            ->first();
+        $membershipType = MembershipType::where('slug', $slug)->first();
 
         if (!$membershipType) {
             abort(404);
@@ -64,15 +62,10 @@ class MembershipController extends Controller
     /**
      * Создать платеж в YooKassa
      */
-    public function createPayment(Request $request, PaymentService $service)
+    public function createPayment(MembershipRequest $memberShipRequest, PaymentService $service)
     {
-        $request->validate([
-            'membership_type' => 'required|in:light,smart,infinity',
-            'months' => 'required|integer|min:1|max:12',
-        ]);
-
-        $membershipType = MembershipType::where('slug', $request->membership_type)->firstOrFail();
-        $months = $request->months;
+        $membershipType = MembershipType::where('slug', $memberShipRequest->membership_type)->firstOrFail();
+        $months = $memberShipRequest->months;
         $amount = $membershipType->price * $months;
 
         $decription = 'Абонемент ' . $membershipType->name . ' успешно оформлен на ' . $months . ' месяцев. Сумма: ' . $amount;
@@ -148,9 +141,9 @@ class MembershipController extends Controller
                     'status'             => MembershipStatusEnum::ACTIVE,
                 ]);
 
-            return Inertia::render('Memberships/Success', [
-                'transaction' => $transaction
-            ]);
+                return Inertia::render('Memberships/Success', [
+                    'transaction' => $transaction
+                ]);
             }
         } catch (\Exception $e) {
             return view('memberships.error', ['error' => $e->getMessage()]);
@@ -173,26 +166,24 @@ class MembershipController extends Controller
                 $transaction = Transaction::where('payment_id', $paymentId)->first();
 
                 if ($transaction && $transaction->status === 'pending') {
-                    DB::transaction(function () use ($transaction) {
-                        $transaction->update(['status' => 'completed']);
+                    $transaction->update(['status' => 'completed']);
 
-                        // Деактивируем текущий абонемент
-                        if ($currentMembership = $transaction->user->membership) {
-                            $currentMembership->delete();
-                        }
+                    // Деактивируем текущий абонемент
+                    if ($currentMembership = $transaction->user->membership) {
+                        $currentMembership->delete();
+                    }
 
-                        // Создаем новый абонемент
-                        $startDate = now();
-                        $endDate = $startDate->copy()->addMonths($transaction->months);
+                    // Создаем новый абонемент
+                    $startDate = now();
+                    $endDate = $startDate->copy()->addMonths($transaction->months);
 
-                        Membership::create([
-                            'user_id' => $transaction->user_id,
-                            'membership_type_id' => null, // Пока null, так как используем статические данные
-                            'start_date' => $startDate,
-                            'end_date' => $endDate,
-                            'status' => 'active',
-                        ]);
-                    });
+                    Membership::create([
+                        'user_id' => $transaction->user_id,
+                        'membership_type_id' => $transaction->membership_type_id,
+                        'start_date' => $startDate,
+                        'end_date' => $endDate,
+                        'status' => 'active',
+                    ]);
                 }
             }
 

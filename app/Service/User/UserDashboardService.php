@@ -3,7 +3,6 @@
 namespace App\Service\User;
 
 use App\Models\User;
-use App\Models\Booking;
 
 class UserDashboardService
 {

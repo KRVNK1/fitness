@@ -3,13 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class TrainerRequest extends Model
+class UserRequest extends Model
 {
-    use HasFactory;
-
-    // Массовое заполнение
     protected $fillable = [
         'user_id',
         'trainer_id',

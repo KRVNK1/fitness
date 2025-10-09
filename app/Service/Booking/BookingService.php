@@ -16,10 +16,9 @@ class BookingService
     public function createBooking($userId, $workoutScheduleId)
     {
         try {
-            // Проверяем расписание тренировки
             $schedule = WorkoutSchedule::findOrFail($workoutScheduleId);
 
-            // Проверяем наличие свободных мест
+            // Проверка на свообдные места
             if ($schedule->booked_slots >= $schedule->available_slots) {
                 return [
                     'success' => false,
@@ -27,7 +26,7 @@ class BookingService
                 ];
             }
 
-            // Проверяем, не записан ли пользователь уже на эту тренировку
+            // Проверка записи пользователя
             $existingBooking = Booking::where('user_id', $userId)
                 ->where('workout_schedule_id', $workoutScheduleId)
                 ->whereIn('status', [BookingStatusEnum::BOOKED, BookingStatusEnum::ATTENDED])
@@ -40,7 +39,6 @@ class BookingService
                 ];
             }
 
-            // Получаем активный абонемент пользователя
             $membership = Membership::where('user_id', $userId)
                 ->where('status', 'active')
                 ->where('end_date', '>=', now())
@@ -53,7 +51,6 @@ class BookingService
                 ];
             }
 
-            // Создаем бронирование
             $booking = Booking::create([
                 'user_id' => $userId,
                 'workout_schedule_id' => $workoutScheduleId,
@@ -61,7 +58,6 @@ class BookingService
                 'status' => BookingStatusEnum::BOOKED
             ]);
 
-            // Увеличиваем количество забронированных мест
             $schedule->increment('booked_slots');
 
             return [
@@ -72,7 +68,7 @@ class BookingService
         } catch (Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Произошла ошибка при записи на тренировку'
+                'message' => 'Произошла ошибка при записи на тренировку' . $e
             ];
         }
     }
@@ -95,7 +91,6 @@ class BookingService
                 ];
             }
 
-            // Проверяем, не началась ли уже тренировка
             $schedule = $booking->workoutSchedule;
             if ($schedule->start_time <= now()) {
                 return [
@@ -104,10 +99,8 @@ class BookingService
                 ];
             }
 
-            // Обновляем статус бронирования
             $booking->update(['status' => BookingStatusEnum::CANCELED]);
 
-            // Уменьшаем количество забронированных мест
             $schedule->decrement('booked_slots');
 
             return [

@@ -18,7 +18,6 @@ class MembershipSeeder extends Seeder
                 'slug'          => 'light',
                 'description'   => 'Базовый доступ в тренажерный зал',
                 'price'         => 1990,
-                'is_active'     => true,
                 'features'      => [
                     ['text' => "Безлимитный доступ в клуб", 'included' => true],
                     ['text' => "Вводная тренировка с тренером", 'included' => true],
@@ -33,7 +32,6 @@ class MembershipSeeder extends Seeder
                 'slug'          => 'smart',
                 'description'   => 'Зал + групповые занятия',
                 'price'         => 2400,
-                'is_active'     => true,
                 'features'      => [
                     ['text' => "Безлимитный доступ в клуб", 'included' => true],
                     ['text' => "Вводная тренировка с тренером", 'included' => true],
@@ -48,7 +46,6 @@ class MembershipSeeder extends Seeder
                 'slug'          => 'infinity',
                 'description'   => 'Полный доступ с персональными тренировками',
                 'price'         => 2800,
-                'is_active'     => true,
                 'features'      => [
                     ['text' => "Безлимитный доступ в клуб", 'included' => true],
                     ['text' => "Вводная тренировка с тренером", 'included' => true],

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -78,12 +77,12 @@ class User extends Authenticatable
     // Связь для пользователей с их заявками
     public function trainerRequests()
     {
-        return $this->hasMany(TrainerRequest::class, 'user_id');
+        return $this->hasMany(UserRequest::class, 'user_id');
     }
 
     // Связь для тренеров для одобрения заявок
     public function incomingRequests()
     {
-        return $this->hasMany(TrainerRequest::class, 'trainer_id');
+        return $this->hasMany(UserRequest::class, 'trainer_id');
     }
 }
