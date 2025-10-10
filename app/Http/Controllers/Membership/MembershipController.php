@@ -94,14 +94,17 @@ class MembershipController extends Controller
     public function callback(Request $request, PaymentService $service)
     {
         $source = file_get_contents('php://input');
+
+        Log::error($source);
+
         $requestBody = json_decode($source, true);
-        $notification = ($requestBody['event'] === NotificationEventType::PAYMENT_SUCCEEDED)
+        $notification = (isset($requestBody['event']) &&$requestBody['event'] === NotificationEventType::PAYMENT_SUCCEEDED)
             ? new NotificationSucceeded($requestBody)
             : new NotificationWaitingForCapture($requestBody);
 
         $payment = $notification->getObject();
 
-        Log::info($payment);
+        Log::info(json_encode($payment));
 
         if (isset($payment->status) && $payment->status === 'waiting_for_capture') {
             $service->getClient()->capturePayment([
