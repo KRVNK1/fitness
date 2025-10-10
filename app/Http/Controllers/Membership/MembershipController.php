@@ -138,7 +138,7 @@ class MembershipController extends Controller
 
         // Проверяем статус платежа в YooKassa
         try {
-            $payment = $this->yookassa->getPaymentInfo($transaction->id); // вот это комментить на локалке
+            $payment = $this->yookassa->getPaymentInfo($transaction->yookassa_payment_id); // вот это комментить на локалке
 
             Log::info(json_encode($payment));
 
