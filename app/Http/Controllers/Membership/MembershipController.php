@@ -99,6 +99,13 @@ class MembershipController extends Controller
             : new NotificationWaitingForCapture($requestBody);
 
         $payment = $notification->getObject();
+
+        if (isset($payment->status) && $payment->status === 'succeeded') {
+            $service->getClient()->capturePayment([
+                'amount' => $payment->amount,
+            ], $payment->id, uniqid('', true));
+        }
+
         if (isset($payment->status) && $payment->status === 'succeeded') {
             if ((bool) $payment->paid === true) {
                 $metadata = (object)$payment->metadata;

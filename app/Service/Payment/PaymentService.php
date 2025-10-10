@@ -6,7 +6,7 @@ use YooKassa\Client;
 
 class PaymentService
 {
-    private function getClient()
+    public function getClient()
     {
         $client = new Client();
         $client->setAuth(
