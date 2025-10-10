@@ -5,6 +5,7 @@ namespace Database\Seeders\Workout\WorkoutType;
 use App\Models\WorkoutCategory;
 use App\Models\WorkoutType;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class WorkoutTypeSeeder extends Seeder
 {
@@ -192,6 +193,7 @@ class WorkoutTypeSeeder extends Seeder
                     'description' => 'Круговая групповая тренировка — это уникальная программа, где в основной части чередуются аэробные и силовые упражнения! Используя специальное оборудование, вы сможете эффективно прокачать все группы мышц, улучшая физическую форму и выносливость. Присоединяйтесь к занятиям и преобразите свое тело с каждым подходом!',
                     'duration_minutes' => 55,
                     'intensivity_level' => 1,
+                    'photo'             => Storage::url('Workout/WorkoutTypePhotos/kartinka.webp')
                 ],
                 [
                     'name' => 'AQUA JOGGER',

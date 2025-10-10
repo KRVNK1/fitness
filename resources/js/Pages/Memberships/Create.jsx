@@ -7,6 +7,7 @@ import { router } from "@inertiajs/react";
 export default function Create({ auth, membershipType }) {
 
     const [selectedMonth, setSelectedMonth] = useState(1);
+    const [modal, setModal] = useState(null);
 
     const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 

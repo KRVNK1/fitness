@@ -6,6 +6,11 @@ export default function WorkoutCard({ workout }) {
     return (
         <div className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
             <div className="p-6">
+                <img 
+                    src={workout.photo} 
+                    alt={workout.name}
+                    className="w-full h-48 object-cover rounded-t-lg"
+                />
                 {/* Категория и продолжительность */}
                 <div className="flex items-center justify-between mb-3">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
