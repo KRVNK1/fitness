@@ -84,7 +84,7 @@ class MembershipController extends Controller
                 'transaction_id' => $transaction->id
             ]);
 
-            return response()->json(['redirect_url' => $link]);
+            return Inertia::location($link);
         }
         // return redirect()->away(route('membership.payment.success', ['transaction' => $transaction->id]));
     }
