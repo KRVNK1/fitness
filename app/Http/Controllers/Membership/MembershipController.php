@@ -100,7 +100,7 @@ class MembershipController extends Controller
 
         $payment = $notification->getObject();
 
-        if (isset($payment->status) && $payment->status === 'succeeded') {
+        if (isset($payment->status) && $payment->status === 'waiting_for_capture') {
             $service->getClient()->capturePayment([
                 'amount' => $payment->amount,
             ], $payment->id, uniqid('', true));
