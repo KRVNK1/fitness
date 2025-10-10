@@ -11,3 +11,7 @@ php artisan migrate:fresh --seed
 
 php artisan serve
 npm run dev
+
+## Проверка платежей
+
+5555 5555 5555 4477
