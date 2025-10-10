@@ -2,6 +2,7 @@
 
 namespace App\Service\Payment;
 
+use App\Models\Transaction;
 use YooKassa\Client;
 
 class PaymentService
@@ -35,6 +36,13 @@ class PaymentService
             ],
             'description' => $description,
         ], uniqid('', true));
+
+        $transaction = Transaction::find($options['transaction_id']);
+        if ($transaction) {
+            $transaction->update([
+                'yookassa_payment_id' => $payment->getId(),
+            ]);
+        }
 
         return $payment->getConfirmation()->getConfirmationUrl();
     }
