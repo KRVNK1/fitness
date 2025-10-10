@@ -85,9 +85,9 @@ class MembershipController extends Controller
                 'transaction_id' => $transaction->id
             ]);
 
-            $transaction->update([
-                'yookassa_payment_id' => $link['payment_id']
-            ]);
+            // $transaction->update([
+            //     'yookassa_payment_id' => $link['payment_id']
+            // ]);
 
             return Inertia::location($link);
         }
