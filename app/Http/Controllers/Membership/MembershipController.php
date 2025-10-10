@@ -84,7 +84,7 @@ class MembershipController extends Controller
                 'transaction_id' => $transaction->id
             ]);
 
-            return redirect()->away($link);
+            return response()->json(['redirect_url' => $link]);
         }
         // return redirect()->away(route('membership.payment.success', ['transaction' => $transaction->id]));
     }
