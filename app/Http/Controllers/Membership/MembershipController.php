@@ -95,16 +95,12 @@ class MembershipController extends Controller
     {
         $source = file_get_contents('php://input');
 
-        Log::error($source);
-
         $requestBody = json_decode($source, true);
         $notification = (isset($requestBody['event']) &&$requestBody['event'] === NotificationEventType::PAYMENT_SUCCEEDED)
             ? new NotificationSucceeded($requestBody)
             : new NotificationWaitingForCapture($requestBody);
 
         $payment = $notification->getObject();
-
-        Log::info(json_encode($payment));
 
         if (isset($payment->status) && $payment->status === 'waiting_for_capture') {
             $service->getClient()->capturePayment([
@@ -139,8 +135,6 @@ class MembershipController extends Controller
         // Проверяем статус платежа в YooKassa
         try {
             $payment = $this->yookassa->getPaymentInfo($transaction->yookassa_payment_id); // вот это комментить на локалке
-
-            Log::info(json_encode($payment));
 
             if ($payment->getStatus() === 'succeeded') { // вот это комментить на локалке
                 $transaction->update(['status' => PaymentStatusEnum::CONFIRMED]);

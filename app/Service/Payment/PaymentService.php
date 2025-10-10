@@ -26,7 +26,7 @@ class PaymentService
                 'value' => $amount,
                 'currency' => 'RUB',
             ],
-            'capture' => false,
+            'capture' => true,
             'confirmation' => [
                 'type' => 'redirect',
                 'return_url' => route('membership.payment.success', ['transaction' => $options['transaction_id']]),
