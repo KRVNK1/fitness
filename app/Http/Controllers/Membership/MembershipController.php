@@ -137,6 +137,8 @@ class MembershipController extends Controller
         try {
             $payment = $this->yookassa->getPaymentInfo($transaction->id); // вот это комментить на локалке
 
+            Log::info(json_encode($payment));
+
             if ($payment->getStatus() === 'succeeded') { // вот это комментить на локалке
                 $transaction->update(['status' => PaymentStatusEnum::CONFIRMED]);
 
@@ -156,7 +158,9 @@ class MembershipController extends Controller
                 ]);
             }
         } catch (\Exception $e) {
-            return view('memberships.error', ['error' => $e->getMessage()]);
+            return Inertia::render('Memberships/Error', [
+                'error' => $e->getMessage()
+            ]);
         }
 
         // return view('memberships.pending', compact('transaction'));
