@@ -12,6 +12,7 @@ use App\Models\Transaction;
 use App\Service\Payment\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use YooKassa\Client;
 use YooKassa\Model\Notification\NotificationEventType;
@@ -99,6 +100,8 @@ class MembershipController extends Controller
             : new NotificationWaitingForCapture($requestBody);
 
         $payment = $notification->getObject();
+
+        Log::info($payment);
 
         if (isset($payment->status) && $payment->status === 'waiting_for_capture') {
             $service->getClient()->capturePayment([
