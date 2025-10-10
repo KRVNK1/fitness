@@ -85,6 +85,10 @@ class MembershipController extends Controller
                 'transaction_id' => $transaction->id
             ]);
 
+            $transaction->update([
+                'yookassa_payment_id' => $link['payment_id']
+            ]);
+
             return Inertia::location($link);
         }
         // return redirect()->away(route('membership.payment.success', ['transaction' => $transaction->id]));
@@ -135,9 +139,7 @@ class MembershipController extends Controller
 
         // Проверяем статус платежа в YooKassa
         try {
-            $payment = $this->yookassa->getPaymentInfo($transaction->id); // вот это комментить на локалке
-
-            Log::info(json_encode($payment));
+            $payment = $this->yookassa->getPaymentInfo($transaction->yookassa_payment_id); // комментить на локалке
 
             if ($payment->getStatus() === 'succeeded') { // вот это комментить на локалке
                 $transaction->update(['status' => PaymentStatusEnum::CONFIRMED]);
