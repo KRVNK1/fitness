@@ -45,7 +45,7 @@ class WorkoutScheduleSeeder extends Seeder
             // Пропускаем воскресенье
             if ($currentDate->dayOfWeek !== Carbon::SUNDAY) {
                 foreach ($timeSlots as $timeSlot) {
-                    // Создаем тренировки только в 30% случаев для реалистичности
+                    // Создаем тренировки
                     $workoutType = $workoutTypes->random();
                     $trainer = $trainers->random();
 
@@ -53,13 +53,9 @@ class WorkoutScheduleSeeder extends Seeder
                     $endTime = $startTime->copy()->addMinutes($workoutType->duration_minutes);
 
                     $conflictExists = WorkoutSchedule::where('trainer_id', $trainer->id)
-                        ->where(function ($query) use ($startTime, $endTime) {
-                            $query->whereBetween('start_time', [$startTime, $endTime])
-                                ->orWhereBetween('end_time', [$startTime, $endTime])
-                                ->orWhere(function ($q) use ($startTime, $endTime) {
-                                    $q->where('start_time', '<=', $startTime)
-                                        ->where('end_time', '>=', $endTime);
-                                });
+                        ->where(function ($q) use ($startTime, $endTime) {
+                            $q->where('start_time', '<', $endTime)
+                                ->where('end_time', '>', $startTime);
                         })
                         ->exists();
 
