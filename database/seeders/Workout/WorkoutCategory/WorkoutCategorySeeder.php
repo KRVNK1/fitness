@@ -14,11 +14,11 @@ class WorkoutCategorySeeder extends Seeder
     {
         $categories = [
             [
-                'name' => 'Силовые тренировки',
+                'name' => 'Силовые',
                 'slug' => 'strength-training',
             ],
             [
-                'name' => 'Кардио тренировки',
+                'name' => 'Кардио',
                 'slug' => 'cardio-training',
             ],
             [
@@ -26,11 +26,11 @@ class WorkoutCategorySeeder extends Seeder
                 'slug' => 'yoga-stretching',
             ],
             [
-                'name' => 'Функциональный тренинг',
+                'name' => 'Функциональные',
                 'slug' => 'functional-training',
             ],
             [
-                'name' => 'Танцевальные направления',
+                'name' => 'Танцевальные',
                 'slug' => 'dance-classes',
             ],
             [
@@ -38,7 +38,7 @@ class WorkoutCategorySeeder extends Seeder
                 'slug' => 'mind-body',
             ],
             [
-                'name' => 'Водные программы',
+                'name' => 'Водные',
                 'slug' => 'aqua-programs',
             ],
         ];

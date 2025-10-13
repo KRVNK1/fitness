@@ -62,8 +62,6 @@ class WorkoutScheduleController extends Controller
             ->take(10)
             ->get();
 
-        // dd($workout);
-
         return Inertia::render('WorkoutSchedule/Show', [
             'workout' => $workout,
             'schedules' => $schedules

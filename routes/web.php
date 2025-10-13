@@ -3,6 +3,7 @@
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Membership\MembershipController;
+use App\Http\Controllers\Trainer\TrainerController;
 use App\Http\Controllers\WorkoutSchedule\WorkoutScheduleController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,11 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 Route::prefix('workouts')->name('workouts.')->group(function () {
     Route::get('/', [WorkoutScheduleController::class, 'index'])->name('index');
     Route::get('/{id}', [WorkoutScheduleController::class, 'show'])->name('show');
+});
+
+Route::prefix('trainers')->name('trainers.')->group(function () {
+    Route::get('/', [TrainerController::class, 'index'])->name('index');
+    Route::get('/{id}', [TrainerController::class, 'show'])->name('show');
 });
 
 Route::middleware(['auth'])->group(function () {

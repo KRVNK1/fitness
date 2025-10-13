@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class WorkoutSchedule extends Model
 {
     protected $fillable = [
-        'workout_category_id',
+        'workout_type_id',
         'trainer_id',
         'start_time',
         'end_time',
@@ -26,7 +26,8 @@ class WorkoutSchedule extends Model
         return $this->belongsTo(WorkoutCategory::class);
     }
 
-    public function workoutType() {
+    public function workoutType()
+    {
         return $this->belongsTo(WorkoutType::class);
     }
 
@@ -43,6 +44,6 @@ class WorkoutSchedule extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'bookings')
-                    ->withTimestamps();
+            ->withTimestamps();
     }
 }
