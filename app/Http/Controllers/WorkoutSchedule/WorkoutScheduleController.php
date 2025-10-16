@@ -3,68 +3,40 @@
 namespace App\Http\Controllers\WorkoutSchedule;
 
 use App\Http\Controllers\Controller;
-use App\Models\WorkoutCategory;
-use App\Models\WorkoutSchedule;
-use App\Models\WorkoutType;
-use Illuminate\Http\Request;
+use App\Service\WorkoutSchedule\WorkoutScheduleService;
 use Inertia\Inertia;
 
 class WorkoutScheduleController extends Controller
 {
-    public function index(Request $request)
+    private $workoutScheduleService;
+
+    public function __construct(WorkoutScheduleService $workoutScheduleService)
     {
-        $categoryFilter = $request->get('categories');
-        $intensityFilter = $request->get('intensity');
-        $durationFilter = $request->get('duration');
+        $this->workoutScheduleService = $workoutScheduleService;
+    }
 
-        $query = WorkoutType::with(['workoutCategory'])
-            ->whereHas('workoutCategory');
-
-
-        if ($categoryFilter) {
-            $query->where('workout_category_id', $categoryFilter);
-        }
-
-        if ($intensityFilter) {
-            $query->where('intensivity_level', $intensityFilter);
-        }
-
-        if ($durationFilter) {
-            $query->where('duration_minutes', $durationFilter);
-        }
-
-        $workouts = $query->paginate(30);
-
-        $categories = WorkoutCategory::whereHas('workoutTypes')->get();
-        $intensityLevels = WorkoutType::distinct()->pluck('intensivity_level')->filter()->sort()->values()->toArray();
-        $durations = WorkoutType::distinct()->pluck('duration_minutes')->filter()->sort()->values()->toArray();
-
+    public function index()
+    {
         return Inertia::render('WorkoutSchedule/Index', [
-            'workouts' => $workouts,
-            'categories' => $categories,
-            'intensivityLevels' => $intensityLevels,
-            'durations' => $durations,
-
-            'categoryFilter' => $categoryFilter,
-            'intensityFilter' => $intensityFilter,
-            'durationFilter' => $durationFilter
+            'schedules' => $this->workoutScheduleService->getWorkoutSchedule()
         ]);
     }
 
-    public function show($id) {
+    public function catalog()
+    {
+        return Inertia::render('WorkoutSchedule/Catalog', [
+            'workouts'          => $this->workoutScheduleService->getCatalog(),
+            'categories'        => $this->workoutScheduleService->getWorkoutCategory(),
+            'intensivityLevels' => $this->workoutScheduleService->getIntensivityLevels(),
+            'durations'         => $this->workoutScheduleService->getDurations(),
+        ]);
+    }
 
-        $workout = WorkoutType::with(['workoutCategory'])->findOrFail($id);
-
-        $schedules = WorkoutSchedule::where('workout_type_id', $id)
-            ->with(['trainer'])
-            ->where('start_time', '>=', now())
-            ->orderBy('start_time')
-            ->take(10)
-            ->get();
-
+    public function show($id)
+    {
         return Inertia::render('WorkoutSchedule/Show', [
-            'workout' => $workout,
-            'schedules' => $schedules
+            'workout'   => $this->workoutScheduleService->getWorkoutType($id),
+            'schedules' => $this->workoutScheduleService->getWorkoutTypeSchedule($id)
         ]);
     }
 }

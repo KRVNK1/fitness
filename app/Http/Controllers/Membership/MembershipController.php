@@ -12,7 +12,6 @@ use App\Models\Transaction;
 use App\Service\Payment\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use YooKassa\Client;
 use YooKassa\Model\Notification\NotificationEventType;
@@ -158,49 +157,6 @@ class MembershipController extends Controller
             return Inertia::render('Memberships/Error', [
                 'error' => $e->getMessage()
             ]);
-        }
-
-        // return view('memberships.pending', compact('transaction'));
-    }
-
-    /**
-     * Webhook для уведомлений от YooKassa
-     */
-    public function webhook(Request $request)
-    {
-        try {
-            $source = file_get_contents('php://input');
-            $requestBody = json_decode($source, true);
-
-            if ($requestBody['event'] === 'payment.succeeded') {
-                $paymentId = $requestBody['object']['id'];
-                $transaction = Transaction::where('payment_id', $paymentId)->first();
-
-                if ($transaction && $transaction->status === 'pending') {
-                    $transaction->update(['status' => 'completed']);
-
-                    // Деактивируем текущий абонемент
-                    if ($currentMembership = $transaction->user->membership) {
-                        $currentMembership->delete();
-                    }
-
-                    // Создаем новый абонемент
-                    $startDate = now();
-                    $endDate = $startDate->copy()->addMonths($transaction->months);
-
-                    Membership::create([
-                        'user_id' => $transaction->user_id,
-                        'membership_type_id' => $transaction->membership_type_id,
-                        'start_date' => $startDate,
-                        'end_date' => $endDate,
-                        'status' => 'active',
-                    ]);
-                }
-            }
-
-            return response()->json(['status' => 'success']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 }
