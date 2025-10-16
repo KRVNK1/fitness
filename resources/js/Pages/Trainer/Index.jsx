@@ -1,7 +1,7 @@
 import Footer from "@/Components/layout/Footer"
 import Header from "@/Components/layout/Header"
 import Title from "@/Components/ui/Title"
-import TrainerCard from "@/Components/features/TrainerCard"
+import TrainerCard from "@/Components/features/Trainers/TrainerCard"
 import { Head } from "@inertiajs/react"
 
 export default function Index({ auth, trainers }) {

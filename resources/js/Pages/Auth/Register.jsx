@@ -1,6 +1,7 @@
 import Header from "../../Components/layout/Header"
 import Footer from "../../Components/layout/Footer"
 import { useForm } from "@inertiajs/react";
+import { Input } from "@/Components/ui/input";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -41,13 +42,12 @@ export default function Register() {
                                     <label htmlFor="first_name" className="block text-gray-700 font-medium mb-2">
                                         Имя
                                     </label>
-                                    <input
+                                    <Input
                                         id="first_name"
                                         name="first_name"
                                         type="text"
                                         value={data.first_name}
                                         onChange={handleChange}
-                                        className="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#7f36dd] focus:border-[#7f36dd] transition-colors"
                                         placeholder="Ваше имя"
                                         autoComplete="given-name"
                                     />
@@ -58,13 +58,12 @@ export default function Register() {
                                     <label htmlFor="last_name" className="block text-gray-700 font-medium mb-2">
                                         Фамилия
                                     </label>
-                                    <input
+                                    <Input
                                         id="last_name"
                                         name="last_name"
                                         type="text"
                                         value={data.last_name}
                                         onChange={handleChange}
-                                        className="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#7f36dd] focus:border-[#7f36dd] transition-colors"
                                         placeholder="Ваша фамилия"
                                         autoComplete="family-name"
                                     />
@@ -76,13 +75,12 @@ export default function Register() {
                                 <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
                                     Email адрес
                                 </label>
-                                <input
+                                <Input
                                     id="email"
                                     name="email"
                                     type="email"
                                     value={data.email}
                                     onChange={handleChange}
-                                    className="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#7f36dd] focus:border-[#7f36dd] transition-colors"
                                     placeholder="Введите ваш email"
                                     autoComplete="username"
                                 />
@@ -93,13 +91,12 @@ export default function Register() {
                                 <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
                                     Пароль
                                 </label>
-                                <input
+                                <Input
                                     id="password"
                                     name="password"
                                     type="password"
                                     value={data.password}
                                     onChange={handleChange}
-                                    className="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#7f36dd] focus:border-[#7f36dd] transition-colors"
                                     placeholder="Создайте пароль"
                                     autoComplete="new-password"
                                 />
@@ -110,13 +107,12 @@ export default function Register() {
                                 <label htmlFor="password_confirmation" className="block text-gray-700 font-medium mb-2">
                                     Подтвердите пароль
                                 </label>
-                                <input
+                                <Input
                                     id="password_confirmation"
                                     name="password_confirmation"
                                     type="password"
                                     value={data.password_confirmation}
                                     onChange={handleChange}
-                                    className="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#7f36dd] focus:border-[#7f36dd] transition-colors"
                                     placeholder="Повторите пароль"
                                     autoComplete="new-password"
                                 />

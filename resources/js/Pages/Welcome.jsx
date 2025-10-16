@@ -105,7 +105,7 @@ export default function Welcome({ auth, membershipTypes }) {
                 <script src="https://api-maps.yandex.ru/2.0-stable/?apikey=0aa3ee8d-e6c4-4d5b-910f-d3760f48934d&load=package.full&lang=ru-RU" type="text/javascript"></script>
             </Head>
 
-            <div className="scroll-smooth">
+            <div className="scroll-smooth bg-gray-50">
                 <Header user={auth.user} />
 
                 {/* Hero section */}
@@ -174,7 +174,7 @@ export default function Welcome({ auth, membershipTypes }) {
                     </div>
                 </div>
 
-                {/* Pricing Cards */}
+                {/* Карточки тарифов */}
                 <section id="pricing" className="py-16 bg-gray-50">
                     <div className="container mx-auto px-4">
                         <h2 className="text-4xl lg:text-5xl font-bold text-center mb-4 text-gray-800">Тарифы</h2>
@@ -275,7 +275,7 @@ export default function Welcome({ auth, membershipTypes }) {
 
                             <div className="flex-1">
                                 <img
-                                    src={spaImage || "/placeholder.svg"}
+                                    src={spaImage}
                                     alt="SPA зона"
                                     className="w-full h-auto rounded-2xl shadow-lg transition-opacity duration-500"
                                 />
@@ -287,7 +287,6 @@ export default function Welcome({ auth, membershipTypes }) {
                 {/* Map Section */}
                 <section className="container mx-auto px-4 py-16">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 text-gray-800">Где нас найти</h2>
-
                     <div id="myMap" className="w-full h-[500px] sm:h-[550px] md:h-[600px] lg:h-[600px] xl:h-[800px] rounded-2xl shadow-lg"></div>
                 </section>
 

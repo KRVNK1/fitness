@@ -1,0 +1,48 @@
+export default function TrainerInfo({ trainer }) {
+    return (
+        <div className="flex flex-col md:flex-row gap-6">
+            {/* Фото тренера */}
+            <div className="flex-shrink-0">
+                <div className="relative w-48 h-64 rounded-lg overflow-hidden bg-gradient-to-br from-purple-100 to-purple-200">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <svg className="w-24 h-24 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                            />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            {/* Информация */}
+            <div className="flex-1">
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                    {trainer.first_name} {trainer.last_name}
+                </h1>
+
+                {trainer.trainer_info?.experience_years && (
+                    <p className="text-gray-700 mb-4">
+                        Стаж:{" "}
+                        <span className="font-semibold">
+                            {trainer.trainer_info.experience_years}{" "}
+                            {trainer.trainer_info.experience_years === 1
+                                ? "год"
+                                : trainer.trainer_info.experience_years < 5
+                                    ? "года"
+                                    : "лет"}
+                        </span>
+                    </p>
+                )}
+
+                <div className="max-w-none">
+                    <p className="text-gray-700 leading-relaxed">
+                        {trainer.trainer_info.description || "Информация о тренере отсутствует"}
+                    </p>
+                </div>
+            </div>
+        </div>
+    )
+}

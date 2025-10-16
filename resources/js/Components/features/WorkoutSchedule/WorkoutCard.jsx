@@ -25,12 +25,14 @@ export default function WorkoutCard({ workout }) {
                     )}
 
 
-                    {/* Категория и продолжительность */}
                     <div className="flex items-center justify-between absolute bottom-2 left-2 gap-2">
+                        {/* Категория и продолжительность */}
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white text-purple-800">
                             {workout.workout_category.name}
                         </span>
-                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-white text-purple-800">{workout.duration_minutes} мин</span>
+                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-white text-purple-800">
+                            {workout.duration_minutes} мин.
+                        </span>
 
                         {/* Интенсивность */}
                         {workout.intensivity_level && (
@@ -39,7 +41,6 @@ export default function WorkoutCard({ workout }) {
                             </div>
                         )}
                     </div>
-
                 </div>
 
                 <div className="p-4">
@@ -52,7 +53,7 @@ export default function WorkoutCard({ workout }) {
                     {/* Кнопка */}
                     <Link
                         className="inline-flex items-center justify-center w-full px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition-colors"
-                        href={`/workouts/${workout.id}`}
+                        href={`/workouts/schedule/${workout.id}`}
                     >
                         Подробнее
                     </Link>

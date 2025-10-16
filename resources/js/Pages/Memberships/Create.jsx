@@ -7,7 +7,6 @@ import { router } from "@inertiajs/react";
 export default function Create({ auth, membershipType }) {
 
     const [selectedMonth, setSelectedMonth] = useState(1);
-    const [modal, setModal] = useState(null);
 
     const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -24,7 +23,7 @@ export default function Create({ auth, membershipType }) {
     }
 
     return (
-        <div className="scroll-smooth">
+        <div className="scroll-smooth bg-gray-100">
             <Header user={auth.user}/>
 
             <div className="container mx-auto px-4 py-8">

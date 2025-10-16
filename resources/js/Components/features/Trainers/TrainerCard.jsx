@@ -47,7 +47,7 @@ export default function TrainerCard({ trainer }) {
 
         <Link
           className="inline-flex items-center justify-center w-full px-4 py-2.5 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 transition-colors"
-          href={`/trainers/${trainer.id}`}
+          href={`/trainers/schedule/${trainer.id}`}
         >
           Подробнее
         </Link>

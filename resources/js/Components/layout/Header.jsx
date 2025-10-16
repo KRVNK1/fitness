@@ -21,8 +21,9 @@ export default function Header({ user }) {
           {/* Навигация десктоп */}
           <div className="hidden md:flex items-center gap-8 font-semibold [&>a:hover]:text-[#7f36dd] [&>a]:transition-colors">
             <a href="/#pricing">Тарифы</a>
-            <a href="/workouts">Групповые</a>
+            <a href="/workouts/catalog">Групповые</a>
             <a href="/trainers">Тренеры</a>
+            <a href="/workouts/schedule">Расписание</a>
           </div>
 
           <div className="hidden md:block">

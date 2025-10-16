@@ -1,6 +1,7 @@
 import Header from "../../Components/layout/Header"
 import Footer from "../../Components/layout/Footer"
 import { useForm } from "@inertiajs/react"
+import { Input } from "@/Components/ui/input"
 
 export default function Login({ status }) {
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -41,15 +42,14 @@ export default function Login({ status }) {
             <form onSubmit={submit} className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
-                  Email адрес
+                  Email
                 </label>
-                <input
+                <Input
                   id="email"
                   name="email"
                   type="email"
                   value={data.email}
                   onChange={handleChange}
-                  className="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#7f36dd] focus:border-[#7f36dd] transition-colors"
                   placeholder="Введите ваш email"
                   autoComplete="username"
                 />
@@ -60,13 +60,12 @@ export default function Login({ status }) {
                 <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
                   Пароль
                 </label>
-                <input
+                <Input
                   id="password"
                   name="password"
                   type="password"
                   value={data.password}
                   onChange={handleChange}
-                  className="block w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#7f36dd] focus:border-[#7f36dd] transition-colors"
                   placeholder="Введите пароль"
                   autoComplete="current-password"
                 />

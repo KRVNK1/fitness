@@ -3,7 +3,7 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/profile/Card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/profile/Tabs"
 import { Button } from "@/Components/ui/Button"
-import { Input } from "@/Components/ui/input"
+import { Input } from "@/Components/ui/Input"
 import { Label } from "@/Components/ui/label"
 import Header from "@/Components/layout/Header"
 import Footer from "@/Components/layout/Footer"
@@ -86,6 +86,8 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
 
         return <Badge variant={variants[status] || "secondary"}>{labels[status] || status}</Badge>
     }
+
+    console.log(user)
 
     return (
         <>
@@ -245,6 +247,7 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
                                     <div className="space-y-4">
                                         {workoutHistory.data.length > 0 ? (
                                             workoutHistory.data.map((booking) => (
+                                                
                                                 <div
                                                     key={booking.id}
                                                     className="flex items-start justify-between border-b pb-4 last:border-0 last:pb-0"
