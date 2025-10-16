@@ -1,7 +1,7 @@
 import Header from "../../Components/layout/Header"
 import Footer from "../../Components/layout/Footer"
 import { useForm } from "@inertiajs/react"
-import { Input } from "@/Components/ui/input"
+import { Input } from "@/Components/ui/Input"
 
 export default function Login({ status }) {
   const { data, setData, post, processing, errors, reset } = useForm({
