@@ -140,10 +140,12 @@ class MembershipController extends Controller
 
                 $startDate = now();
                 $endDate = $startDate->copy()->addMonths($transaction->months);
+                $remainingDays = (int) $startDate->diffInDays($endDate);
 
                 Membership::create([
                     'user_id'            => $transaction->user_id,
                     'membership_type_id' => $transaction->membership_type_id,
+                    'remaining_days'     => $remainingDays,
                     'start_date'         => $startDate,
                     'end_date'           => $endDate,
                     'status'             => MembershipStatusEnum::ACTIVE,

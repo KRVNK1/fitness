@@ -3,6 +3,7 @@
 namespace App\Service\Booking;
 
 use App\Enums\Booking\BookingStatusEnum;
+use App\Enums\Membership\MembershipStatusEnum;
 use App\Enums\Payment\UserRequestEnum;
 use App\Models\Booking;
 use App\Models\Membership;
@@ -15,6 +16,17 @@ use Illuminate\Support\Facades\Auth;
 
 class BookingService
 {
+    /**
+     * Получить абонемент пользователя
+     */
+    public function getMembership($userId)
+    {
+        return Membership::where('user_id', $userId)
+            ->where('status', MembershipStatusEnum::ACTIVE)
+            ->where('end_date', '>=', now())
+            ->first();
+    }
+
     /**
      * Создать бронирование на тренировку
      */
@@ -44,10 +56,7 @@ class BookingService
                 ];
             }
 
-            $membership = Membership::where('user_id', $userId)
-                ->where('status', 'active')
-                ->where('end_date', '>=', now())
-                ->first();
+            $membership = $this->getMembership($userId);
 
             if (!$membership) {
                 return [
@@ -57,10 +66,10 @@ class BookingService
             }
 
             $booking = Booking::create([
-                'user_id' => $userId,
+                'user_id'             => $userId,
                 'workout_schedule_id' => $workoutScheduleId,
-                'membership_id' => $membership->id,
-                'status' => BookingStatusEnum::BOOKED
+                'membership_id'       => $membership->id,
+                'status'              => BookingStatusEnum::BOOKED
             ]);
 
             $schedule->increment('booked_slots');
@@ -120,16 +129,16 @@ class BookingService
         }
     }
 
+    /**
+     * Запись на индивидуальную тренировку
+     */ 
     public function storeIndWorkout(User $trainerid, Request $request)
     {
         $userId = Auth::id();
         $requestedDate = $request->input('requested_date');
         $comment = $request->input('comment');
 
-        $membership = Membership::where('user_id', $userId)
-            ->where('status', 'active')
-            ->where('end_date', '>=', now())
-            ->first();
+        $membership = $this->getMembership($userId);
 
         if (!$membership) {
             return [
@@ -156,7 +165,7 @@ class BookingService
     /**
      * Получить все бронирования пользователя
      */
-    public function getUserBookings(int $userId, ?string $status = null)
+    public function getUserBookings(int $userId, string $status)
     {
         $query = Booking::where('user_id', $userId)
             ->with(['workoutSchedule.workoutType', 'workoutSchedule.trainer', 'membership'])

@@ -9,6 +9,7 @@ class Membership extends Model
     protected $fillable = [
         'user_id',
         'membership_type_id',
+        'remaining_days',
         'start_date',
         'end_date',
         'status',

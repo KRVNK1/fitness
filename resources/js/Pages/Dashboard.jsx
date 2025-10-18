@@ -61,14 +61,6 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
         })
     }
 
-    let membershipDurationDays
-
-    if (stats.userMembership && stats.userMembership.start_date && stats.userMembership.end_date) {
-        const startMembership = new Date(stats.userMembership.start_date)
-        const endMembership = new Date(stats.userMembership.end_date)
-        membershipDurationDays = (endMembership - startMembership) / (1000 * 60 * 60 * 24)
-    }
-
     const getStatusBadge = (status) => {
         const variants = {
             confirmed: "default",
@@ -88,6 +80,7 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
     }
 
     console.log(user)
+    console.log(stats)
 
     return (
         <>
@@ -151,7 +144,7 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
                                     </CardHeader>
                                     <CardContent className="flex flex-col place-items-center">
                                         <div className="text-2xl font-bold">
-                                            {membershipDurationDays ? `${membershipDurationDays} дней` : "0"}
+                                            {stats.userMembership.remaining_days ? `${stats.userMembership.remaining_days} дней` : '0'}
                                         </div>
                                         <p className="text-sm">Оставшееся время (в днях)</p>
                                     </CardContent>
