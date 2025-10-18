@@ -3,10 +3,15 @@
 namespace App\Service\Booking;
 
 use App\Enums\Booking\BookingStatusEnum;
+use App\Enums\Payment\UserRequestEnum;
 use App\Models\Booking;
 use App\Models\Membership;
+use App\Models\User;
+use App\Models\UserRequest;
 use App\Models\WorkoutSchedule;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingService
 {
@@ -113,6 +118,39 @@ class BookingService
                 'message' => 'Произошла ошибка при отмене бронирования'
             ];
         }
+    }
+
+    public function storeIndWorkout(User $trainerid, Request $request)
+    {
+        $userId = Auth::id();
+        $requestedDate = $request->input('requested_date');
+        $comment = $request->input('comment');
+
+        $membership = Membership::where('user_id', $userId)
+            ->where('status', 'active')
+            ->where('end_date', '>=', now())
+            ->first();
+
+        if (!$membership) {
+            return [
+                'success' => false,
+                'message' => 'У вас нет активного абонемента. Пожалуйста, приобретите абонемент.'
+            ];
+        }
+
+        $userRequest = UserRequest::create([
+            'user_id'        => $userId,
+            'trainer_id'     => $trainerid,
+            'requested_date' => $requestedDate,
+            'status'         => UserRequestEnum::PENDING,
+            'comment'        => $comment
+        ]);
+
+        return [
+            'success'     => true,
+            'message'     => 'Вы успешно создали заявку!',
+            'userRequest' => $userRequest
+        ];
     }
 
     /**

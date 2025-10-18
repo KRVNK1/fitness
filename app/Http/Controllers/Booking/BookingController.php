@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Booking;
 
+use App\Enums\Payment\UserRequestEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Workout\WorkoutSchedule\WorkoutScheduleRequest;
+use App\Models\Membership;
+use App\Models\User;
+use App\Models\UserRequest;
 use App\Service\Booking\BookingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,5 +65,13 @@ class BookingController extends Controller
         return response()->json([
             'bookings' => $bookings
         ]);
+    }
+
+    /**
+     * Запись на индивидуальные тренировки
+     */
+    public function storeIndWorkout()
+    {
+        return $this->bookingService->storeIndWorkout();
     }
 }

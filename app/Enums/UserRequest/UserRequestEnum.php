@@ -2,7 +2,7 @@
 
 namespace App\Enums\Payment;
 
-class TrainerRequestEnum
+class UserRequestEnum
 {
     public const PENDING = 'pending';
     public const APPROVED = 'approved';
