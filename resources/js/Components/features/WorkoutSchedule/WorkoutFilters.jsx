@@ -1,4 +1,5 @@
 import { Button } from "@/Components/ui/Button"
+import { Label } from "@/Components/ui/Label"
 import { useState } from "react"
 
 export default function WorkoutFilters({ categories, intensivityLevels, durations, onFilterChange, currentFilters }) {
@@ -25,9 +26,9 @@ export default function WorkoutFilters({ categories, intensivityLevels, duration
             <div className="space-y-4 md:space-y-0 md:flex md:items-end md:space-x-6">
                 {/* Категория */}
                 <div className="flex-1">
-                    <label htmlFor="categories" className="block text-sm font-medium text-gray-700 mb-2">
+                    <Label htmlFor="categories" className="block text-sm font-medium text-gray-700 mb-2">
                         Категория
-                    </label>
+                    </Label>
                     <select
                         id="categories"
                         value={filters.category}
@@ -45,9 +46,9 @@ export default function WorkoutFilters({ categories, intensivityLevels, duration
 
                 {/* Интенсивность */}
                 <div className="flex-1">
-                    <label htmlFor="intensity" className="block text-sm font-medium text-gray-700 mb-2">
+                    <Label htmlFor="intensity" className="block text-sm font-medium text-gray-700 mb-2">
                         Интенсивность
-                    </label>
+                    </Label>
                     <select
                         id="intensity"
                         value={filters.intensity}
@@ -65,9 +66,9 @@ export default function WorkoutFilters({ categories, intensivityLevels, duration
 
                 {/* Продолжительность */}
                 <div className="flex-1">
-                    <label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-2">
+                    <Label htmlFor="duration" className="block text-sm font-medium text-gray-700 mb-2">
                         Продолжительность
-                    </label>
+                    </Label>
                     <select
                         id="duration"
                         value={filters.duration}

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import PricingPlan from "@/Components/features/PricingPlan"
 
 export default function Welcome({ auth, membershipTypes }) {
-    const [spaImage, setSpaImage] = useState("https://i.ibb.co/7dw1kS5F/fin-sauna.webp")
+    const [spaImage, setSpaImage] = useState("/storage/Global/SPA/fin-sauna.webp")
     const [activeButton, setActiveButton] = useState(0)
 
     const planStyles = {
@@ -63,7 +63,7 @@ export default function Welcome({ auth, membershipTypes }) {
                         },
                         {
                             iconLayout: "default#image",
-                            iconImageHref: "https://i.ibb.co/Gffcd1Q8/location-map-pin-mark-icon-148684.png",
+                            iconImageHref: "/storage/Global/icon-map.png",
                             iconImageSize: [40, 40],
                         },
                     )
@@ -84,16 +84,16 @@ export default function Welcome({ auth, membershipTypes }) {
     const spaButtons = [
         {
             text: "Финская сауна",
-            image: "https://i.ibb.co/7dw1kS5F/fin-sauna.webp"
+            image: "/storage/Global/SPA/fin-sauna.webp"
         },
 
         {
             text: "Турецкий хаммам",
-            image: "https://i.ibb.co/gZVXRqHT/turkish-hammam.webp"
+            image: "/storage/Global/SPA/turkish-hammam.webp"
         },
         {
             text: "Соляная комната",
-            image: "https://i.ibb.co/PZrkFWqh/solyanaya-komnata.webp"
+            image: "/storage/Global/SPA/solyanaya-komnata.webp"
         },
     ]
 
@@ -114,7 +114,7 @@ export default function Welcome({ auth, membershipTypes }) {
                         {/* Mobile */}
                         <div className="lg:hidden relative">
                             <img
-                                src="https://i.ibb.co/Fb0Ys1K9/main-Mobile.webp"
+                                src="/storage/Global/main-Mobile.webp"
                                 alt="Фитнес модель мобильная"
                                 className="w-full h-[525px] object-cover rounded-3xl"
                             />
@@ -122,7 +122,7 @@ export default function Welcome({ auth, membershipTypes }) {
                         {/* Desktop */}
                         <div className="hidden lg:block flex-1 relative">
                             <img
-                                src="https://i.ibb.co/zhqDW1X9/main.webp"
+                                src="/storage/Global/main.webp"
                                 alt="Фитнес модель"
                                 className="w-full h-[550px] object-cover rounded-[40px]"
                             />
@@ -210,7 +210,7 @@ export default function Welcome({ auth, membershipTypes }) {
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                             <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
                                 <img
-                                    src="https://i.ibb.co/JjYb4jML/kardip.webp"
+                                    src="/storage/Global/WorkoutZones/kardio.webp"
                                     alt="Тренажерный зал"
                                     className="w-full h-56 object-cover"
                                 />
@@ -222,7 +222,7 @@ export default function Welcome({ auth, membershipTypes }) {
 
                             <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
                                 <img
-                                    src="https://i.ibb.co/R4gG3X6v/silovaya.webp"
+                                    src="/storage/Global/WorkoutZones/silovaya.webp"
                                     alt="Силовой зал"
                                     className="w-full h-56 object-cover"
                                 />
@@ -234,7 +234,7 @@ export default function Welcome({ auth, membershipTypes }) {
 
                             <div className="bg-white rounded-2xl md:col-span-2 lg:col-span-1 overflow-hidden shadow-lg">
                                 <img
-                                    src="https://i.ibb.co/pjnzWsX0/kinoteatr.webp"
+                                    src="/storage/Global/WorkoutZones/kinoteatr.webp"
                                     alt="Кардио Кинотеатр"
                                     className="w-full h-56 object-cover"
                                 />

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Membership\MembershipController;
+use App\Http\Controllers\UserApplication\UserApplicationController;
 use App\Http\Controllers\WorkoutSchedule\Trainer\TrainerScheduleController;
 use App\Http\Controllers\WorkoutSchedule\WorkoutScheduleController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,26 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [BookingController::class, 'index'])->name('index');
         Route::post('/', [BookingController::class, 'store'])->name('store');
         Route::post('/{bookingId}/cancel', [BookingController::class, 'cancel'])->name('cancel');
+    });
+
+    Route::prefix('requests')->name('requests.')->group(function () {
+        // Создание заявки
+        Route::post('/', [UserApplicationController::class, 'store'])->name('store');
+        
+        // Заявки пользователя
+        Route::get('/my', [UserApplicationController::class, 'userRequests'])->name('user');
+        
+        // Отмена заявки пользователем
+        Route::delete('/{id}/cancel', [UserApplicationController::class, 'cancel'])->name('cancel');
+        
+        // Заявки для тренера
+        Route::get('/trainer', [UserApplicationController::class, 'trainerRequests'])->name('trainer');
+        
+        // Принять заявку (тренер)
+        Route::post('/{id}/approve', [UserApplicationController::class, 'approve'])->name('approve');
+        
+        // Отклонить заявку (тренер)
+        Route::post('/{id}/reject', [UserApplicationController::class, 'reject'])->name('reject');
     });
 });
 

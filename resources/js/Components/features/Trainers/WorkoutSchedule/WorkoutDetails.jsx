@@ -79,7 +79,7 @@ export default function WorkoutDetails({ workout, format }) {
                     />
 
                     <Link
-                        href={`/workouts/${workout.workout_type.id}`}
+                        href={`/workouts/schedule/${workout.workout_type.id}`}
                         className="border bg-white hover:bg-gray-100 text-purple-700 px-6 py-3 rounded-lg font-medium transition-colors"
                     >
                         Подробнее

@@ -4,14 +4,12 @@ namespace App\Service\Booking;
 
 use App\Enums\Booking\BookingStatusEnum;
 use App\Enums\Membership\MembershipStatusEnum;
-use App\Enums\Payment\UserRequestEnum;
+use App\Enums\UserApplication\UserApplicationEnum;
 use App\Models\Booking;
 use App\Models\Membership;
-use App\Models\User;
-use App\Models\UserRequest;
+use App\Models\UserApplication;
 use App\Models\WorkoutSchedule;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BookingService
@@ -30,7 +28,7 @@ class BookingService
     /**
      * Создать бронирование на тренировку
      */
-    public function createBooking($userId, $workoutScheduleId)
+    public function createBooking($userId, $workoutScheduleId): array
     {
         try {
             $schedule = WorkoutSchedule::findOrFail($workoutScheduleId);
@@ -39,7 +37,7 @@ class BookingService
             if ($schedule->booked_slots >= $schedule->available_slots) {
                 return [
                     'success' => false,
-                    'message' => 'К сожалению, все места заняты'
+                    'message' => 'К сожалению, все места заняты.'
                 ];
             }
 
@@ -52,7 +50,7 @@ class BookingService
             if ($existingBooking) {
                 return [
                     'success' => false,
-                    'message' => 'Вы уже записаны на эту тренировку'
+                    'message' => 'Вы уже записаны на данную тренировку.'
                 ];
             }
 
@@ -65,7 +63,7 @@ class BookingService
                 ];
             }
 
-            $booking = Booking::create([
+            Booking::create([
                 'user_id'             => $userId,
                 'workout_schedule_id' => $workoutScheduleId,
                 'membership_id'       => $membership->id,
@@ -76,13 +74,12 @@ class BookingService
 
             return [
                 'success' => true,
-                'message' => 'Вы успешно записались на тренировку!',
-                'booking' => $booking->load(['workoutSchedule.workoutCategory', 'workoutSchedule.trainer'])
+                'message' => 'Вы успешно записались на тренировку!'
             ];
         } catch (Exception $e) {
             return [
                 'success' => false,
-                'message' => 'Произошла ошибка при записи на тренировку' . $e
+                'message' => $e->getMessage()
             ];
         }
     }
@@ -131,13 +128,10 @@ class BookingService
 
     /**
      * Запись на индивидуальную тренировку
-     */ 
-    public function storeIndWorkout(User $trainerid, Request $request)
+     */
+    public function storeIndWorkout($trainerId, $requestedDate, $comment = null)
     {
         $userId = Auth::id();
-        $requestedDate = $request->input('requested_date');
-        $comment = $request->input('comment');
-
         $membership = $this->getMembership($userId);
 
         if (!$membership) {
@@ -147,18 +141,44 @@ class BookingService
             ];
         }
 
-        $userRequest = UserRequest::create([
+        $existingRequest = UserApplication::where('user_id', $userId)
+            ->where('trainer_id', $trainerId)
+            ->where('status', UserApplicationEnum::PENDING)
+            ->first();
+
+        if ($existingRequest) {
+            return [
+                'success' => false,
+                'message' => 'У вас уже есть активная заявка к этому тренеру.'
+            ];
+        }
+
+        if ($requestedDate < now()) {
+            return [
+                'success' => false,
+                'message' => 'Дата тренировки не может быть в прошлом.'
+            ];
+        }
+
+        if ($trainerId === $userId) {
+            return [
+                'success' => false,
+                'message' => 'Вы не можете записаться на свою тренировку.'
+            ];
+        }
+
+        $UserApplication = UserApplication::create([
             'user_id'        => $userId,
-            'trainer_id'     => $trainerid,
+            'trainer_id'     => $trainerId,
             'requested_date' => $requestedDate,
-            'status'         => UserRequestEnum::PENDING,
+            'status'         => UserApplicationEnum::PENDING,
             'comment'        => $comment
         ]);
 
         return [
-            'success'     => true,
-            'message'     => 'Вы успешно создали заявку!',
-            'userRequest' => $userRequest
+            'success'         => true,
+            'message'         => 'Заявка успешно отправлена! Тренер рассмотрит её в ближайшее время.',
+            'UserApplication' => $UserApplication
         ];
     }
 

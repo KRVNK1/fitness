@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { router } from "@inertiajs/react";
+import { useState } from "react"
+import { router } from "@inertiajs/react"
 
 export default function useBooking(scheduleId) {
-    const [isBooking, setIsBooking] = useState(false);
+    const [isBooking, setIsBooking] = useState(false)
 
     const handleBooking = () => {
         setIsBooking(true);
@@ -11,13 +11,15 @@ export default function useBooking(scheduleId) {
                 workout_schedule_id: scheduleId
             },
             {
-                onFinish: () => {
-                    setIsBooking(false);
-                    window.location.reload();
+                onSuccess: () => {
+                    setIsBooking(false)
                 },
-            }
-        );
-    };
+                onError: () => {
+                    setIsBooking(false)
+                },
+                preserveScroll: true,
+            })
+    }
 
-    return { isBooking, handleBooking };
+    return { isBooking, handleBooking }
 }

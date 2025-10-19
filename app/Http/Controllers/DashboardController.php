@@ -22,11 +22,12 @@ class DashboardController extends Controller
     {
         $user = $request->user();
         
-        return Inertia::render('Dashboard', [
+        return Inertia::render('DashBoard/Dashboard', [
             'user'           => $user,
             'stats'          => $this->dashboardService->getUserStats($user),
             'recentBookings' => $this->dashboardService->getRecentBookings($user, 3),
             'workoutHistory' => $this->dashboardService->getWorkoutHistory($user, 7),
+            'requests'       => $this->dashboardService->userRequests()
         ]);
     }
 }

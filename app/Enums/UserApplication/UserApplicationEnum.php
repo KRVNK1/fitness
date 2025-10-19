@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Enums\Payment;
+namespace App\Enums\UserApplication;
 
-class UserRequestEnum
+class UserApplicationEnum
 {
     public const PENDING = 'pending';
     public const APPROVED = 'approved';

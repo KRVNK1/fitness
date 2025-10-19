@@ -1,0 +1,102 @@
+import { Button } from "@/Components/ui/Button"
+import { Input } from "@/Components/ui/Input"
+import { useForm } from "@inertiajs/react"
+
+export default function TrainerModal({ trainer, show, onClose }) {
+    const { data, setData, post, errors, reset } = useForm({
+        trainer_id: trainer.id,
+        requested_date: "",
+        comment: "",
+    })
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        post(route("requests.store"), {
+            onSuccess: () => {
+                reset()
+                onClose()
+            },
+        })
+    }
+
+    if (!show) return null
+
+    return (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+            <div className="flex min-h-screen items-center justify-center p-4">
+                {/* Оверлей */}
+                <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" onClick={onClose} />
+
+
+                {/* Модалка */}
+                <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-semibold text-gray-900">Записаться к тренеру</h3>
+                        <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Тренер</label>
+                            <input
+                                type="text"
+                                value={`${trainer.first_name} ${trainer.last_name}`}
+                                disabled
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Предпочитаемая дата <span className="text-red-500">*</span>
+                            </label>
+                            <Input
+                                type="datetime-local"
+                                value={data.requested_date}
+                                onChange={(e) => setData("requested_date", e.target.value)}
+                                min={new Date().toISOString().slice(0, 16)}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                required
+                            />
+                            {errors.requested_date && <p className="mt-1 text-sm text-red-600">{errors.requested_date}</p>}
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Комментарий</label>
+                            <textarea
+                                value={data.comment}
+                                onChange={(e) => setData("comment", e.target.value)}
+                                rows={4}
+                                placeholder="Опишите ваши цели, пожелания или вопросы..."
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            />
+                            {errors.comment && <p className="mt-1 text-sm text-red-600">{errors.comment}</p>}
+                        </div>
+
+                        {errors.trainer_id && <p className="text-sm text-red-600">{errors.trainer_id}</p>}
+
+                        <div className="flex gap-3 pt-4">
+                            <button
+                                type="button"
+                                onClick={onClose}
+                                className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                            >
+                                Отмена
+                            </button>
+                            <Button
+                                type="submit"
+                                className="flex-1"
+                            >
+                                Отправить заявку
+                            </Button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    )
+}

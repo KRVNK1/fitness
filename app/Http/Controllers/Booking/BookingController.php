@@ -18,7 +18,7 @@ class BookingController extends Controller
     }
 
     /**
-     * Создать бронирование на тренировку
+     * Создать бронирование на групповую тренировку
      */
     public function store(WorkoutScheduleRequest $request)
     {
@@ -61,13 +61,5 @@ class BookingController extends Controller
         return response()->json([
             'bookings' => $bookings
         ]);
-    }
-
-    /**
-     * Запись на индивидуальные тренировки
-     */
-    public function storeIndWorkout()
-    {
-        return $this->bookingService->storeIndWorkout();
     }
 }

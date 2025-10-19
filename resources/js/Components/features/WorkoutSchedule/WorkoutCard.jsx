@@ -3,9 +3,13 @@ import IntensityDots from "@/Components/ui/IntensityDots"
 
 export default function WorkoutCard({ workout }) {
 
+    function redirectToWorkout() {
+        window.location.href = `/workouts/schedule/${workout.id}`
+    }
+
     return (
         <div className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-            <div className="">
+            <div className="cursor-pointer shadow-md" onClick={redirectToWorkout}>
                 <div className="relative">
                     {workout.photo ? (
                         <div className="w-full h-60">

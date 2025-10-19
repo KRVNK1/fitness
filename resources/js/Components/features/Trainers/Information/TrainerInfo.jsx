@@ -1,4 +1,10 @@
+import { Button } from "@/Components/ui/Button";
+import { useState } from "react";
+import TrainerModal from "../TrainerModal";
+
 export default function TrainerInfo({ trainer }) {
+    const [showModal, setShowModal] = useState(false);
+
     return (
         <div className="flex flex-col md:flex-row gap-6">
             {/* Фото тренера */}
@@ -42,7 +48,17 @@ export default function TrainerInfo({ trainer }) {
                         {trainer.trainer_info.description || "Информация о тренере отсутствует"}
                     </p>
                 </div>
+
+                <div className="">
+                    <Button
+                        onClick={() => setShowModal(true)}
+                    >
+                        Записаться к тренеру
+                    </Button>
+                </div>
             </div>
+
+            <TrainerModal trainer={trainer} show={showModal} onClose={() => setShowModal(false)}/> 
         </div>
     )
 }
