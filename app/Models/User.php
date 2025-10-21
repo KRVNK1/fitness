@@ -77,12 +77,12 @@ class User extends Authenticatable
     // Связь для пользователей с их заявками
     public function trainerRequests()
     {
-        return $this->hasMany(UserRequest::class, 'user_id');
+        return $this->hasMany(UserApplication::class, 'user_id');
     }
 
     // Связь для тренеров для одобрения заявок
     public function incomingRequests()
     {
-        return $this->hasMany(UserRequest::class, 'trainer_id');
+        return $this->hasMany(UserApplication::class, 'trainer_id');
     }
 }

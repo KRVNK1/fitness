@@ -1,4 +1,10 @@
+import { Button } from "@/Components/ui/Button"
+import { useState } from "react"
+import RejectModal from "../Modals/RejectModal"
+
 export default function Requests({ requests }) {
+    const [showModal, setShowModal] = useState(false)
+
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString("ru-RU", {
             year: "numeric",
@@ -19,7 +25,6 @@ export default function Requests({ requests }) {
         }
 
         const badge = badges[status]
-        return <span className={`px-3 py-1 text-sm rounded-full ${badge.class}`}>{badge.text}</span>
     }
 
     return (
@@ -51,7 +56,13 @@ export default function Requests({ requests }) {
                                         <p className="text-xs text-gray-400">Создана: {formatDate(request.created_at)}</p>
                                     </div>
                                 </div>
+                                <div className="flex items-center justify-center">
+                                    <Button onClick={() => setShowModal(true)}>
+                                        Отменить заявку
+                                    </Button>
+                                </div>
                             </div>
+                            <RejectModal request={request} show={showModal} onClose={() => setShowModal(false)} />
                         </div>
                     ))}
                 </div>

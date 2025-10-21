@@ -7,16 +7,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserApplication\UserApplicationRequest;
 use App\Models\UserApplication;
 use App\Service\Booking\BookingService;
+use App\Service\User\UserApplicationService;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class UserApplicationController extends Controller
 {
     private BookingService $bookingService;
+    private UserApplicationService $userApplicationService;
 
-    public function __construct(BookingService $bookingService)
+    public function __construct(BookingService $bookingService, UserApplicationService $userApplicationService)
     {
         $this->bookingService = $bookingService;
+        $this->userApplicationService = $userApplicationService;
     }
 
     /**
@@ -93,15 +96,12 @@ class UserApplicationController extends Controller
      */
     public function cancel($id)
     {
-        $userId = Auth::id();
+        $result = $this->userApplicationService->cancel($id);
 
-        $request = UserApplication::where('id', $id)
-            ->where('user_id', $userId)
-            ->where('status', UserApplicationEnum::PENDING)
-            ->firstOrFail();
+        if ($result['success']) {
+            return redirect()->back()->with('success', $result['message']);
+        }
 
-        $request->delete();
-
-        return back()->with('success', 'Заявка отменена.');
+        return redirect()->back()->with('error', $result['message']);
     }
 }

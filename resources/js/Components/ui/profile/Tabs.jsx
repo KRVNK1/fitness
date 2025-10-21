@@ -35,7 +35,7 @@ export function TabsTrigger({ value, className = "", children, ...props }) {
     return (
         <button
             type="button"
-            className={`inline-flex items-center justify-center px-3 py-2 text-xs lg:text-base font-medium disabled:pointer-events-none ${isActive ? "border-b-2" : "hover:border-b-2"} ${className}`}
+            className={`inline-flex items-center justify-center px-3 py-2 text-sm lg:text-base font-medium disabled:pointer-events-none ${isActive ? "border-b-2" : "hover:border-b-2"} ${className}`}
             onClick={() => context.onValueChange(value)}
             {...props}
         >

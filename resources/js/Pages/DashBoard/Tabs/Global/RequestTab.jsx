@@ -6,7 +6,7 @@ export default function RequestTab({ requests }) {
         <Card>
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                    Смена пароля
+                    Заявки
                 </CardTitle>
             </CardHeader>
             <CardContent>

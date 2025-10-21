@@ -51,7 +51,7 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
             <Head title="Личный кабинет" />
 
             <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     {/* Приветствие */}
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-gray-900">Привет, {user.first_name}!</h1>
@@ -60,7 +60,7 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
 
                     {/* Табы */}
                     <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-                        <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-grid">
+                        <TabsList className="lg:inline-grid lg:grid-cols-5 lg:w-auto">
                             <TabsTrigger value="overview">Обзор</TabsTrigger>
                             <TabsTrigger value="history">История</TabsTrigger>
                             <TabsTrigger value="user-requests">Заявки</TabsTrigger>
@@ -89,6 +89,11 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
                             />
                         </TabsContent>
 
+                        {/* Вкладка: Заявки */}
+                        <TabsContent value="user-requests" className="space-y-6">
+                            <RequestTab requests={requests} />
+                        </TabsContent>
+                        
                         {/* Вкладка: Личные данные */}
                         <TabsContent value="profile">
                             <ProfileTab user={user} />
@@ -99,10 +104,6 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
                             <SecurityTab />
                         </TabsContent>
 
-                        {/* Вкладка: Заявки */}
-                        <TabsContent value="user-requests" className="space-y-6">
-                            <RequestTab requests={requests} />
-                        </TabsContent>
 
                     </Tabs>
                 </div>

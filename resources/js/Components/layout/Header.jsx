@@ -1,10 +1,10 @@
 import { useState } from "react"
 
 export default function Header({ user }) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [MobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
+    setMobileMenuOpen(!MobileMenuOpen)
   }
 
   return (
@@ -47,11 +47,12 @@ export default function Header({ user }) {
         </div>
 
         {/* Навигация мобилок */}
-        <div className={`md:hidden mt-4 pb-4 border-t border-gray-100 ${isMobileMenuOpen ? "block" : "hidden"}`}>
+        <div className={`md:hidden mt-4 pb-4 border-t border-gray-100 ${MobileMenuOpen ? "block" : "hidden"}`}>
           <div className="flex flex-col gap-4 pt-4 [&>a:hover]:text-[#7f36dd] [&>a]:transition-colors">
             <a href="/#pricing">Тарифы</a>
-            <a href="/workouts">Групповые</a>
-            <a href="/#trainers">Тренеры</a>
+            <a href="/workouts/catalog">Групповые</a>
+            <a href="/trainers">Тренеры</a>
+            <a href="/workouts/schedule">Расписание</a>
             {user ? (
               <a href="/dashboard" className="bg-[#7f36dd] text-white px-6 py-2 rounded-full font-semibold text-center hover:bg-[#661CC3] transition-colors duration-200">
                 Личный кабинет
