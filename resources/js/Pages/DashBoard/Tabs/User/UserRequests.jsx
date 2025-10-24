@@ -1,8 +1,8 @@
 import { Button } from "@/Components/ui/Button"
 import { useState } from "react"
-import RejectModal from "../Modals/RejectModal"
+import RejectModal from "../../Modals/RejectModal"
 
-export default function Requests({ requests }) {
+export default function UserRequests({ requests }) {
     const [showModal, setShowModal] = useState(false)
 
     const formatDate = (dateString) => {
@@ -14,8 +14,6 @@ export default function Requests({ requests }) {
             minute: "numeric",
         })
     }
-
-    console.log(requests)
 
     const getStatusBadge = (status) => {
         const badges = {

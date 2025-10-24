@@ -1,10 +1,36 @@
-import { useState } from "react"
+import { router } from "@inertiajs/react"
+import { useState, useRef, useEffect } from "react"
 
 export default function Header({ user }) {
   const [MobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [ProfileMenuOpen, setProfileMenuOpen] = useState(false)
+  const profileMenuRef = useRef(null)
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!MobileMenuOpen)
+  }
+
+  const toggleProfileMenu = () => {
+    setProfileMenuOpen(!ProfileMenuOpen)
+  }
+
+  // Закрытие выпадающего меню при клике вне его
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+  //       setProfileMenuOpen(false)
+  //     }
+  //   }
+
+  //   document.addEventListener("mousedown", handleClickOutside)
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside)
+  //   }
+  // }, [])
+
+  const handleLogout = () => {
+    router.post(route("logout"))
+    setProfileMenuOpen(false)
   }
 
   return (
@@ -26,11 +52,55 @@ export default function Header({ user }) {
             <a href="/workouts/schedule">Расписание</a>
           </div>
 
-          <div className="hidden md:block">
+          <div className="hidden md:block relative" ref={profileMenuRef}>
             {user ? (
-              <a href="/dashboard" className="bg-white border-2 border-[#7f36dd] text-[#7f36dd] px-6 py-2 rounded-full font-semibold hover:bg-[#7f36dd] hover:text-white transition-all duration-200" >
-                Личный кабинет
-              </a>
+              <div className="relative">
+                <button
+                  onClick={toggleProfileMenu}
+                  className="bg-white border-2 border-[#7f36dd] text-[#7f36dd] px-6 py-2 rounded-full font-semibold hover:bg-[#7f36dd] hover:text-white transition-all duration-200 flex items-center gap-2"
+                >
+                  Личный кабинет
+                  <svg
+                    className={`w-4 h-4 transition-transform ${ProfileMenuOpen ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Выпадающее меню */}
+                {ProfileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                    <a href="/my-applications" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                      onClick={() => setProfileMenuOpen(false)}>
+                      Мои заявки
+                    </a>
+                    <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                      onClick={() => setProfileMenuOpen(false)}>
+                      Профиль
+                    </a>
+                    {user.role === 'trainer' && (
+                      <a href="/trainer" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setProfileMenuOpen(false)}>
+                        Тренерская
+                      </a>
+                    )}
+                    {user.role === "admin" && (
+                      <a href="/admin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setProfileMenuOpen(false)}>
+                        Админ-панель
+                      </a>
+                    )}
+                    <div className="border-t border-gray-100 my-1"></div>
+                    <button className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors"
+                      onClick={handleLogout}>
+                      Выход
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <a href="/login" className="bg-white border-2 border-[#7f36dd] text-[#7f36dd] px-6 py-2 rounded-full font-semibold hover:bg-[#7f36dd] hover:text-white transition-all duration-200" >
                 Войти
@@ -54,9 +124,30 @@ export default function Header({ user }) {
             <a href="/trainers">Тренеры</a>
             <a href="/workouts/schedule">Расписание</a>
             {user ? (
-              <a href="/dashboard" className="bg-[#7f36dd] text-white px-6 py-2 rounded-full font-semibold text-center hover:bg-[#661CC3] transition-colors duration-200">
-                Личный кабинет
-              </a>
+              <div className="flex flex-col gap-2">
+                <a href="/my-applications" className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                  Мои заявки
+                </a>
+                <a href="/dashboard" className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                  Профиль
+                </a>
+                {user.role === 'trainer' && (
+                  <a href="/trainer" className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    Тренерская
+                  </a>
+                )}
+                {user.role === 'admin' && (
+                  <a href="/admin" className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    Админ-панель
+                  </a>
+                )}
+                <button
+                  onClick={handleLogout}
+                  className="text-left px-4 py-2 text-red-600 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  Выход
+                </button>
+              </div>
             ) : (
               <a href="/login" className="bg-[#7f36dd] text-white px-6 py-2 rounded-full font-semibold text-center hover:bg-[#661CC3] transition-colors duration-200">
                 Войти

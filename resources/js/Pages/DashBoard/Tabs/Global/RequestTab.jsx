@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/profile/Card";
-import Requests from "../User/Requests";
+import UserRequests from "../User/UserRequests";
 
 export default function RequestTab({ requests }) {
     return (
@@ -10,7 +10,7 @@ export default function RequestTab({ requests }) {
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <Requests requests={requests} />
+                <UserRequests requests={requests} />
             </CardContent>
         </Card>
     )
