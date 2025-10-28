@@ -4,7 +4,7 @@ import BookingButton from "@/Components/ui/BookingButton"
 import useBooking from "@/hooks/Booking/useBooking"
 
 export default function WorkoutDetails({ workout, format }) {
-    const {isBooking, handleBooking } = useBooking(workout?.id)
+    const { isBooking, handleBooking } = useBooking(workout?.id)
 
     if (!workout) return null
 
@@ -54,21 +54,22 @@ export default function WorkoutDetails({ workout, format }) {
                     </p>
                 </div>
 
+                {workout.trainer && (
+                    <div>
+                        <p className="text-sm font-medium text-gray-700 mb-1">Тренер</p>
+                        <p className="text-gray-700 text-sm leading-relaxed flex items-center gap-2">
+                            <img className="w-8 h-8 rounded-xl mr-2" src={workout.trainer.trainer_info.photo} alt="" />
+                            {workout.trainer.first_name} {workout.trainer.last_name}
+                        </p>
+                    </div>
+                )}
+
                 <div>
                     <p className="text-sm font-medium text-gray-700 mb-1">Участники</p>
                     <p className={`font-semibold ${workout.available_slots - workout.booked_slots > 0 ? "text-green-600" : "text-red-600"}`}>
                         Свободно: {`${workout.available_slots - workout.booked_slots} из ${workout.available_slots}`}
                     </p>
                 </div>
-
-                {workout.description && (
-                    <div>
-                        <p className="text-sm font-medium text-gray-700 mb-1">Комментарий тренера</p>
-                        <p className="text-gray-700 text-sm leading-relaxed">
-                            {workout.description}
-                        </p>
-                    </div>
-                )}
 
                 <div className="flex gap-4 mt-4">
                     <BookingButton

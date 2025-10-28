@@ -1,16 +1,7 @@
 // components/PricingPlan.jsx
 import { Link } from "@inertiajs/react"
 
-export default function PricingPlan({
-    name,
-    price,
-    badge,
-    bg_color,
-    features,
-    buttonTextColor,
-    buttonHoverColor,
-    link
-}) {
+export default function PricingPlan({ name, price, badge, bg_color, features, buttonTextColor, buttonHoverColor, link }) {
     return (
         <div className={`relative ${bg_color} text-white p-8 bg rounded-3xl shadow-xl transform hover:scale-105 transition-all duration-300`}>
             {badge && (

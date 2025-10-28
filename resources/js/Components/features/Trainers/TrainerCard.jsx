@@ -4,10 +4,10 @@ export default function TrainerCard({ trainer }) {
   return (
     <div className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
       <div className="relative">
-        {trainer.photo ? (
+        {trainer.trainer_info.photo ? (
           <div className="w-full h-80">
             <img
-              src={trainer.photo}
+              src={trainer.trainer_info.photo}
               alt={`${trainer.first_name} ${trainer.last_name}`}
               className="w-full h-80 object-cover rounded-t-lg"
             />
@@ -23,12 +23,12 @@ export default function TrainerCard({ trainer }) {
         {trainer.trainer_info && (
           <div className="absolute bottom-3 left-3">
             <span className="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-white text-purple-800 shadow-sm">
-              Стаж: {trainer.trainer_info.experience_years}{" "}
-              {trainer.trainer_info.experience_years === 1
+              {`Стаж: ${trainer.trainer_info.experience_years}
+              ${trainer.trainer_info.experience_years === 1
                 ? "год"
                 : trainer.trainer_info.experience_years < 5
                   ? "года"
-                  : "лет"}
+                  : "лет"}`}
             </span>
           </div>
         )}
@@ -41,7 +41,7 @@ export default function TrainerCard({ trainer }) {
         </h3>
 
         {/* Описание */}
-        {trainer.trainer_info?.description && (
+        {trainer.trainer_info.description && (
           <p className="text-gray-600 text-sm mb-4 line-clamp-3">{trainer.trainer_info.description}</p>
         )}
 
