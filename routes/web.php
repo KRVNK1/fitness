@@ -40,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/', [UserApplicationController::class, 'store'])->name('store');
         
         // Заявки пользователя
-        Route::get('/my', [UserApplicationController::class, 'userRequests'])->name('user');
+        Route::get('/my-applications', [UserApplicationController::class, 'userApplications'])->name('user');
         
         // Отмена заявки пользователем
         Route::delete('/{id}/cancel', [UserApplicationController::class, 'cancel'])->name('cancel');

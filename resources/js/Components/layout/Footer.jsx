@@ -17,18 +17,13 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#programs" className="hover:text-white transition-colors">
+                <a href="/workouts/catalog" className="hover:text-white transition-colors">
                   Групповые программы
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-white transition-colors">
                   Персональные тренировки
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition-colors">
-                  SPA зона
                 </a>
               </li>
             </ul>

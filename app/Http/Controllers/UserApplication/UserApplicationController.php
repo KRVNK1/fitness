@@ -8,6 +8,7 @@ use App\Http\Requests\UserApplication\UserApplicationRequest;
 use App\Models\UserApplication;
 use App\Service\Booking\BookingService;
 use App\Service\User\UserApplicationService;
+use App\Service\User\UserDashboardService;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -15,11 +16,20 @@ class UserApplicationController extends Controller
 {
     private BookingService $bookingService;
     private UserApplicationService $userApplicationService;
+    private UserDashboardService $userDashboardService;
 
-    public function __construct(BookingService $bookingService, UserApplicationService $userApplicationService)
+    public function __construct(BookingService $bookingService, UserApplicationService $userApplicationService, UserDashboardService $userDashboardService)
     {
         $this->bookingService = $bookingService;
         $this->userApplicationService = $userApplicationService;
+        $this->userDashboardService = $userDashboardService;
+    }
+
+    public function userApplications()
+    {
+        return Inertia::render('DashBoard/MyApplications', [
+            'requests'       => $this->userDashboardService->userRequests()
+        ]);
     }
 
     /**

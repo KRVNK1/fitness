@@ -45,7 +45,7 @@ export default function Header({ user }) {
           </div>
 
           {/* Навигация десктоп */}
-          <div className="hidden md:flex items-center gap-8 font-semibold [&>a:hover]:text-[#7f36dd] [&>a]:transition-colors">
+          <div className="hidden md:flex items-center gap-4 lg:gap-8 font-semibold [&>a:hover]:text-[#7f36dd] [&>a]:transition-colors">
             <a href="/#pricing">Тарифы</a>
             <a href="/workouts/catalog">Групповые</a>
             <a href="/trainers">Тренеры</a>
@@ -73,7 +73,7 @@ export default function Header({ user }) {
                 {/* Выпадающее меню */}
                 {ProfileMenuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-                    <a href="/my-applications" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    <a href="/requests/my-applications" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setProfileMenuOpen(false)}>
                       Мои заявки
                     </a>
