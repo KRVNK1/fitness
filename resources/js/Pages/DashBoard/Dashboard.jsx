@@ -63,7 +63,6 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
                         <TabsList className="lg:inline-grid lg:grid-cols-5 lg:w-auto">
                             <TabsTrigger value="overview">Обзор</TabsTrigger>
                             <TabsTrigger value="history">История</TabsTrigger>
-                            <TabsTrigger value="user-requests">Заявки</TabsTrigger>
                             <TabsTrigger value="profile">Личные данные</TabsTrigger>
                             <TabsTrigger value="security">Безопасность</TabsTrigger>
                         </TabsList>
@@ -87,11 +86,6 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
                                 formatDate={formatDate}
                                 getStatusBadge={getStatusBadge}
                             />
-                        </TabsContent>
-
-                        {/* Вкладка: Заявки */}
-                        <TabsContent value="user-requests" className="space-y-6">
-                            <RequestTab requests={requests} />
                         </TabsContent>
                         
                         {/* Вкладка: Личные данные */}
