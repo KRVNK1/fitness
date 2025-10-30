@@ -1,6 +1,4 @@
 export default function WorkoutList({ workouts, selectedWorkout, setSelectedWorkout, format }) {
-    if (!workouts.length) return null
-
     return (
         <div className="space-y-3">
             {workouts.map((workout) => (

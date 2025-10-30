@@ -15,6 +15,9 @@ class TrainerScheduleController extends Controller
         $this->trainerService = $trainerService;
     }
 
+    /**
+     * Показать всех тренеров
+     */
     public function index()
     {
         return Inertia::render('Trainer/Index', [
@@ -22,6 +25,9 @@ class TrainerScheduleController extends Controller
         ]);
     }
 
+    /**
+     * Показать конкретного тренера с его расписанием
+     */
     public function show($id)
     {
         $trainer = $this->trainerService->getTrainerById($id);

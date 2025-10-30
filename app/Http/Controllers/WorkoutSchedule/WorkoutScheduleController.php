@@ -15,6 +15,9 @@ class WorkoutScheduleController extends Controller
         $this->workoutScheduleService = $workoutScheduleService;
     }
 
+    /**
+     * Показать полное расписание тренировок
+     */
     public function index()
     {
         return Inertia::render('WorkoutSchedule/Index', [
@@ -22,6 +25,9 @@ class WorkoutScheduleController extends Controller
         ]);
     }
 
+    /**
+     * Показать каталог тренировок (страница групповых тренировок)
+     */
     public function catalog()
     {
         return Inertia::render('WorkoutSchedule/Catalog', [
@@ -32,6 +38,9 @@ class WorkoutScheduleController extends Controller
         ]);
     }
 
+    /**
+     * Показать конкретную тренировку с расписанием
+     */
     public function show($id)
     {
         return Inertia::render('WorkoutSchedule/Show', [

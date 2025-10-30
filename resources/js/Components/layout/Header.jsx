@@ -15,18 +15,18 @@ export default function Header({ user }) {
   }
 
   // Закрытие выпадающего меню при клике вне его
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
-  //       setProfileMenuOpen(false)
-  //     }
-  //   }
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setProfileMenuOpen(false)
+      }
+    }
 
-  //   document.addEventListener("mousedown", handleClickOutside)
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside)
-  //   }
-  // }, [])
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   const handleLogout = () => {
     router.post(route("logout"))
@@ -71,35 +71,37 @@ export default function Header({ user }) {
                 </button>
 
                 {/* Выпадающее меню */}
-                {ProfileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
-                    <a href="/requests/my-applications" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                <div className={`absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 transition-all duration-200
+                  ${ProfileMenuOpen
+                    ? "opacity-100 scale-100 translate-y-0"
+                    : "opacity-0 scale-95 -translate-y-2 pointer-events-none"}`}
+                >
+                  <a href="/requests/my-applications" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    onClick={() => setProfileMenuOpen(false)}>
+                    Мои заявки
+                  </a>
+                  <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    onClick={() => setProfileMenuOpen(false)}>
+                    Профиль
+                  </a>
+                  {user.role === 'trainer' && (
+                    <a href="/trainer" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setProfileMenuOpen(false)}>
-                      Мои заявки
+                      Тренерская
                     </a>
-                    <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                  )}
+                  {user.role === "admin" && (
+                    <a href="/admin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setProfileMenuOpen(false)}>
-                      Профиль
+                      Админ-панель
                     </a>
-                    {user.role === 'trainer' && (
-                      <a href="/trainer" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                        onClick={() => setProfileMenuOpen(false)}>
-                        Тренерская
-                      </a>
-                    )}
-                    {user.role === "admin" && (
-                      <a href="/admin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                        onClick={() => setProfileMenuOpen(false)}>
-                        Админ-панель
-                      </a>
-                    )}
-                    <div className="border-t border-gray-100 my-1"></div>
-                    <button className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors"
-                      onClick={handleLogout}>
-                      Выход
-                    </button>
-                  </div>
-                )}
+                  )}
+                  <div className="border-t border-gray-100 my-1"></div>
+                  <button className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors"
+                    onClick={handleLogout}>
+                    Выход
+                  </button>
+                </div>
               </div>
             ) : (
               <a href="/login" className="bg-white border-2 border-[#7f36dd] text-[#7f36dd] px-6 py-2 rounded-full font-semibold hover:bg-[#7f36dd] hover:text-white transition-all duration-200" >

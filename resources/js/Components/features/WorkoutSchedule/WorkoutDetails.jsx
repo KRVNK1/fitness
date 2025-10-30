@@ -6,8 +6,6 @@ import useBooking from "@/hooks/Booking/useBooking"
 export default function WorkoutDetails({ workout, format }) {
     const { isBooking, handleBooking } = useBooking(workout?.id)
 
-    if (!workout) return null
-
     return (
         <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
             <div className="mb-4">
@@ -18,7 +16,7 @@ export default function WorkoutDetails({ workout, format }) {
                 />
             </div>
 
-            <div className="flex justify-between mb-4">
+            <div className="flex max-md:flex-col gap-3 md:justify-between mb-4">
                 <h3 className="text-xl font-bold text-gray-900">
                     {workout.workout_type.name}
                 </h3>
@@ -71,7 +69,7 @@ export default function WorkoutDetails({ workout, format }) {
                     </p>
                 </div>
 
-                <div className="flex gap-4 mt-4">
+                <div className="flex gap-4 mt-4 overflow-x-auto">
                     <BookingButton
                         availableSlots={workout.available_slots}
                         bookedSlots={workout.booked_slots}

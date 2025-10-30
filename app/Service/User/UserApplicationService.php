@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class UserApplicationService
 {
-
-    public function cancel(int $applicationId)
+    /**
+     * Отменить заявку
+     */
+    public function cancel(int $applicationId): array
     {
         $userId = Auth::id();
 

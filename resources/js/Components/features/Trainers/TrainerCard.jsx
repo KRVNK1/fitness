@@ -25,10 +25,10 @@ export default function TrainerCard({ trainer }) {
             <span className="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-white text-purple-800 shadow-sm">
               {`Стаж: ${trainer.trainer_info.experience_years}
               ${trainer.trainer_info.experience_years === 1
-                ? "год"
-                : trainer.trainer_info.experience_years < 5
-                  ? "года"
-                  : "лет"}`}
+                  ? "год"
+                  : trainer.trainer_info.experience_years < 5
+                    ? "года"
+                    : "лет"}`}
             </span>
           </div>
         )}
