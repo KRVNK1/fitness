@@ -1,9 +1,7 @@
 import WorkoutDetails from "./WorkoutDetails"
 import WorkoutList from "./WorkoutList"
 
-export default function WorkoutsSchedule({ selectedDayWorkouts, selectedWorkout, setSelectedWorkout, format }) {
-    if (!selectedDayWorkouts.length) return null
-
+export default function WorkoutSchedule({ selectedDayWorkouts, selectedWorkout, setSelectedWorkout, format }) {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <WorkoutList

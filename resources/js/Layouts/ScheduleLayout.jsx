@@ -1,4 +1,4 @@
-import WorkoutsSchedule from "@/Components/features/Trainers/WorkoutSchedule/WorkoutSchedule"
+import WorkoutSchedule from "@/Components/features/WorkoutSchedule/WorkoutSchedule"
 import Footer from "@/Components/layout/Footer"
 import Header from "@/Components/layout/Header"
 import DaySelector from "@/Components/ui/DaySelector"
@@ -65,7 +65,7 @@ export default function ScheduleLayout({ auth, navText, backLink, headerComponen
                     <DaySelector days={days} selectedDate={selectedDate} onSelect={setSelectedDate} />
 
                     {selectedDayWorkouts.length > 0 ? (
-                        <WorkoutsSchedule
+                        <WorkoutSchedule
                             selectedDayWorkouts={selectedDayWorkouts}
                             selectedWorkout={selectedSchedule}
                             setSelectedWorkout={setSelectedSchedule}

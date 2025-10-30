@@ -8,7 +8,6 @@ import OverviewTab from "./Tabs/Global/OverviewTab"
 import HistoryTab from "./Tabs/Global/HistoryTab"
 import ProfileTab from "./Tabs/Global/ProfileTab"
 import SecurityTab from "./Tabs/Global/SecurityTab"
-import RequestTab from "./Tabs/Global/RequestTab"
 
 export default function Dashboard({ auth, user, stats, recentBookings, workoutHistory, requests }) {
     const [activeTab, setActiveTab] = useState("overview")

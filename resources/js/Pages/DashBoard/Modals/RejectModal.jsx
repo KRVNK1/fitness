@@ -1,5 +1,5 @@
 import { Button } from "@/Components/ui/Button"
-import CloseIconModal from "@/Components/ui/CloseIconModal"
+import Modal from "@/Components/ui/Modal"
 import { router } from "@inertiajs/react"
 
 export default function RejectModal({ request, show, onClose }) {
@@ -9,24 +9,21 @@ export default function RejectModal({ request, show, onClose }) {
         })
     }
 
-    if (!show) return null
-
     return (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
-            <div className="flex min-h-screen items-center justify-center p-4">
-                {/* Оверлей */}
-                <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" onClick={onClose} />
-
-                {/* Модалка */}
-                <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-                    <div className="flex justify-between">
-                        <h1 className="text-xl font-bold text-gray-900 mb-2">Отмена заявки</h1>
-                        <CloseIconModal onClose={onClose} />
-                    </div>
-                    <p className="mb-2">Вы уверены, что хотите отменить заявку?</p>
-                    <Button onClick={rejectApplication}>Отменить заявку</Button>
-                </div>
+        <Modal show={show} onClose={onClose} title="Отмена заявки">
+            <p className="mb-4 text-gray-700">Вы уверены, что хотите отменить заявку?</p>
+            <div className="flex gap-3">
+                <button
+                    type="button"
+                    onClick={onClose}
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                    Закрыть
+                </button>
+                <Button onClick={rejectApplication} className="flex-1">
+                    Отменить заявку
+                </Button>
             </div>
-        </div>
+        </Modal>
     )
 }

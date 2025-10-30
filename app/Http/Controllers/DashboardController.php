@@ -16,7 +16,7 @@ class DashboardController extends Controller
     }
     
     /**
-     * Отображение дашборда пользователя
+     * Отображение личного кабинета пользователя
      */
     public function index(Request $request)
     {
