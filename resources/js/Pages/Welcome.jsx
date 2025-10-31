@@ -102,6 +102,7 @@ export default function Welcome({ auth, membershipTypes }) {
             <Head title="IRKFITNESS - Современный фитнес-клуб" />
 
             <Head>
+                <meta name="description" content="IRKFITNESS - Современный фитнес-клуб в Иркутске" />
                 <script src="https://api-maps.yandex.ru/2.0-stable/?apikey=0aa3ee8d-e6c4-4d5b-910f-d3760f48934d&load=package.full&lang=ru-RU" type="text/javascript"></script>
             </Head>
 
