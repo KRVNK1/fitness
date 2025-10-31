@@ -4,9 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Фитнес-зал IRK Fitness — тренировки, питание, прогресс.">
-    <meta property="og:title" content="IRK Fitness">
-    <meta property="og:description" content="Фитнес-зал IRK Fitness — тренировки, питание, прогресс.">
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 

@@ -55,7 +55,6 @@ class BookingController extends Controller
     {
         $bookings = $this->bookingService->getUserBookings(
             Auth::id(),
-            $request->get('status')
         );
 
         return response()->json([

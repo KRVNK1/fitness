@@ -9,6 +9,7 @@ use App\Models\Booking;
 use App\Models\Membership;
 use App\Models\UserApplication;
 use App\Models\WorkoutSchedule;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -141,6 +142,14 @@ class BookingService
             ];
         }
 
+        // Проверка на пересечение времени с существующими бронированиями
+        if ($this->hasTimeConflict($userId, $requestedDate)) {
+            return [
+                'success' => false,
+                'message' => 'У вас уже есть тренировка в это время. Пожалуйста, выберите другое время.'
+            ];
+        }
+
         $existingRequest = UserApplication::where('user_id', $userId)
             ->where('trainer_id', $trainerId)
             ->where('status', UserApplicationEnum::PENDING)
@@ -185,16 +194,38 @@ class BookingService
     /**
      * Получить все бронирования пользователя
      */
-    public function getUserBookings(int $userId, string $status)
+    public function getUserBookings(int $userId)
     {
         $query = Booking::where('user_id', $userId)
             ->with(['workoutSchedule.workoutType', 'workoutSchedule.trainer', 'membership'])
             ->orderBy('created_at', 'desc');
 
-        if ($status) {
-            $query->where('status', $status);
-        }
-
         return $query->get();
+    }
+
+    /**
+     * Проверяет, есть ли у пользователя тренировка в указанное время
+     */
+    private function hasTimeConflict($userId, $requestedDate)
+    {
+        $trainingDuration = 60; // длительность индивидуальной тренировки в минутах
+        $requestedStart = Carbon::parse($requestedDate);
+        $requestedEnd = $requestedStart->copy()->addMinutes($trainingDuration);
+
+        // Ищем бронирования, которые пересекаются с запрашиваемым временем
+        $conflictingBookings = Booking::where('user_id', $userId)
+            ->whereIn('status', [BookingStatusEnum::BOOKED, BookingStatusEnum::ATTENDED])
+            ->whereHas('workoutSchedule', function ($query) use ($requestedStart, $requestedEnd) {
+                $query->where(function ($q) use ($requestedStart, $requestedEnd) {
+                    // Проверяем пересечение интервалов
+                    $q->where(function ($innerQ) use ($requestedStart, $requestedEnd) {
+                        $innerQ->where('start_time', '<', $requestedEnd)
+                            ->where('end_time', '>', $requestedStart);
+                    });
+                });
+            })
+            ->exists();
+
+        return $conflictingBookings;
     }
 }
