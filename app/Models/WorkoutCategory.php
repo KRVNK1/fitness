@@ -20,4 +20,10 @@ class WorkoutCategory extends Model
     {
         return $this->hasMany(WorkoutSchedule::class);
     }
+
+
+    public function trainers()
+    {
+        return $this->belongsToMany(TrainerInfo::class, 'trainer_categories');
+    }
 }

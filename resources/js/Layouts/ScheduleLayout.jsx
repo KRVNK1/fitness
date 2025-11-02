@@ -6,7 +6,7 @@ import useDays from "@/hooks/global/useDays"
 import { Link } from "@inertiajs/react"
 import { useEffect, useState } from "react"
 
-export default function ScheduleLayout({ auth, navText, backLink, headerComponent, schedules, entity }) {
+export default function ScheduleLayout({ auth, navText, backLink, headerComponent, specComponent, schedules, entity }) {
     const [selectedDate, setSelectedDate] = useState(Object.keys(schedules)[0] || null)
     const [selectedSchedule, setSelectedSchedule] = useState(selectedDate ? schedules[selectedDate]?.[0] : null)
     const days = useDays(schedules)
@@ -55,6 +55,13 @@ export default function ScheduleLayout({ auth, navText, backLink, headerComponen
                 <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
                     {headerComponent(entity)}
                 </div>
+
+                {/* Дополнительная информация для тренера */}
+                {specComponent && (
+                    <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
+                        {specComponent(entity)}
+                    </div>
+                )}
 
                 {/* Расписание */}
                 <div className="bg-white rounded-lg shadow-sm border p-6">

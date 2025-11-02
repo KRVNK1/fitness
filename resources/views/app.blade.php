@@ -7,6 +7,10 @@
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+    <meta name="description" content="IRKFITNESS - Современный фитнес-клуб в Иркутске с профессиональным оборудованием, SPA-зоной и тренажерными залами. Тарифы от 1990₽ в месяц.">
+    <meta name="keywords" content="фитнес клуб irkfitness, спортзал irkfitness, тренажерный зал irkfitness, irkfitness Иркутск, irkfitness, фитнес-клуб, тренировки irkfitness, SPA">
+    <meta name="author" content="irkfitness">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

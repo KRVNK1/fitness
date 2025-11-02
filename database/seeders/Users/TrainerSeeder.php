@@ -39,11 +39,11 @@ class TrainerSeeder extends Seeder
 
         User::firstOrCreate(
             [
-                'email'      => 'korotchuk@bk.ru',
+                'email'      => 'kuznetsov@bk.ru',
             ],
             [
                 'first_name' => 'Александр',
-                'last_name'  => 'Коротчук',
+                'last_name'  => 'Кузнецов',
                 'password'   => '123123123',
                 'role'       => UserEnum::TRAINER,
             ]

@@ -87,7 +87,6 @@ export default function WorkoutFilters({ categories, intensivityLevels, duration
                 {/* Кнопки */}
                 <div className="flex space-x-3">
                     <Button
-                        type="button"
                         onClick={handleReset}
                         className="bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition-colors"
                     >

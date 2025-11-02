@@ -20,7 +20,7 @@ export function Tabs({ value, onValueChange, className = "", children, ...props 
 export function TabsList({ className = "", children, ...props }) {
     return (
         <div
-            className={`inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground ${className}`}
+            className={`overflow-x-auto overflow-y-hidden flex h-12 items-center justify-start rounded-md p-1 flex-nowrap ${className}`}
             {...props}
         >
             {children}

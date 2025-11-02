@@ -1,15 +1,20 @@
 import { Link } from "@inertiajs/react"
 
 export default function TrainerCard({ trainer }) {
+
+  function redirectToTrainer() {
+    window.location.href = `/trainers/schedule/${trainer.id}`
+  }
+
   return (
-    <div className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
+    <div onClick={redirectToTrainer} className="bg-white cursor-pointer rounded-lg shadow-sm border hover:shadow-md transition-shadow">
       <div className="relative">
         {trainer.trainer_info.photo ? (
           <div className="w-full h-80">
             <img
               src={trainer.trainer_info.photo}
               alt={`${trainer.first_name} ${trainer.last_name}`}
-              className="w-full h-80 object-cover rounded-t-lg"
+              className="w-full h-80 object-cover object-top rounded-t-lg"
             />
           </div>
         ) : (
