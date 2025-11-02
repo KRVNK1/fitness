@@ -1,14 +1,14 @@
 export function Badge({ variant = "default", className = "", children, ...props }) {
     const variants = {
-        default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-        secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        destructive: "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-        outline: "text-foreground border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        default: "bg-blue-500 text-white",
+        secondary: "bg-gray-200 text-gray-800",
+        destructive: "bg-red-500 text-white",
+        outline: "bg-green-600 text-white",
     }
 
     return (
         <div
-            className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${variants[variant]} ${className}`}
+            className={`w-28 lg:w-32 inline-flex justify-center items-center bg-green rounded-full border px-2.5 py-0.5 text-xs lg:text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ${variants[variant]} ${className}`}
             {...props}
         >
             {children}

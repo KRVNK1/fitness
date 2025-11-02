@@ -196,11 +196,10 @@ class BookingService
      */
     public function getUserBookings(int $userId)
     {
-        $query = Booking::where('user_id', $userId)
+        return Booking::where('user_id', $userId)
             ->with(['workoutSchedule.workoutType', 'workoutSchedule.trainer', 'membership'])
-            ->orderBy('created_at', 'desc');
-
-        return $query->get();
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
     /**
@@ -212,20 +211,12 @@ class BookingService
         $requestedStart = Carbon::parse($requestedDate);
         $requestedEnd = $requestedStart->copy()->addMinutes($trainingDuration);
 
-        // Ищем бронирования, которые пересекаются с запрашиваемым временем
-        $conflictingBookings = Booking::where('user_id', $userId)
+        return Booking::where('user_id', $userId)
             ->whereIn('status', [BookingStatusEnum::BOOKED, BookingStatusEnum::ATTENDED])
             ->whereHas('workoutSchedule', function ($query) use ($requestedStart, $requestedEnd) {
-                $query->where(function ($q) use ($requestedStart, $requestedEnd) {
-                    // Проверяем пересечение интервалов
-                    $q->where(function ($innerQ) use ($requestedStart, $requestedEnd) {
-                        $innerQ->where('start_time', '<', $requestedEnd)
-                            ->where('end_time', '>', $requestedStart);
-                    });
-                });
+                $query->where('start_time', '<', $requestedEnd)
+                    ->where('end_time', '>', $requestedStart);
             })
             ->exists();
-
-        return $conflictingBookings;
     }
 }

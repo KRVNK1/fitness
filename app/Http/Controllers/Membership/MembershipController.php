@@ -36,10 +36,8 @@ class MembershipController extends Controller
      */
     public function index()
     {
-        $membershipTypes = MembershipType::get();
-
         return Inertia::render('Welcome', [
-            'membershipTypes' => $membershipTypes
+            'membershipTypes' => MembershipType::get()
         ]);
     }
 
@@ -95,7 +93,7 @@ class MembershipController extends Controller
         $source = file_get_contents('php://input');
 
         $requestBody = json_decode($source, true);
-        $notification = (isset($requestBody['event']) &&$requestBody['event'] === NotificationEventType::PAYMENT_SUCCEEDED)
+        $notification = (isset($requestBody['event']) && $requestBody['event'] === NotificationEventType::PAYMENT_SUCCEEDED)
             ? new NotificationSucceeded($requestBody)
             : new NotificationWaitingForCapture($requestBody);
 

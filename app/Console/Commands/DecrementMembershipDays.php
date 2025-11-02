@@ -52,7 +52,6 @@ class DecrementMembershipDays extends Command
         $this->info('Команда отработала в: ' . now()->format('Y-m-d H:i:s'));
         $this->info("Обработано абонементов: {$updatedCount}");
         $this->info("Истекло абонементов: {$expiredCount}");
-        $this->info('Готово!');
 
         return Command::SUCCESS;
     }

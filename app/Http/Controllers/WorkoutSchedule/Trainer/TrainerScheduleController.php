@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WorkoutSchedule\Trainer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Trainer\TrainerResource;
 use App\Service\Trainer\TrainerService;
 use Inertia\Inertia;
 
@@ -35,7 +36,7 @@ class TrainerScheduleController extends Controller
         $schedules = $this->trainerService->getTrainerSchedule($trainer);
 
         return Inertia::render('Trainer/Show', [
-            'trainer'   => $trainer,
+            'trainer'   => new TrainerResource($trainer),
             'schedules' => $schedules,
         ]);
     }

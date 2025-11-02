@@ -10,20 +10,13 @@ use Illuminate\Database\Seeder;
 
 class WorkoutScheduleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $trainers = User::where('role', 'trainer')->get();
-        $workoutTypes = WorkoutType::all();
-
-        if ($trainers->isEmpty() || $workoutTypes->isEmpty()) {
-            return;
-        }
-
-        // Создаем расписание на следующие 2 недели
-        $startDate = Carbon::now()->startOfWeek();
+        if ($trainers->isEmpty()) return;
+        
+        // Расписание на 2 недели
+        $startDate = Carbon::now();
         $endDate = $startDate->copy()->addWeeks(2);
 
         $timeSlots = [
@@ -42,36 +35,43 @@ class WorkoutScheduleSeeder extends Seeder
         $createdCount = 0;
 
         while ($currentDate->lte($endDate)) {
-            // Пропускаем воскресенье
-            if ($currentDate->dayOfWeek !== Carbon::SUNDAY) {
-                foreach ($timeSlots as $timeSlot) {
-                    // Создаем тренировки
-                    $workoutType = $workoutTypes->random();
-                    $trainer = $trainers->random();
+            foreach ($timeSlots as $timeSlot) {
+                $startTime = $currentDate->copy()->setTimeFromTimeString($timeSlot);
 
-                    $startTime = $currentDate->copy()->setTimeFromTimeString($timeSlot);
-                    $endTime = $startTime->copy()->addMinutes($workoutType->duration_minutes);
+                // Выбираем случайного тренера, у которого есть специализации и нет тренировки в этот слот
+                $availableTrainers = $trainers->filter(
+                    fn($trainer) =>
+                    $trainer->trainerInfo->specializations->isNotEmpty() &&
+                        !WorkoutSchedule::where('trainer_id', $trainer->id)
+                            ->where('start_time', $startTime)
+                            ->exists()
+                );
 
-                    $conflictExists = WorkoutSchedule::where('trainer_id', $trainer->id)
-                        ->where(function ($q) use ($startTime, $endTime) {
-                            $q->where('start_time', '<', $endTime)
-                                ->where('end_time', '>', $startTime);
-                        })
-                        ->exists();
+                if ($availableTrainers->isEmpty()) continue;
 
-                    if (!$conflictExists) {
-                        WorkoutSchedule::create([
-                            'workout_type_id' => $workoutType->id,
-                            'trainer_id' => $trainer->id,
-                            'start_time' => $startTime,
-                            'end_time' => $endTime,
-                            'available_slots' => rand(8, 20),
-                            'booked_slots' => 0,
-                            'status' => 'scheduled',
-                        ]);
-                        $createdCount++;
-                    }
-                }
+                $trainer = $availableTrainers->random();
+
+                // Выбираем случайный тип тренировки из специализаций тренера
+                $trainerWorkoutTypes = WorkoutType::whereIn(
+                    'workout_category_id',
+                    $trainer->trainerInfo->specializations->pluck('id')
+                )->get();
+
+                if ($trainerWorkoutTypes->isEmpty()) continue;
+
+                $workoutType = $trainerWorkoutTypes->random();
+                $endTime = $startTime->copy()->addMinutes($workoutType->duration_minutes);
+
+                WorkoutSchedule::create([
+                    'workout_type_id' => $workoutType->id,
+                    'trainer_id' => $trainer->id,
+                    'start_time' => $startTime,
+                    'end_time' => $endTime,
+                    'available_slots' => rand(8, 20),
+                    'booked_slots' => 0,
+                    'status' => 'scheduled',
+                ]);
+                $createdCount++;
             }
             $currentDate->addDay();
         }

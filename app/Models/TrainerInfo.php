@@ -16,4 +16,9 @@ class TrainerInfo extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function specializations()
+    {
+        return $this->belongsToMany(WorkoutCategory::class, 'trainer_categories');
+    }
 }

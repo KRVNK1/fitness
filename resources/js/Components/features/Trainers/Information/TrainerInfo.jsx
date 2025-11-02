@@ -13,7 +13,7 @@ export default function TrainerInfo({ trainer }) {
                     <img
                         src={trainer.trainer_info.photo}
                         alt={`${trainer.first_name} ${trainer.last_name}`}
-                        className="w-80 h-80 object-cover rounded-lg"
+                        className="w-80 h-80 object-cover object-top rounded-lg"
                     />
                 ) : (
                     <div className="relative w-48 h-64 rounded-lg overflow-hidden bg-gradient-to-br from-purple-100 to-purple-200">

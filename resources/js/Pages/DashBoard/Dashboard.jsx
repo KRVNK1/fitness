@@ -26,17 +26,17 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
 
     const getStatusBadge = (status) => {
         const variants = {
-            confirmed: "default",
-            pending: "secondary",
-            cancelled: "destructive",
-            completed: "outline",
+            booked: "default",
+            missed: "secondary",
+            canceled: "destructive",
+            attended: "outline",
         }
 
         const labels = {
-            confirmed: "Подтверждено",
-            pending: "Ожидание",
-            cancelled: "Отменено",
-            completed: "Завершено",
+            booked: "Забронировано",
+            missed: "Отсутствовал",
+            canceled: "Отменено",
+            attended: "Присутствовал",
         }
 
         return <Badge variant={variants[status] || "secondary"}>{labels[status] || status}</Badge>
@@ -96,8 +96,6 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
                         <TabsContent value="security" className="space-y-6">
                             <SecurityTab />
                         </TabsContent>
-
-
                     </Tabs>
                 </div>
             </div>

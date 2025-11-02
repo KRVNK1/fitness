@@ -60,7 +60,7 @@ export default function OverviewTab({ stats, recentBookings, user, formatDate, g
                 {/* Последние тренировки */}
                 <Card>
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
+                        <CardTitle className="flex items-center gap-2 text-center sm:text-left">
                             Последние тренировки
                         </CardTitle>
                     </CardHeader>
@@ -69,29 +69,30 @@ export default function OverviewTab({ stats, recentBookings, user, formatDate, g
                             recentBookings.map((booking) => (
                                 <div
                                     key={booking.id}
-                                    className="flex items-start justify-between border-b pb-4 last:border-0 last:pb-0"
+                                    className="border-b pb-4 last:border-0 last:pb-0"
                                 >
-                                    <div className="space-y-1">
-                                        <p className="font-medium">{booking.workout_name}</p>
+                                    <div className="flex flex-col justify-between space-y-1">
+                                        <div className="flex sm:justify-between flex-col sm:flex-row">
+                                            <p className="font-medium text-center">{booking.workout_name}</p>
+                                            {getStatusBadge(booking.status)}
+                                        </div>
                                         <div className="flex flex-wrap gap-2 text-sm ">
                                             <span className="flex items-center gap-1">
                                                 {booking.duration} мин
                                             </span>
-                                            <span className="flex items-center gap-1">
-
-                                            </span>
                                         </div>
                                         <p className="text-sm">{formatDate(booking.start_time)}</p>
                                     </div>
-                                    {getStatusBadge(booking.status)}
                                 </div>
                             ))
                         ) : (
                             <p className="text-sm">У вас пока нет тренировок</p>
                         )}
-                        <Button variant="outline" className="bg-transparent" onClick={() => setActiveTab("history")}>
-                            Все тренировки
-                        </Button>
+                        <div className="flex flex-col sm:flex-row sm:justify-start gap-2">
+                            <Button variant="outline" className="" onClick={() => setActiveTab("history")}>
+                                Все тренировки
+                            </Button>
+                        </div>
                     </CardContent>
                 </Card>
 
@@ -119,7 +120,7 @@ export default function OverviewTab({ stats, recentBookings, user, formatDate, g
                                 <p className="text-base">{user.phone || "Не указан"}</p>
                             </div>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex flex-col sm:flex-row sm:justify-start gap-2">
                             <Button variant="default" onClick={() => setActiveTab("profile")}>
                                 Редактировать
                             </Button>

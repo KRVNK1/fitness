@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/profil
 import { Button } from "@/Components/ui/Button"
 import { router } from "@inertiajs/react"
 
-export default function HistoryTab({ workoutHistory, formatDate, getStatusBadge,  }) {
+export default function HistoryTab({ workoutHistory, formatDate, getStatusBadge }) {
     return (
         <Card>
             <CardHeader>

@@ -24,7 +24,7 @@ class TrainerService
     public function getTrainerById(int $id)
     {
         return User::where('role', UserEnum::TRAINER)
-            ->with(['trainerInfo'])
+            ->with(['trainerInfo.specializations'])
             ->findOrFail($id);
     }
 
