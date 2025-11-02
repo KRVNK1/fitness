@@ -70,7 +70,7 @@ export default function TrainerModal({ trainer, show, onClose }) {
                     >
                         Отмена
                     </button>
-                    <Button type="submit" className="flex-1">
+                    <Button type="submit" className="flex-1 bg-purple-600 hover:bg-purple-700">
                         Отправить заявку
                     </Button>
                 </div>

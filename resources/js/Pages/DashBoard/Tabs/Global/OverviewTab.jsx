@@ -89,7 +89,7 @@ export default function OverviewTab({ stats, recentBookings, user, formatDate, g
                             <p className="text-sm">У вас пока нет тренировок</p>
                         )}
                         <div className="flex flex-col sm:flex-row sm:justify-start gap-2">
-                            <Button variant="outline" className="" onClick={() => setActiveTab("history")}>
+                            <Button variant="outline" className="bg-purple-600 hover:bg-purple-700" onClick={() => setActiveTab("history")}>
                                 Все тренировки
                             </Button>
                         </div>
@@ -121,7 +121,7 @@ export default function OverviewTab({ stats, recentBookings, user, formatDate, g
                             </div>
                         </div>
                         <div className="flex flex-col sm:flex-row sm:justify-start gap-2">
-                            <Button variant="default" onClick={() => setActiveTab("profile")}>
+                            <Button className="bg-purple-600 hover:bg-purple-700" variant="default" onClick={() => setActiveTab("profile")}>
                                 Редактировать
                             </Button>
                             <Button variant="destructive" className="bg-red-600 hover:bg-red-700" onClick={handleLogout}>

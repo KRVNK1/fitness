@@ -52,7 +52,7 @@ export default function TrainerInfo({ trainer }) {
                 )}
 
                 <div className="max-w-none">
-                    <p className="text-gray-700 leading-relaxed">
+                    <p className="text-gray-700 leading-relaxed mb-4">
                         {trainer.trainer_info.description || "Информация о тренере отсутствует"}
                     </p>
                 </div>
@@ -60,6 +60,7 @@ export default function TrainerInfo({ trainer }) {
                 <div className="">
                     <Button
                         onClick={() => setShowModal(true)}
+                        className="bg-purple-600 hover:bg-purple-700"
                     >
                         Записаться к тренеру
                     </Button>

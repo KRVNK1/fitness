@@ -12,6 +12,7 @@ class UserApplication extends Model
         'requested_date',
         'status',
         'comment',
+        'trainer_comment'
     ];
 
     protected $casts = [

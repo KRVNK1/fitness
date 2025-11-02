@@ -1,29 +1,14 @@
 import { Button } from "@/Components/ui/Button"
 import { useState } from "react"
 import RejectModal from "../../Modals/RejectModal"
+import useStatusBadge from "@/hooks/global/useStatusBadge"
+import useFormatDate from "@/hooks/global/useFormatDate"
 
 export default function UserRequests({ requests }) {
     const [showModal, setShowModal] = useState(false)
 
-    const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString("ru-RU", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-        })
-    }
-
-    const getStatusBadge = (status) => {
-        const badges = {
-            pending: { text: "В ожидании", class: "bg-yellow-100 text-yellow-800" },
-            approved: { text: "Принята", class: "bg-green-100 text-green-800" },
-            rejected: { text: "Отклонена", class: "bg-red-100 text-red-800" },
-        }
-
-        const badge = badges[status]
-    }
+    const formatDate = useFormatDate()
+    const getStatusBadge = useStatusBadge();
 
     return (
         <>
@@ -38,7 +23,9 @@ export default function UserRequests({ requests }) {
                             <div className="flex items-start justify-between">
                                 <div className="flex-1">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <h3 className="text-lg font-semibold text-gray-900">Тренер: {request.trainer.first_name} {request.trainer.last_name}</h3>
+                                        <h3 className="text-lg font-semibold text-gray-900">
+                                            Тренер: {request.trainer.first_name} {request.trainer.last_name}
+                                        </h3>
                                         {getStatusBadge(request.status)}
                                     </div>
 
@@ -51,14 +38,22 @@ export default function UserRequests({ requests }) {
                                                 <span className="font-medium">Ваш комментарий:</span> {request.comment}
                                             </p>
                                         )}
+                                        {request.trainer_comment && (
+                                            <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-md">
+                                                <p className="font-medium text-red-900 mb-1">Комментарий тренера:</p>
+                                                <p className="text-red-800">{request.trainer_comment}</p>
+                                            </div>
+                                        )}
                                         <p className="text-xs text-gray-400">Создана: {formatDate(request.created_at)}</p>
                                     </div>
                                 </div>
-                                <div className="flex items-center justify-center">
-                                    <Button onClick={() => setShowModal(true)}>
-                                        Отменить заявку
-                                    </Button>
-                                </div>
+                                {!request.trainer_comment && (
+                                    <div className="flex items-center justify-center">
+                                        <Button onClick={() => setShowModal(true)}>
+                                            Отменить заявку
+                                        </Button>
+                                    </div>
+                                )}
                             </div>
                             <RejectModal request={request} show={showModal} onClose={() => setShowModal(false)} />
                         </div>

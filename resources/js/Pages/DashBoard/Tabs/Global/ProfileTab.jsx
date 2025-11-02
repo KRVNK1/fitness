@@ -91,7 +91,7 @@ export default function ProfileTab({ user }) {
                         )}
                     </div>
 
-                    <Button type="submit" disabled={profileForm.processing}>
+                    <Button className="bg-purple-600 hover:bg-purple-700" type="submit" disabled={profileForm.processing}>
                         Сохранить изменения
                     </Button>
                 </form>

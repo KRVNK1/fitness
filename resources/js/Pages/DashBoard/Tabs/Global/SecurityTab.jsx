@@ -80,7 +80,7 @@ export default function SecurityTab() {
                             )}
                         </div>
 
-                        <Button type="submit" disabled={passwordForm.processing}>
+                        <Button className="bg-purple-600 hover:bg-purple-700" type="submit" disabled={passwordForm.processing}>
                             {passwordForm.processing ? "Сохранение..." : "Сменить пароль"}
                         </Button>
                     </form>

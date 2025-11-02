@@ -85,7 +85,7 @@ export default function Header({ user }) {
                     Профиль
                   </a>
                   {user.role === 'trainer' && (
-                    <a href="/trainer" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    <a href="/requests/trainer" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setProfileMenuOpen(false)}>
                       Тренерская
                     </a>
@@ -134,7 +134,7 @@ export default function Header({ user }) {
                   Профиль
                 </a>
                 {user.role === 'trainer' && (
-                  <a href="/trainer" className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                  <a href="/requests/trainer" className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
                     Тренерская
                   </a>
                 )}
