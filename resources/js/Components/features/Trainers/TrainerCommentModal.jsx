@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { Button } from "@/Components/ui/Button"
 import Modal from "@/Components/ui/Modal"

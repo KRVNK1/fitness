@@ -54,7 +54,7 @@ class TrainerApplicationService
 
     public function cancelApplication(int $id, int $trainerId, string $trainerComment)
     {
-        $application = $this->getApplication($id, $trainerId, UserApplicationEnum::PENDING);
+        $application = $this->getApplication($id, $trainerId, UserApplicationEnum::APPROVED);
 
         $application->update([
             'status'          => UserApplicationEnum::CANCELED,
