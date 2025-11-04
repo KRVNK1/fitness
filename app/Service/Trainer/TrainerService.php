@@ -4,6 +4,7 @@ namespace App\Service\Trainer;
 
 use App\Enums\User\UserEnum;
 use App\Models\User;
+use App\Models\WorkoutSchedule;
 use Carbon\Carbon;
 
 class TrainerService
@@ -43,6 +44,34 @@ class TrainerService
             ->get()
             ->groupBy(function ($schedule) {
                 return Carbon::parse($schedule->start_time)->format('Y-m-d');
+            });
+    }
+
+    /**
+     * Получить групповые тренировки тренера
+     */
+    public function getTrainerGroupWorkouts(int $trainerId)
+    {
+        return WorkoutSchedule::where('trainer_id', $trainerId)
+            ->with([
+                'workoutType',
+                'workoutType.workoutCategory',
+                'bookings.user'
+            ])
+            ->where('start_time', '>=', now())
+            ->orderBy('start_time', 'asc')
+            ->get()
+            ->map(function ($workout) {
+                return [
+                    'id' => $workout->id,
+                    'workout_type' => $workout->workoutType,
+                    'start_time' => $workout->start_time,
+                    'end_time' => $workout->end_time,
+                    'available_slots' => $workout->available_slots,
+                    'booked_slots' => $workout->booked_slots,
+                    'bookings_count' => $workout->bookings->count(),
+                    'bookings' => $workout->bookings,
+                ];
             });
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Requests;
 
 use App\Http\Controllers\Controller;
 use App\Service\Trainer\TrainerApplicationService;
+use App\Service\Trainer\TrainerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -11,10 +12,12 @@ use Inertia\Inertia;
 class TrainerApplicationController extends Controller
 {
     private TrainerApplicationService $trainerApplicationService;
+    private TrainerService $trainerService;
 
-    public function __construct(TrainerApplicationService $trainerApplicationService)
+    public function __construct(TrainerApplicationService $trainerApplicationService, TrainerService $trainerService)
     {
         $this->trainerApplicationService = $trainerApplicationService;
+        $this->trainerService = $trainerService;
     }
     /**
      * Заявки для тренера (в тренерской)
@@ -23,6 +26,7 @@ class TrainerApplicationController extends Controller
     {
         return Inertia::render('DashBoard/TrainerTable', [
             'requests' => $this->trainerApplicationService->getTrainerRequests(Auth::id()),
+            'workouts' => $this->trainerService->getTrainerGroupWorkouts(Auth::id()),
         ]);
     }
 
