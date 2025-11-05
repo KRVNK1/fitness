@@ -57,9 +57,11 @@ export default function TrainerTable({ auth, requests, workouts }) {
             }
             grouped[date].push(workout)
         })
-        console.log(grouped)
         return grouped
     }
+
+    const groupedWorkouts = groupWorkoutsByDate(workouts)
+    const dates = Object.keys(groupedWorkouts).sort()
 
     return (
         <div className="bg-gray-100 min-h-screen">
@@ -185,10 +187,8 @@ export default function TrainerTable({ auth, requests, workouts }) {
                                             <p className="text-gray-500">У вас пока нет запланированных групповых тренировок</p>
                                         </div>
                                     ) : (
-                                        (() => {
-                                            const groupedWorkouts = groupWorkoutsByDate(workouts)
-                                            const dates = Object.keys(groupedWorkouts).sort()
-                                            dates.map((date) => (
+                                        <>
+                                            {dates.map((date) => (
                                                 <div key={date} className="border rounded-lg overflow-hidden">
                                                     <div className="bg-blue-50 px-6 py-4 border-b">
                                                         <h3 className="font-semibold text-gray-900">{date}</h3>
@@ -199,22 +199,21 @@ export default function TrainerTable({ auth, requests, workouts }) {
                                                                 key={workout.id}
                                                                 className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border hover:bg-gray-100 transition"
                                                             >
-                                                                {console.log(workout)}
                                                                 <div className="flex-1">
                                                                     <h4 className="font-medium text-gray-900">
                                                                         {workout.workout_type.name || "Тренировка"}
                                                                     </h4>
                                                                     <p className="text-sm text-gray-600">{workout.workout_type.workout_category.name}</p>
                                                                     <p className="text-sm text-gray-500">
-                                                                        {new Date(workout.start_time).toLocaleTimeString("ru-RU", {
-                                                                            hour: "2-digit",
-                                                                            minute: "2-digit",
-                                                                        })}{" "}
-                                                                        -{" "}
-                                                                        {new Date(workout.end_time).toLocaleTimeString("ru-RU", {
+                                                                        {`${new Date(workout.start_time).toLocaleTimeString("ru-RU", {
                                                                             hour: "2-digit",
                                                                             minute: "2-digit",
                                                                         })}
+                                                                        -
+                                                                        ${new Date(workout.end_time).toLocaleTimeString("ru-RU", {
+                                                                            hour: "2-digit",
+                                                                            minute: "2-digit",
+                                                                        })}`}
                                                                     </p>
                                                                     <p className="text-xs text-gray-400 mt-1">
                                                                         Мест: {workout.booked_slots}/{workout.available_slots}
@@ -233,8 +232,8 @@ export default function TrainerTable({ auth, requests, workouts }) {
                                                         ))}
                                                     </div>
                                                 </div>
-                                            ))
-                                        })()
+                                            ))}
+                                        </>
                                     )}
                                 </div>
                             </CardContent>
