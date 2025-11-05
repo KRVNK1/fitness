@@ -37,7 +37,7 @@ export default function Header({ user }) {
     <header className="sticky top-0 bg-white border-b-2 border-gray-100 z-50 shadow-sm">
       <nav className="container mx-auto px-4 lg:px-8 py-4">
         <div className="flex justify-between items-center">
-          {/* Logo */}
+          {/* Лого */}
           <div className="text-2xl lg:text-3xl font-bold">
             <a href="/" className="flex items-center">
               <span className="text-[#7f36dd]">IRK</span>FITNESS

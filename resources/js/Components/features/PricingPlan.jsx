@@ -1,4 +1,3 @@
-// components/PricingPlan.jsx
 import { Link } from "@inertiajs/react"
 
 export default function PricingPlan({ name, price, badge, bg_color, features, buttonTextColor, buttonHoverColor, link }) {

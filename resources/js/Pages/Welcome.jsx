@@ -109,10 +109,10 @@ export default function Welcome({ auth, membershipTypes }) {
             <div className="scroll-smooth bg-gray-50">
                 <Header user={auth.user} />
 
-                {/* Hero section */}
+                {/* Приветствие */}
                 <div className="container mx-auto px-4 py-4 transition-all duration-300">
                     <div className="relative">
-                        {/* Mobile */}
+                        {/* мобилки */}
                         <div className="lg:hidden relative">
                             <img
                                 src="/storage/Global/main-Mobile.webp"
@@ -120,7 +120,7 @@ export default function Welcome({ auth, membershipTypes }) {
                                 className="w-full h-[525px] object-cover rounded-3xl"
                             />
                         </div>
-                        {/* Desktop */}
+                        {/* десктоп */}
                         <div className="hidden lg:block flex-1 relative">
                             <img
                                 src="/storage/Global/main.webp"
@@ -204,7 +204,7 @@ export default function Welcome({ auth, membershipTypes }) {
                     </div>
                 </section>
 
-                {/* Gym Halls Section */}
+                {/* Тренажерные залы */}
                 <section className="py-16 bg-gray-50">
                     <div className="container mx-auto px-4">
                         <h2 className="text-4xl font-bold text-center mb-12 text-gray-800">Тренажерные залы</h2>
