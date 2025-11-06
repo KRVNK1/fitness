@@ -68,7 +68,6 @@ export default function AttendanceTracker({ auth, workout }) {
                         </p>
                         <p className="text-sm text-gray-500">
                             {`${formatDate(workout.start_time)} с
-                            ${new Date(workout.start_time).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })} до
                             ${new Date(workout.end_time).toLocaleTimeString("ru-RU", { hour: "2-digit", minute: "2-digit" })}`}
                         </p>
                     </CardHeader>
