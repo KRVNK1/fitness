@@ -16,6 +16,7 @@ class TrainerSeeder extends Seeder
         User::firstOrCreate(
             [
                 'email'      => 'ivanov@bk.ru',
+                'phone'      => '79012345679',
             ],
             [
                 'first_name' => 'Иван',
@@ -28,6 +29,7 @@ class TrainerSeeder extends Seeder
         User::firstOrCreate(
             [
                 'email'      => 'petrova@bk.ru',
+                'phone'      => '79012345680',
             ],
             [
                 'first_name' => 'Анна',
@@ -40,6 +42,7 @@ class TrainerSeeder extends Seeder
         User::firstOrCreate(
             [
                 'email'      => 'kuznetsov@bk.ru',
+                'phone'      => '79012345681',
             ],
             [
                 'first_name' => 'Александр',
@@ -52,6 +55,7 @@ class TrainerSeeder extends Seeder
         User::firstOrCreate(
             [
                 'email'      => 'sidorov.sergey@bk.ru',
+                'phone'      => '79012345682',
             ],
             [
                 'first_name' => 'Сергей',
@@ -64,6 +68,7 @@ class TrainerSeeder extends Seeder
         User::firstOrCreate(
             [
                 'email'      => 'dmitriev.fitness@bk.ru',
+                'phone'      => '79012345683',
             ],
             [
                 'first_name' => 'Дмитрий',
@@ -76,6 +81,7 @@ class TrainerSeeder extends Seeder
         User::firstOrCreate(
             [
                 'email'      => 'volkov.coach@bk.ru',
+                'phone'      => '79012345684',
             ],
             [
                 'first_name' => 'Алексей',
@@ -88,6 +94,7 @@ class TrainerSeeder extends Seeder
         User::firstOrCreate(
             [
                 'email'      => 'smirnova.olga@bk.ru',
+                'phone'      => '79012345685',
             ],
             [
                 'first_name' => 'Ольга',
@@ -100,6 +107,7 @@ class TrainerSeeder extends Seeder
         User::firstOrCreate(
             [
                 'email'      => 'kuznetsova.ekaterina@bk.ru',
+                'phone'      => '79012345686',
             ],
             [
                 'first_name' => 'Екатерина',
@@ -112,6 +120,7 @@ class TrainerSeeder extends Seeder
         User::firstOrCreate(
             [
                 'email'      => 'fedorova.trainer@bk.ru',
+                'phone'      => '79012345687',
             ],
             [
                 'first_name' => 'Мария',

@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
         User::firstOrCreate(
             [
                 'email'      => 'admin@bk.ru',
+                'phone'      => '79081231212',
             ],
             [
                 'first_name' => 'Admin',
@@ -30,6 +31,7 @@ class UserSeeder extends Seeder
         User::firstOrCreate(
             [
                 'email'      => 'user@bk.ru',
+                'phone'      => '79012345678',
             ],
             [
                 'first_name' => 'User',

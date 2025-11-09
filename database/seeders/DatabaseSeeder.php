@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\MembershipTypes\MembershipSeeder;
+use Database\Seeders\Memberships\MembershipSeeder;
+use Database\Seeders\Memberships\MembershipTypeSeeder;
 use Database\Seeders\Trainers\TrainerDataSeeder;
 use Database\Seeders\Users\TrainerSeeder;
 use Database\Seeders\Users\UserSeeder;
@@ -20,9 +21,10 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         $this->call([
-            MembershipSeeder::class,
+            MembershipTypeSeeder::class,
             UserSeeder::class,
             TrainerSeeder::class,
+            MembershipSeeder::class,
             WorkoutDataSeeder::class,
             TrainerDataSeeder::class,
             WorkoutScheduleSeeder::class

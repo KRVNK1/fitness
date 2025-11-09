@@ -1,11 +1,11 @@
 <?php
 
-namespace Database\Seeders\MembershipTypes;
+namespace Database\Seeders\Memberships;
 
 use App\Models\MembershipType;
 use Illuminate\Database\Seeder;
 
-class MembershipSeeder extends Seeder
+class MembershipTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
