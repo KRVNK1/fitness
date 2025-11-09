@@ -8,6 +8,7 @@ export default function Register() {
         first_name: "",
         last_name: "",
         email: "",
+        phone: "",
         password: "",
         password_confirmation: "",
     });
@@ -85,6 +86,22 @@ export default function Register() {
                                     autoComplete="username"
                                 />
                                 {errors.email && <p className="mt-2 text-sm text-red-600">{errors.email}</p>}
+                            </div>
+
+                            <div>
+                                <label htmlFor="phone" className="block text-gray-700 font-medium mb-2">
+                                    Номер телефона
+                                </label>
+                                <Input
+                                    id="phone"
+                                    name="phone"
+                                    type="phone"
+                                    value={data.phone}
+                                    onChange={handleChange}
+                                    placeholder="Введите ваш номер телефона"
+                                    autoComplete="phone"
+                                />
+                                {errors.phone && <p className="mt-2 text-sm text-red-600">{errors.phone}</p>}
                             </div>
 
                             <div>

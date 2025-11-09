@@ -76,13 +76,13 @@ export default function Header({ user }) {
                     ? "opacity-100 scale-100 translate-y-0"
                     : "opacity-0 scale-95 -translate-y-2 pointer-events-none"}`}
                 >
-                  <a href="/requests/my-applications" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                    onClick={() => setProfileMenuOpen(false)}>
-                    Мои заявки
-                  </a>
                   <a href="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                     onClick={() => setProfileMenuOpen(false)}>
                     Профиль
+                  </a>
+                  <a href="/requests/my-applications" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    onClick={() => setProfileMenuOpen(false)}>
+                    Мои заявки
                   </a>
                   {user.role === 'trainer' && (
                     <a href="/requests/trainer" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
@@ -120,32 +120,34 @@ export default function Header({ user }) {
 
         {/* Навигация мобилок */}
         <div className={`md:hidden mt-4 pb-4 border-t border-gray-100 ${MobileMenuOpen ? "block" : "hidden"}`}>
-          <div className="flex flex-col gap-4 pt-4 [&>a:hover]:text-[#7f36dd] [&>a]:transition-colors">
-            <a href="/#pricing">Тарифы</a>
-            <a href="/workouts/catalog">Групповые</a>
-            <a href="/trainers">Тренеры</a>
-            <a href="/workouts/schedule">Расписание</a>
+          <div className="flex justify-between flex-row gap-4 pt-4 [&>a:hover]:text-[#7f36dd] [&>a]:transition-colors">
+            <div className="flex flex-col gap-4">
+              <a href="/#pricing">Тарифы</a>
+              <a href="/workouts/catalog">Групповые</a>
+              <a href="/trainers">Тренеры</a>
+              <a href="/workouts/schedule">Расписание</a>
+            </div>
             {user ? (
-              <div className="flex flex-col gap-2">
-                <a href="/my-applications" className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+              <div className="flex flex-col gap-4">
+                <a href="/my-applications" className="rounded-lg hover:bg-gray-100 transition-colors">
                   Мои заявки
                 </a>
-                <a href="/dashboard" className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                <a href="/dashboard" className="rounded-lg hover:bg-gray-100 transition-colors">
                   Профиль
                 </a>
                 {user.role === 'trainer' && (
-                  <a href="/requests/trainer" className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                  <a href="/requests/trainer" className="rounded-lg hover:bg-gray-100 transition-colors">
                     Тренерская
                   </a>
                 )}
                 {user.role === 'admin' && (
-                  <a href="/admin" className="px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+                  <a href="/admin" className="rounded-lg hover:bg-gray-100 transition-colors">
                     Админ-панель
                   </a>
                 )}
                 <button
                   onClick={handleLogout}
-                  className="text-left px-4 py-2 text-red-600 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="text-left text-red-600 rounded-lg hover:bg-gray-100 transition-colors"
                 >
                   Выход
                 </button>
