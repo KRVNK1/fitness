@@ -9,6 +9,7 @@ use App\Http\Requests\Membership\MembershipRequest;
 use App\Models\Membership;
 use App\Models\MembershipType;
 use App\Models\Transaction;
+use App\Service\Booking\BookingService;
 use App\Service\Payment\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,15 +21,18 @@ use YooKassa\Model\Notification\NotificationWaitingForCapture;
 
 class MembershipController extends Controller
 {
+    private BookingService $bookingService;
     private $yookassa;
 
-    public function __construct()
+    public function __construct(BookingService $bookingService)
     {
         $this->yookassa = new Client();
         $this->yookassa->setAuth(
             config('services.yookassa.shop_id'),
             config('services.yookassa.secret_key')
         );
+
+        $this->bookingService = $bookingService;
     }
 
     /*
@@ -62,6 +66,12 @@ class MembershipController extends Controller
      */
     public function createPayment(MembershipRequest $memberShipRequest, PaymentService $service)
     {
+        $activeMembership = $this->bookingService->getMembership(Auth::id());
+
+        if ($activeMembership) {
+            return back()->with('error', 'У вас уже есть активный абонемент');
+        }
+
         $membershipType = MembershipType::where('slug', $memberShipRequest->membership_type)->firstOrFail();
         $months = $memberShipRequest->months;
         $amount = $membershipType->price * $months;

@@ -1,11 +1,9 @@
 <?php
 
-use App\Http\Controllers\Booking\AttendanceController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Membership\MembershipController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Requests\TrainerApplicationController;
 use App\Http\Controllers\Requests\UserApplicationController;
 use App\Http\Controllers\WorkoutSchedule\Trainer\TrainerScheduleController;
 use App\Http\Controllers\WorkoutSchedule\WorkoutScheduleController;
@@ -39,12 +37,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{bookingId}/cancel', [BookingController::class, 'cancel'])->name('cancel');
     });
 
-    Route::prefix('attendance')->name('attendance.')->group(function () {
-        Route::get('/workout/{workoutScheduleId}', [AttendanceController::class, 'show'])->name('show');
-        Route::post('/update', [AttendanceController::class, 'updateAttendance'])->name('update');
-        Route::get('/attendees/{workoutScheduleId}', [AttendanceController::class, 'getAttendees'])->name('attendees');
-    });
-
     Route::prefix('requests')->name('requests.')->group(function () {
         // Создание заявки
         Route::post('/', [UserApplicationController::class, 'store'])->name('store');
@@ -54,21 +46,9 @@ Route::middleware(['auth'])->group(function () {
 
         // Отмена заявки пользователем
         Route::delete('/{id}/cancel', [UserApplicationController::class, 'cancel'])->name('cancel');
-
-        // Заявки для тренера
-        Route::get('/trainer', [TrainerApplicationController::class, 'trainerRequests'])->name('trainer');
-
-        // Принять заявку (тренер)
-        Route::post('/{id}/approve', [TrainerApplicationController::class, 'approve'])->name('approve');
-
-        // Отклонить заявку (тренер)
-        Route::post('/{id}/reject', [TrainerApplicationController::class, 'reject'])->name('reject');
-
-        // Отменить принятую заявку (тренер)
-        Route::post('/{id}/cancel-approved', [TrainerApplicationController::class, 'cancelApproved'])->name('cancel-approved');
     });
 });
 
 require __DIR__ . '/auth.php';
-require __DIR__ . '/profile.php';
 require __DIR__ . '/membership.php';
+require __DIR__ . '/trainer.php';
