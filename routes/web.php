@@ -4,6 +4,7 @@ use App\Http\Controllers\Booking\AttendanceController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Membership\MembershipController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Requests\TrainerApplicationController;
 use App\Http\Controllers\Requests\UserApplicationController;
 use App\Http\Controllers\WorkoutSchedule\Trainer\TrainerScheduleController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\WorkoutSchedule\WorkoutScheduleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MembershipController::class, 'index'])->name('home');
+Route::middleware(['admin'])->get('users/export/', [ProfileController::class, 'export']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])

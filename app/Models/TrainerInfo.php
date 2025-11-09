@@ -10,6 +10,7 @@ class TrainerInfo extends Model
         'user_id',
         'description',
         'experience_years',
+        'photo'
     ];
 
     public function user()
