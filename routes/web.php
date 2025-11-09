@@ -12,7 +12,7 @@ use App\Http\Controllers\WorkoutSchedule\WorkoutScheduleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MembershipController::class, 'index'])->name('home');
-Route::get('users/export/', [ProfileController::class, 'export']);
+Route::middleware(['admin'])->get('users/export/', [ProfileController::class, 'export']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
