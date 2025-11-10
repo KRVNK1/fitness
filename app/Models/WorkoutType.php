@@ -13,6 +13,7 @@ class WorkoutType extends Model
         'description',
         'duration_minutes',
         'intensivity_level',
+        'photo'
     ];
 
     public function workoutCategory()

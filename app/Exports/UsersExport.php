@@ -27,12 +27,35 @@ class UsersExport implements FromCollection, WithHeadings, WithMapping, WithStyl
         'updated_at',
     ];
 
+    protected $filters;
+
+    public function __construct($filters)
+    {
+        $this->filters = $filters;
+    }
+
     /**
      * Данные
      */
     public function collection(): Collection
     {
-        return User::select($this->columns)->get();
+        $query = User::select($this->columns);
+
+        if (!empty($this->filters['search'])) {
+            $search = $this->filters['search'];
+            $query->where(function ($q) use ($search) {
+                $q->where('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%");
+            });
+        }
+
+        if (!empty($this->filters['role'])) {
+            $query->where('role', $this->filters['role']);
+        }
+
+        return $query->orderBy('id')->get();
     }
 
     /**

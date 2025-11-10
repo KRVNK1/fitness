@@ -91,7 +91,7 @@ export default function Header({ user }) {
                     </a>
                   )}
                   {user.role === "admin" && (
-                    <a href="/admin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                    <a href="/admin/users" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setProfileMenuOpen(false)}>
                       Админ-панель
                     </a>
@@ -141,7 +141,7 @@ export default function Header({ user }) {
                   </a>
                 )}
                 {user.role === 'admin' && (
-                  <a href="/admin" className="rounded-lg hover:bg-gray-100 transition-colors">
+                  <a href="/admin/users" className="rounded-lg hover:bg-gray-100 transition-colors">
                     Админ-панель
                   </a>
                 )}

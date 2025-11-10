@@ -29,7 +29,7 @@ class UserDashboardService
 
         $totalWorkouts = $bookings->count() + $individualWorkouts;
 
-        $userMembership = $user->memberships()->first();
+        $userMembership = $user->memberships()->where('status', 'active')->first();
 
         return [
             'total_workouts' => $totalWorkouts,

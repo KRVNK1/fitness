@@ -9,6 +9,12 @@ export default function Welcome({ auth, membershipTypes }) {
     const [activeButton, setActiveButton] = useState(0)
 
     const planStyles = {
+        default: {
+            bg_color: "bg-gray-500",
+            text_color: "text-gray-700",
+            buttonTextColor: "text-gray-600",
+            buttonHoverColor: "bg-gray-100",
+        },
         light: {
             bg_color: "bg-blue-500",
             text_color: "text-blue",
@@ -32,7 +38,7 @@ export default function Welcome({ auth, membershipTypes }) {
     }
 
     const plans = membershipTypes.map((membershipType) => {
-        const style = planStyles[membershipType.slug]
+        const style = planStyles[membershipType.slug] || planStyles.default
         return {
             name: membershipType.name,
             price: `${Math.round(membershipType.price).toLocaleString("ru-RU")}₽`,
