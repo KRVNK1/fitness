@@ -31,7 +31,7 @@ class MembeshipController extends Controller
             $query->where('membership_type_id', $request->input('membership_type_id'));
         }
 
-        $memberships = $query->orderBy('created_at', 'asc')->paginate(7);
+        $memberships = $query->orderBy('id')->paginate(7);
         $membershipTypes = MembershipType::all();
 
         return Inertia::render('Admin/Memberships/Index', [
