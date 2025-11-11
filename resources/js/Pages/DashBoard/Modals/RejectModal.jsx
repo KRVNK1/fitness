@@ -20,7 +20,7 @@ export default function RejectModal({ request, show, onClose }) {
                 >
                     Закрыть
                 </button>
-                <Button onClick={rejectApplication} className="flex-1">
+                <Button onClick={rejectApplication} className="flex-1 bg-purple-600 hover:bg-purple-700">
                     Отменить заявку
                 </Button>
             </div>

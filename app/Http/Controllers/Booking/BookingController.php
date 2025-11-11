@@ -47,18 +47,4 @@ class BookingController extends Controller
 
         return redirect()->back()->with('error', $result['message']);
     }
-
-    /**
-     * Получить список бронирований пользователя
-     */
-    public function index(Request $request)
-    {
-        $bookings = $this->bookingService->getUserBookings(
-            Auth::id(),
-        );
-
-        return response()->json([
-            'bookings' => $bookings
-        ]);
-    }
 }

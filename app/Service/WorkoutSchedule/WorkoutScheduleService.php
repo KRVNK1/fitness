@@ -15,7 +15,7 @@ class WorkoutScheduleService
      */
     public function getWorkoutSchedule()
     {
-        return WorkoutSchedule::with(['trainer.trainerInfo', 'workoutType.workoutCategory'])
+        return WorkoutSchedule::with(['trainer.trainerInfo', 'workoutType.workoutCategory', 'bookings'])
             ->where('start_time', '>=', now())
             ->where('status', WorkoutScheduleEnum::SCHEDULED)
             ->orderBy('start_time')
@@ -49,7 +49,7 @@ class WorkoutScheduleService
     public function getWorkoutTypeSchedule($id)
     {
         return WorkoutSchedule::where('workout_type_id', $id)
-            ->with(['trainer.trainerInfo', 'workoutType.workoutCategory'])
+            ->with(['trainer.trainerInfo', 'workoutType.workoutCategory', 'bookings'])
             ->where('start_time', '>=', now())
             ->orderBy('start_time')
             ->take(15)

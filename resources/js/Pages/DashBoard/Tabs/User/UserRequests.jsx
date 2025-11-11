@@ -49,7 +49,7 @@ export default function UserRequests({ requests }) {
                                 </div>
                                 {!request.trainer_comment && (
                                     <div className="flex items-center justify-center">
-                                        <Button onClick={() => setShowModal(true)}>
+                                        <Button onClick={() => setShowModal(true)} className="bg-purple-600 hover:bg-purple-700">
                                             Отменить заявку
                                         </Button>
                                     </div>

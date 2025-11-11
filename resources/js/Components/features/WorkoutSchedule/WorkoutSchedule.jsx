@@ -1,7 +1,7 @@
 import WorkoutDetails from "./WorkoutDetails"
 import WorkoutList from "./WorkoutList"
 
-export default function WorkoutSchedule({ selectedDayWorkouts, selectedWorkout, setSelectedWorkout, format }) {
+export default function WorkoutSchedule({ auth, selectedDayWorkouts, selectedWorkout, setSelectedWorkout, format }) {
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <WorkoutList
@@ -12,6 +12,7 @@ export default function WorkoutSchedule({ selectedDayWorkouts, selectedWorkout, 
             />
 
             <WorkoutDetails
+                auth={auth}
                 workout={selectedWorkout}
                 format={format}
             />

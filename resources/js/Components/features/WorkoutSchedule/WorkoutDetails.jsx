@@ -3,8 +3,11 @@ import IntensityDots from "@/Components/ui/IntensityDots"
 import BookingButton from "@/Components/ui/BookingButton"
 import useBooking from "@/hooks/Booking/useBooking"
 
-export default function WorkoutDetails({ workout, format }) {
+export default function WorkoutDetails({ auth, workout, format }) {
     const { isBooking, handleBooking } = useBooking(workout?.id)
+
+    console.log(workout.bookings)
+    console.log(auth)
 
     return (
         <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
@@ -76,6 +79,8 @@ export default function WorkoutDetails({ workout, format }) {
                         onBook={handleBooking}
                         fullWidth
                     />
+
+                    {}
 
                     <Link
                         href={`/workouts/schedule/${workout.workout_type.id}`}

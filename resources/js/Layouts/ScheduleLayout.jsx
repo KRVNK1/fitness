@@ -73,6 +73,7 @@ export default function ScheduleLayout({ auth, navText, backLink, headerComponen
 
                     {selectedDayWorkouts.length > 0 ? (
                         <WorkoutSchedule
+                            auth={auth}
                             selectedDayWorkouts={selectedDayWorkouts}
                             selectedWorkout={selectedSchedule}
                             setSelectedWorkout={setSelectedSchedule}

@@ -38,7 +38,7 @@ class TrainerService
         $endDate = Carbon::now()->addDays(14)->endOfDay();
 
         return $trainer->workoutSchedules()
-            ->with(['workoutType.workoutCategory'])
+            ->with(['workoutType.workoutCategory', 'bookings'])
             ->whereBetween('start_time', [$startDate, $endDate])
             ->orderBy('start_time', 'asc')
             ->get()
