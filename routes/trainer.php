@@ -10,16 +10,16 @@ Route::middleware(['trainer'])->prefix('attendance')->name('attendance.')->group
     Route::get('/attendees/{workoutScheduleId}', [AttendanceController::class, 'getAttendees'])->name('attendees');
 });
 
-Route::prefix('requests')->name('requests.')->group(function () {
-        // Заявки для тренера
-        Route::get('/trainer', [TrainerApplicationController::class, 'trainerRequests'])->name('trainer');
+Route::middleware('trainer')->prefix('requests')->name('requests.')->group(function () {
+    // Заявки для тренера
+    Route::get('/trainer', [TrainerApplicationController::class, 'trainerRequests'])->name('trainer');
 
-        // Принять заявку (тренер)
-        Route::post('/{id}/approve', [TrainerApplicationController::class, 'approve'])->name('approve');
+    // Принять заявку (тренер)
+    Route::post('/{id}/approve', [TrainerApplicationController::class, 'approve'])->name('approve');
 
-        // Отклонить заявку (тренер)
-        Route::post('/{id}/reject', [TrainerApplicationController::class, 'reject'])->name('reject');
+    // Отклонить заявку (тренер)
+    Route::post('/{id}/reject', [TrainerApplicationController::class, 'reject'])->name('reject');
 
-        // Отменить принятую заявку (тренер)
-        Route::post('/{id}/cancel-approved', [TrainerApplicationController::class, 'cancelApproved'])->name('cancel-approved');
+    // Отменить принятую заявку (тренер)
+    Route::post('/{id}/cancel-approved', [TrainerApplicationController::class, 'cancelApproved'])->name('cancel-approved');
 });
