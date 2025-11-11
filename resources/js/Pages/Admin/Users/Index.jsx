@@ -1,4 +1,4 @@
-import { Head, router, useForm } from "@inertiajs/react"
+import { Head, router } from "@inertiajs/react"
 import { useState } from "react"
 import AdminSidebar from "@/Components/admin/AdminSidebar"
 import UserTable from "@/Components/admin/User/UserTable"
@@ -26,17 +26,6 @@ export default function UsersIndex({ users, filters }) {
             search: searchValue,
             role: role,
         })
-    }
-
-    const form = useForm({
-        search: filters.search || '',
-        role: filters.role || '',
-    });
-
-    const saveExport = () => {
-        const queryString = new URLSearchParams(form.data).toString();
-        console.log(queryString)
-        window.location.href = `/admin/users/export?${queryString}`;
     }
 
     return (
@@ -86,9 +75,6 @@ export default function UsersIndex({ users, filters }) {
                                 <option value="trainer">Тренер</option>
                                 <option value="admin">Администратор</option>
                             </select>
-                            <button onClick={saveExport} className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                                Создать отчет
-                            </button>
                         </div>
 
                         <UserTable

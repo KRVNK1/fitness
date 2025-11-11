@@ -24,8 +24,7 @@ export default function catalog({ auth, workouts, categories, intensivityLevels,
         }
 
         if (filters.intensity) {
-            const levels = filters.intensity
-            filtered = filtered.filter((workout) => levels.includes(workout.intensivity_level))
+            filtered = filtered.filter((workout) => workout.intensivity_level == filters.intensity)
         }
 
         if (filters.duration) {
@@ -34,12 +33,6 @@ export default function catalog({ auth, workouts, categories, intensivityLevels,
 
         setFilteredWorkouts(filtered)
     }
-
-    useEffect(() => {
-        setFilteredWorkouts(workouts.data)
-    }, [workouts])
-
-    console.log()
 
     return (
         <div className="bg-gray-100">

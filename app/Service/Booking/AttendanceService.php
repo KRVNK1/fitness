@@ -2,6 +2,7 @@
 
 namespace App\Service\Booking;
 
+use App\Enums\Workout\Schedule\WorkoutScheduleEnum;
 use App\Http\Resources\this\BookingUserResource;
 use App\Http\Resources\Trainer\WorkoutResource;
 use App\Models\Booking;
@@ -54,5 +55,6 @@ class AttendanceService
         }
 
         $booking->update(['status' => $status]);
+        $booking->workoutSchedule()->update(['status' => WorkoutScheduleEnum::COMPLETED]);
     }
 }

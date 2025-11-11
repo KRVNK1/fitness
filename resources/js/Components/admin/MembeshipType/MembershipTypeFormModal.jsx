@@ -160,7 +160,7 @@ export default function MembershipTypeFormModal({ show, onClose, membershipType,
                 </div>
 
                 {/* Кнопки */}
-                <div className="flex gap-3 justify-end pt-4 border-t">
+                <div className="flex gap-3 justify-end pt-4">
                     <button
                         type="button"
                         onClick={() => {

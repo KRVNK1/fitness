@@ -7,5 +7,4 @@ class BookingStatusEnum
     public const BOOKED = 'booked'; // забронировано
     public const ATTENDED = 'attended'; // присутствовал
     public const MISSED = 'missed'; // отсутствовал
-    public const CANCELED = 'canceled'; // отменено
 }

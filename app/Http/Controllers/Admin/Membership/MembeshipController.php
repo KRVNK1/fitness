@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Membership;
 use App\Http\Controllers\Controller;
 use App\Models\Membership;
 use App\Models\MembershipType;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -35,6 +36,7 @@ class MembeshipController extends Controller
         $membershipTypes = MembershipType::all();
 
         return Inertia::render('Admin/Memberships/Index', [
+            'users' => User::get(),
             'memberships' => $memberships,
             'membershipTypes' => $membershipTypes,
             'filters' => $request->only(['search', 'status', 'membership_type_id']),

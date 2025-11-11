@@ -20,13 +20,12 @@ export default function UserRequests({ requests }) {
                 <div className="space-y-4">
                     {requests.map((request) => (
                         <div key={request.id} className="bg-white rounded-lg border shadow-sm p-6">
-                            <div className="flex items-start justify-between">
+                            <div className="flex flex-col gap-2 lg:flex-row items-start justify-between">
                                 <div className="flex-1">
-                                    <div className="flex items-center gap-3 mb-2">
+                                    <div className="flex items-center gap-4 mb-2">
                                         <h3 className="text-lg font-semibold text-gray-900">
                                             Тренер: {request.trainer.first_name} {request.trainer.last_name}
                                         </h3>
-                                        {getStatusBadge(request.status)}
                                     </div>
 
                                     <div className="space-y-2 text-sm text-gray-600">
@@ -46,9 +45,11 @@ export default function UserRequests({ requests }) {
                                         )}
                                         <p className="text-xs text-gray-400">Создана: {formatDate(request.created_at)}</p>
                                     </div>
+
                                 </div>
                                 {!request.trainer_comment && (
-                                    <div className="flex items-center justify-center">
+                                    <div className="flex justify-end flex-col gap-2 lg:gap-4">
+                                        <span>Состояние заявки - {getStatusBadge(request.status)}</span>
                                         <Button onClick={() => setShowModal(true)} className="bg-purple-600 hover:bg-purple-700">
                                             Отменить заявку
                                         </Button>

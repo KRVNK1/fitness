@@ -1,11 +1,8 @@
 import { useForm } from "@inertiajs/react"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Modal from "@/Components/ui/Modal"
 
-export default function MembershipFormModal({ show, onClose, membership, membershipTypes, title }) {
-    const [users, setUsers] = useState([])
-    const [searchQuery, setSearchQuery] = useState("")
-
+export default function MembershipFormModal({ users = [], show, onClose, membership, membershipTypes, title }) {
     const { data, setData, post, put, reset, errors, clearErrors } = useForm({
         user_id: "",
         membership_type_id: "",
@@ -30,12 +27,6 @@ export default function MembershipFormModal({ show, onClose, membership, members
         }
         clearErrors()
     }, [membership, show])
-
-    useEffect(() => {
-        if (show && !membership) {
-            setUsers([])
-        }
-    }, [show, membership])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -62,16 +53,22 @@ export default function MembershipFormModal({ show, onClose, membership, members
             <form onSubmit={handleSubmit} className="space-y-4">
                 {!membership && (
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">ID пользователя</label>
-                        <input
-                            type="number"
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Пользователь</label>
+                        <select
                             value={data.user_id}
+                            name="user_id"
                             onChange={(e) => setData("user_id", e.target.value)}
-                            placeholder="Введите ID пользователя"
                             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-                        />
+                        >
+                            <option value="">Выберите пользователя</option>
+                            {users.map((user) => (
+                                <option key={user.id} value={user.id}>
+                                    {user.id}) {user.first_name} {user.last_name}
+                                </option>
+                            ))}
+                        </select>
                         {errors.user_id && <p className="mt-1 text-sm text-red-600">{errors.user_id}</p>}
-                        <p className="mt-1 text-xs text-gray-500">Введите ID пользователя, которому хотите выдать абонемент</p>
+                        <p className="mt-1 text-xs text-gray-500">Выберите пользователя, которому хотите выдать абонемент</p>
                     </div>
                 )}
 
@@ -159,7 +156,7 @@ export default function MembershipFormModal({ show, onClose, membership, members
                     {errors.status && <p className="mt-1 text-sm text-red-600">{errors.status}</p>}
                 </div>
 
-                <div className="flex gap-3 justify-end pt-4 border-t">
+                <div className="flex gap-3 justify-end pt-4">
                     <button
                         type="button"
                         onClick={() => {
