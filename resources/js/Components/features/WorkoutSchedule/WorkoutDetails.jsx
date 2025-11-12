@@ -2,12 +2,13 @@ import { Link } from "@inertiajs/react"
 import IntensityDots from "@/Components/ui/IntensityDots"
 import BookingButton from "@/Components/ui/BookingButton"
 import useBooking from "@/hooks/Booking/useBooking"
+import useCancelBooking from "@/hooks/Booking/useCancelBooking"
 
 export default function WorkoutDetails({ auth, workout, format }) {
-    const { isBooking, handleBooking } = useBooking(workout?.id)
+    const { isBooking,  handleBooking } = useBooking(workout?.id)
+    const { isCancelBooking, handleCancelBooking } = useCancelBooking(workout?.id)
 
-    console.log(workout.bookings)
-    console.log(auth)
+    const userBooking = workout.bookings?.find((booking) => booking.user_id === auth.user.id && booking.status === "booked")
 
     return (
         <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
@@ -73,14 +74,18 @@ export default function WorkoutDetails({ auth, workout, format }) {
                 </div>
 
                 <div className="flex gap-4 mt-4 overflow-x-auto">
-                    <BookingButton
-                        availableSlots={workout.available_slots}
-                        bookedSlots={workout.booked_slots}
-                        onBook={handleBooking}
-                        fullWidth
-                    />
-
-                    {}
+                    {userBooking ? (
+                        <button onClick={() => handleCancelBooking(userBooking.id)} className="w-full bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white px-6 py-3 rounded-lg font-medium transition-colors" >
+                            Отменить запись
+                        </button>
+                    ) : (
+                        <BookingButton
+                            availableSlots={workout.available_slots}
+                            bookedSlots={workout.booked_slots}
+                            onBook={handleBooking}
+                            fullWidth
+                        />
+                    )}
 
                     <Link
                         href={`/workouts/schedule/${workout.workout_type.id}`}

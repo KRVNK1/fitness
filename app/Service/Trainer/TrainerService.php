@@ -34,7 +34,7 @@ class TrainerService
      */
     public function getTrainerSchedule(User $trainer)
     {
-        $startDate = Carbon::now()->startOfDay();
+        $startDate = Carbon::now();
         $endDate = Carbon::now()->addDays(14)->endOfDay();
 
         return $trainer->workoutSchedules()

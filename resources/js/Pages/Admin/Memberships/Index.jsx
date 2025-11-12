@@ -1,11 +1,11 @@
-import { Head, router } from "@inertiajs/react"
+import { Head, router, useForm } from "@inertiajs/react"
 import { useState } from "react"
 import AdminSidebar from "@/Components/admin/AdminSidebar"
 import MembershipTable from "@/Components/admin/Membership/MembershipTable"
 import MembershipFormModal from "@/Components/admin/Membership/MembershipFormModal"
 import Pagination from "@/Components/ui/Pagination"
 
-export default function Index({ memberships, membershipTypes, filters }) {
+export default function Index({ memberships, membershipTypes, filters, users }) {
     const [showCreateModal, setShowCreateModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)
     const [selectedMembership, setSelectedMembership] = useState(null)
@@ -38,6 +38,18 @@ export default function Index({ memberships, membershipTypes, filters }) {
             status: statusFilter,
             membership_type_id: typeId,
         })
+    }
+
+    const form = useForm({
+        search: filters.search || '',
+        status: filters.status || '',
+        membership_type_id: filters.membership_type_id || '',
+    });
+
+    const saveExport = () => {
+        const queryString = new URLSearchParams(form.data).toString();
+        console.log(queryString)
+        window.location.href = `/admin/users/export?${queryString}`;
     }
 
     return (
@@ -121,6 +133,7 @@ export default function Index({ memberships, membershipTypes, filters }) {
             </div>
 
             <MembershipFormModal
+                users={users}
                 show={showCreateModal}
                 onClose={() => setShowCreateModal(false)}
                 membership={null}

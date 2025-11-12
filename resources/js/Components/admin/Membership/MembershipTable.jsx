@@ -15,7 +15,7 @@ export default function MembershipTable({ memberships, onEdit }) {
         }
         const statusData = statuses[status] || statuses.active
         return (
-            <span className={`${statusData.bg} ${statusData.text} px-3 py-1 rounded-full text-sm font-medium`}>
+            <span className={`${statusData.text} text-sm font-medium`}>
                 {statusData.label}
             </span>
         )

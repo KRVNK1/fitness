@@ -111,7 +111,7 @@ class BookingService
                 ];
             }
 
-            $booking->update(['status' => BookingStatusEnum::CANCELED]);
+            $booking->delete();
 
             $schedule->decrement('booked_slots');
 

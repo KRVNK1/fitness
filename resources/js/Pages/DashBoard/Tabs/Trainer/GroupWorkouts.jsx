@@ -60,7 +60,7 @@ export default function GroupWorkouts({ workouts }) {
                                                 <div className="flex gap-2">
                                                     <Link
                                                         href={`/attendance/workout/${workout.id}`}
-                                                        className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition"
+                                                        className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition"
                                                     >
                                                         Отметить
                                                     </Link>
