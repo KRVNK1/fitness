@@ -30,7 +30,6 @@ Route::prefix('trainers')->name('trainers.')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('bookings')->name('bookings.')->group(function () {
-        Route::get('/', [BookingController::class, 'index'])->name('index');
         Route::post('/', [BookingController::class, 'store'])->name('store');
         Route::post('/{bookingId}/cancel', [BookingController::class, 'cancel'])->name('cancel');
     });

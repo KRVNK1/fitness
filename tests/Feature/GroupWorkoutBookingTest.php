@@ -6,7 +6,6 @@ use App\Enums\Booking\BookingStatusEnum;
 use App\Enums\Membership\MembershipStatusEnum;
 use App\Enums\User\UserEnum;
 use App\Enums\Workout\Schedule\WorkoutScheduleEnum;
-use App\Models\Booking;
 use App\Models\Membership;
 use App\Models\MembershipType;
 use App\Models\User;
@@ -25,7 +24,6 @@ class GroupWorkoutBookingTest extends TestCase
      */
     public function test_user_can_book_group_workout_with_active_membership()
     {
-        // Создаем пользователя
         $user = User::create([
             'first_name' => 'User',
             'last_name'  => 'User',
@@ -34,7 +32,6 @@ class GroupWorkoutBookingTest extends TestCase
             'role'       => UserEnum::CLIENT,
         ]);
 
-        // Создаем тип абонемента
         $membershipType = MembershipType::create([
             'name'          => 'Light',
             'slug'          => 'light',
@@ -50,7 +47,6 @@ class GroupWorkoutBookingTest extends TestCase
             ],
         ]);
 
-        // Создаем активный абонемент для пользователя
         $membership = Membership::create([
             'user_id'            => $user->id,
             'membership_type_id' => $membershipType->id,

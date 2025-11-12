@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Booking;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Workout\WorkoutSchedule\WorkoutScheduleRequest;
 use App\Service\Booking\BookingService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
