@@ -51,3 +51,4 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/membership.php';
 require __DIR__ . '/trainer.php';
 require __DIR__ . '/admin.php';
+require __DIR__ . '/profile.php';

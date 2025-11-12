@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['trainer'])->prefix('attendance')->name('attendance.')->group(function () {
     Route::get('/workout/{workoutScheduleId}', [AttendanceController::class, 'show'])->name('show');
     Route::post('/update', [AttendanceController::class, 'updateAttendance'])->name('update');
-    Route::get('/attendees/{workoutScheduleId}', [AttendanceController::class, 'getAttendees'])->name('attendees');
 });
 
 Route::middleware('trainer')->prefix('requests')->name('requests.')->group(function () {
