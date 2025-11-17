@@ -17,8 +17,8 @@ class WorkoutSchedule extends Model
     ];
 
     protected $casts = [
-        'start_time'  => 'datetime',
-        'end_time'    => 'datetime',
+        'start_time' => 'datetime:Y-m-d\TH:i',
+        'end_time' => 'datetime:Y-m-d\TH:i',
     ];
 
     public function workoutCategory()

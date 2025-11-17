@@ -45,7 +45,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::delete('/{workout_type}', [WorkoutTypeController::class, 'destroy'])->name('destroy');
     });
     Route::resource('workout-categories', WorkoutCategoryController::class);
-    Route::resource('workout-schedules', WorkoutScheduleController::class)->only(['index', 'show', 'destroy']);
+    Route::resource('workout-schedules', WorkoutScheduleController::class);
 
     // Trainers
     Route::prefix('trainers')->name('trainers.')->group(function () {

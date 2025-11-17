@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Workout;
 use App\Http\Controllers\Controller;
 use App\Models\WorkoutSchedule;
 use App\Models\User;
+use App\Models\WorkoutType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -33,10 +34,11 @@ class WorkoutScheduleController extends Controller
         }
 
         $workoutSchedules = $query->orderBy('start_time', 'asc')->paginate(7)->appends($request->query());
-        $trainers = User::where('role', 'trainer')->get();
+        $trainers = User::where('role', 'trainer')->with('trainerInfo.specializations')->get();
 
         return Inertia::render('Admin/WorkoutSchedules/Index', [
             'workoutSchedules' => $workoutSchedules,
+            'workoutTypes' => WorkoutType::with('workoutCategory')->get(),
             'trainers' => $trainers,
             'filters' => $request->only(['search', 'trainer_id', 'status']),
         ]);
@@ -47,8 +49,8 @@ class WorkoutScheduleController extends Controller
         $validated = $request->validate([
             'trainer_id' => 'required|exists:users,id',
             'workout_type_id' => 'required|exists:workout_types,id',
-            'start_time' => 'required|date_format:Y-m-d H:i',
-            'end_time' => 'required|date_format:Y-m-d H:i|after:start_time',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
             'available_slots' => 'required|integer|min:1',
             'status' => 'required|in:scheduled,completed,cancelled',
         ]);
@@ -63,8 +65,8 @@ class WorkoutScheduleController extends Controller
         $validated = $request->validate([
             'trainer_id' => 'required|exists:users,id',
             'workout_type_id' => 'required|exists:workout_types,id',
-            'start_time' => 'required|date_format:Y-m-d H:i',
-            'end_time' => 'required|date_format:Y-m-d H:i|after:start_time',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
             'available_slots' => 'required|integer|min:1',
             'status' => 'required|in:scheduled,completed,cancelled',
         ]);

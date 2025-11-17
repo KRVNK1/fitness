@@ -20,6 +20,11 @@ export default function TrainerModal({ trainer, show, onClose }) {
         })
     }
 
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const minDateTime = tomorrow.toISOString().slice(0, 16);
+
+
     return (
         <Modal show={show} onClose={onClose} title="Записаться к тренеру">
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -40,8 +45,23 @@ export default function TrainerModal({ trainer, show, onClose }) {
                     <Input
                         type="datetime-local"
                         value={data.requested_date}
-                        onChange={(e) => setData("requested_date", e.target.value)}
-                        min={new Date().toISOString().slice(0, 16)}
+                        onChange={(e) => {
+                            const value = e.target.value
+
+                            const date = new Date(value)
+                            const hours = date.getHours()
+                            const minutes = date.getMinutes()
+
+                            // Ограничение по диапазону времени
+                            const totalMinutes = hours * 60 + minutes
+                            const min = 8 * 60 + 30    // 08:30
+                            const max = 20 * 60        // 20:00
+
+                            if (totalMinutes < min || totalMinutes > max) return
+
+                            setData("requested_date", value)
+                        }}
+                        min={minDateTime}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         required
                     />

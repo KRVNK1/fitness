@@ -1,10 +1,11 @@
 import AdminSidebar from "@/Components/admin/AdminSidebar"
+import WorkoutScheduleFormModal from "@/Components/admin/WorkoutSchedule/WorkoutScheduleFormModal"
 import WorkoutScheduleTable from "@/Components/admin/WorkoutSchedule/WorkoutScheduleTable"
 import Pagination from "@/Components/ui/Pagination"
 import { Head, router } from "@inertiajs/react"
 import { useState } from "react"
 
-export default function Index({ workoutSchedules, trainers, filters }) {
+export default function Index({ workoutSchedules, workoutTypes, trainers, filters }) {
     const [showCreateModal, setShowCreateModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)
     const [selectedWorkoutSchedule, setSelectedWorkoutSchedule] = useState(null)
@@ -38,9 +39,6 @@ export default function Index({ workoutSchedules, trainers, filters }) {
             status: value
         })
     }
-
-    console.log(workoutSchedules)
-    console.log(trainers)
 
     return (
         <>
@@ -84,13 +82,11 @@ export default function Index({ workoutSchedules, trainers, filters }) {
                                 onChange={(e) => handleTrainerFilter(e.target.value)}
                                 className="pl-4 py-2 border border-gray-300 rounded-lg"
                             >
+                                <option value="">Все тренера</option>
                                 {trainers.map((trainer) => (
-                                    <>
-                                    <option value="">Все тренера</option>
-                                    <option value={trainer.id}>
+                                    <option key={trainer.id} value={trainer.id}>
                                         {`${trainer.first_name} ${trainer.last_name}`}
                                     </option>
-                                    </>
                                 ))}
                             </select>
                             <select
@@ -116,6 +112,27 @@ export default function Index({ workoutSchedules, trainers, filters }) {
                     </div>
                 </main>
             </div>
+
+            <WorkoutScheduleFormModal
+                show={showCreateModal}
+                onClose={() => setShowCreateModal(false)}
+                workoutSchedule={null}
+                trainers={trainers}
+                workoutTypes={workoutTypes}
+                title="Создание расписания"
+            />
+
+            <WorkoutScheduleFormModal
+                show={showEditModal}
+                onClose={() => {
+                    setShowEditModal(false)
+                    setSelectedWorkoutSchedule(null)
+                }}
+                workoutSchedule={selectedWorkoutSchedule}
+                trainers={trainers}
+                workoutTypes={workoutTypes}
+                title="Редактирование расписания"
+            />
         </>
     )
 }
