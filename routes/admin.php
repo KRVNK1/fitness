@@ -57,5 +57,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('trainers/{trainerId}/specializations/{categoryId}', [TrainerCategoryController::class, 'destroy'])->name('trainer-specializations.destroy');
 
     // Bookings
-    Route::resource('bookings', BookingController::class)->only(['index', 'show', 'destroy']);
+    Route::prefix('bookings')->name('bookings.')->group(function () {
+        Route::get('/', [BookingController::class, 'index'])->name('index');
+        Route::delete('/{bookings}', [BookingController::class, 'destroy'])->name('destroy');
+    });
 });

@@ -28,14 +28,6 @@ class WorkoutScheduleController extends Controller
             $query->where('trainer_id', $request->input('trainer_id'));
         }
 
-        if ($request->filled('date_from')) {
-            $query->whereDate('start_time', '>=', $request->input('date_from'));
-        }
-
-        if ($request->filled('date_to')) {
-            $query->whereDate('start_time', '<=', $request->input('date_to'));
-        }
-
         if ($request->filled('status')) {
             $query->where('status', $request->input('status'));
         }
@@ -46,7 +38,7 @@ class WorkoutScheduleController extends Controller
         return Inertia::render('Admin/WorkoutSchedules/Index', [
             'workoutSchedules' => $workoutSchedules,
             'trainers' => $trainers,
-            'filters' => $request->only(['search', 'trainer_id', 'date_from', 'date_to', 'status']),
+            'filters' => $request->only(['search', 'trainer_id', 'status']),
         ]);
     }
 
