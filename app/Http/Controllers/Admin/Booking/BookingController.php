@@ -11,7 +11,7 @@ class BookingController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Booking::with(['user', 'membership', 'workoutSchedule.trainer']);
+        $query = Booking::with(['user', 'membership', 'workoutSchedule.trainer', 'workoutSchedule.workoutType']);
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -24,20 +24,12 @@ class BookingController extends Controller
         if ($request->filled('status')) {
             $query->where('status', $request->input('status'));
         }
-
-        if ($request->filled('date_from')) {
-            $query->whereDate('created_at', '>=', $request->input('date_from'));
-        }
-
-        if ($request->filled('date_to')) {
-            $query->whereDate('created_at', '<=', $request->input('date_to'));
-        }
-
+        
         $bookings = $query->orderBy('created_at', 'asc')->paginate(7)->appends($request->query());
 
         return Inertia::render('Admin/Bookings/Index', [
             'bookings' => $bookings,
-            'filters' => $request->only(['search', 'status', 'date_from', 'date_to']),
+            'filters' => $request->only(['search', 'status']),
         ]);
     }
 
