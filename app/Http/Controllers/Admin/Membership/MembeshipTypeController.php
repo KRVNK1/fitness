@@ -13,7 +13,7 @@ class MembeshipTypeController extends Controller
     {
         $query = MembershipType::query();
         
-        $membershipTypes = $query->paginate(7);
+        $membershipTypes = $query->paginate(7)->appends($request->query());
 
         return Inertia::render('Admin/MembershipTypes/Index', [
             'membershipTypes' => $membershipTypes,

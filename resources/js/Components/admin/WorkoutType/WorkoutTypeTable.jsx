@@ -1,9 +1,9 @@
 import { router } from "@inertiajs/react"
 
-export default function MembershipTypeTable({ membershipTypes, onEdit }) {
+export default function WorkoutTypeTable({ workoutTypes, onEdit }) {
     const handleDelete = (id) => {
-        if (window.confirm("Вы уверены, что хотите удалить этот тип абонемента?")) {
-            router.delete(route("admin.membership-types.destroy", id))
+        if (window.confirm("Вы уверены, что хотите удалить эту тренировку?")) {
+            router.delete(route("admin.workout-types.destroy", id))
         }
     }
 
@@ -14,21 +14,25 @@ export default function MembershipTypeTable({ membershipTypes, onEdit }) {
                     <tr>
                         <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">ID</th>
                         <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Название</th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Слаг</th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Описание</th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Цена</th>
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Категория</th>
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Длительность</th>
+                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Интенсивность</th>
                         <th className="px-6 py-3 text-right text-sm font-semibold text-gray-900">Действия</th>
                     </tr>
                 </thead>
                 <tbody className="divide-y">
-                    {membershipTypes.data && membershipTypes.data.length > 0 ? (
-                        membershipTypes.data.map((type) => (
+                    {workoutTypes.data && workoutTypes.data.length > 0 ? (
+                        workoutTypes.data.map((type) => (
                             <tr key={type.id} className="hover:bg-gray-50 transition">
                                 <td className="px-6 py-4 text-sm text-gray-900">#{type.id}</td>
                                 <td className="px-6 py-4 text-sm text-gray-900 font-medium">{type.name}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{type.slug}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{type.description}</td>
-                                <td className="px-6 py-4 text-sm text-gray-900 font-medium">{type.price}</td>
+                                <td className="px-6 py-4 text-sm text-gray-600">{type.workout_category?.name || "-"}</td>
+                                <td className="px-6 py-4 text-sm text-gray-600">{type.duration_minutes} мин</td>
+                                <td className="px-6 py-4 text-sm">
+                                    <span className={`text-xs font-bold ${type.intensivity_level === 1 ? "text-green-500" : type.intensivity_level === 2 ? "text-yellow-500" : "text-red-500"}`}>
+                                        {type.intensivity_level === 1 ? "Низкая" : type.intensivity_level === 2 ? "Средняя" : "Высокая"}
+                                    </span>
+                                </td>
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-2">
                                         <button
@@ -50,7 +54,7 @@ export default function MembershipTypeTable({ membershipTypes, onEdit }) {
                     ) : (
                         <tr>
                             <td colSpan="6" className="px-6 py-8 text-center text-gray-500">
-                                Типы абонементов не найдены
+                                Типы тренировок не найдены
                             </td>
                         </tr>
                     )}

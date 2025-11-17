@@ -40,7 +40,7 @@ class WorkoutScheduleController extends Controller
             $query->where('status', $request->input('status'));
         }
 
-        $workoutSchedules = $query->orderBy('start_time', 'desc')->paginate(7);
+        $workoutSchedules = $query->orderBy('start_time', 'asc')->paginate(7)->appends($request->query());
         $trainers = User::where('role', 'trainer')->get();
 
         return Inertia::render('Admin/WorkoutSchedules/Index', [

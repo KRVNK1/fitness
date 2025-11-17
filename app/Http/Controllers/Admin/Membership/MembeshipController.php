@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin\Membership;
 
+use App\Exports\MembershipsExport;
 use App\Http\Controllers\Controller;
 use App\Models\Membership;
 use App\Models\MembershipType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MembeshipController extends Controller
 {
@@ -32,7 +34,7 @@ class MembeshipController extends Controller
             $query->where('membership_type_id', $request->input('membership_type_id'));
         }
 
-        $memberships = $query->orderBy('id')->paginate(7);
+        $memberships = $query->orderBy('id')->paginate(7)->appends($request->query());
         $membershipTypes = MembershipType::all();
 
         return Inertia::render('Admin/Memberships/Index', [
@@ -77,5 +79,12 @@ class MembeshipController extends Controller
     {
         $membership->delete();
         return back()->with('success', 'Абонемент пользователя удален.');
+    }
+
+    public function export(Request $request)
+    {
+        $filters = $request->only(['search', 'status', 'membership_type_id']);
+
+        return Excel::download(new MembershipsExport($filters), 'Абонементы.xlsx');
     }
 }

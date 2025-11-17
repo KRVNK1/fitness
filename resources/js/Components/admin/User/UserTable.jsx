@@ -8,16 +8,16 @@ export default function UserTable({ users, onEdit }) {
         }
     }
 
-    const getRoleBadge = (role) => {
+    const getRole = (role) => {
         const roles = {
-            user: { bg: "bg-blue-100", text: "text-blue-800", label: "Пользователь" },
-            trainer: { bg: "bg-green-100", text: "text-green-800", label: "Тренер" },
-            admin: { bg: "bg-red-100", text: "text-red-800", label: "Администратор" },
+            client: "Пользователь",
+            trainer: "Тренер",
+            admin: "Администратор",
         }
-        const roleData = roles[role] || roles.user
+        const roleData = roles[role]
         return (
-            <span className={`${roleData.bg} ${roleData.text} px-3 py-1 rounded-full text-sm font-medium`}>
-                {roleData.label}
+            <span className={'text-sm font-medium'}>
+                {roleData}
             </span>
         )
     }
@@ -45,7 +45,7 @@ export default function UserTable({ users, onEdit }) {
                                 <td className="px-6 py-4 text-sm text-gray-900">{user.last_name}</td>
                                 <td className="px-6 py-4 text-sm text-gray-600">{user.email}</td>
                                 <td className="px-6 py-4 text-sm text-gray-600">{user.phone}</td>
-                                <td className="px-6 py-4 text-sm">{user.role}</td>
+                                <td className="px-6 py-4 text-sm">{getRole(user.role)}</td>
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-2">
                                         <button

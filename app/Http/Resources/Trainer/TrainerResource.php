@@ -17,11 +17,10 @@ class TrainerResource extends JsonResource
             'phone' => $this->phone,
             'role' => $this->role,
             'trainer_info' => [
-                'description' => $this->trainerInfo->description,
-                'photo' => $this->trainerInfo->photo,
-                'experience_years' => $this->trainerInfo->experience_years,
-                'specializations' => $this->trainerInfo->specializations
-                    ->pluck('name')
+                'description' => $this->trainerInfo->description ?? '',
+                'photo' => $this->trainerInfo->photo ?? '',
+                'experience_years' => $this->trainerInfo->experience_years ?? 0,
+                'specializations' => $this->trainerInfo->specializations->pluck('name'),
             ],
         ];
     }

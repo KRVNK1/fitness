@@ -33,7 +33,7 @@ class BookingController extends Controller
             $query->whereDate('created_at', '<=', $request->input('date_to'));
         }
 
-        $bookings = $query->orderBy('created_at', 'desc')->paginate(7);
+        $bookings = $query->orderBy('created_at', 'asc')->paginate(7)->appends($request->query());
 
         return Inertia::render('Admin/Bookings/Index', [
             'bookings' => $bookings,

@@ -14,10 +14,10 @@ class TrainerCategoryController extends Controller
     // Получение специализаций тренера
     public function index($trainerId)
     {
-        $trainer = TrainerInfo::with('specializations')->findOrFail($trainerId);
+        $trainer = TrainerInfo::with('specializations', 'user')->findOrFail($trainerId);
         $allCategories = WorkoutCategory::all();
 
-        return Inertia::render('Admin/Trainer/TrainerSpecializations', [
+        return Inertia::render('Admin/TrainerSpecializations/Index', [
             'trainer' => $trainer,
             'specializations' => $trainer->specializations,
             'allCategories' => $allCategories,
@@ -30,8 +30,6 @@ class TrainerCategoryController extends Controller
         $request->validate([
             'workout_category_id' => 'required|exists:workout_categories,id',
         ]);
-
-        $trainer = TrainerInfo::findOrFail($trainerId);
 
         // Проверяем, не добавлена ли уже эта категория
         $exists = TrainerCategory::where('trainer_info_id', $trainerId)

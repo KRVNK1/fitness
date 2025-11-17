@@ -1,0 +1,138 @@
+import { Head, router } from "@inertiajs/react"
+import { useState } from "react"
+import AdminSidebar from "@/Components/admin/AdminSidebar"
+import Pagination from "@/Components/ui/Pagination"
+import WorkoutTypeTable from "@/Components/admin/WorkoutType/WorkoutTypeTable"
+import WorkoutTypeFormModal from "@/Components/admin/WorkoutType/WorkoutTypeFormModal"
+
+export default function WorkoutTypesIndex({ workoutTypes, categories, filters }) {
+    const [showCreateModal, setShowCreateModal] = useState(false)
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [selectedType, setSelectedType] = useState(null)
+    const [searchValue, setSearchValue] = useState(filters?.search || "")
+    const [selectedCategory, setSelectedCategory] = useState(filters?.category_id || "")
+    const [selectedIntensity, setSelectedIntensity] = useState(filters?.intensivity_level || "")
+
+    const handleSearch = (value) => {
+        setSearchValue(value)
+        router.get(route("admin.workout-types.index"), {
+            search: value,
+            category_id: selectedCategory,
+            intensivity_level: selectedIntensity,
+        })
+    }
+
+    const handleCategoryChange = (value) => {
+        setSelectedCategory(value)
+        router.get(route("admin.workout-types.index"), {
+            search: searchValue,
+            category_id: value,
+            intensivity_level: selectedIntensity,
+        })
+    }
+
+    const handleIntensivityChange = (value) => {
+        setSelectedIntensity(value)
+        router.get(route("admin.workout-types.index"), {
+            search: searchValue,
+            category_id: selectedCategory,
+            intensivity_level: value,
+        })
+    }
+
+    return (
+        <>
+            <Head title="Управление типами тренировок" />
+
+            <div className="flex min-h-screen bg-gray-50">
+                <AdminSidebar />
+
+                <main className="flex-1">
+                    <div className="p-8">
+                        <div className="mb-8 flex items-center justify-between">
+                            <div>
+                                <h1 className="text-3xl font-bold text-gray-900">Типы тренировок</h1>
+                                <p className="mt-1 text-gray-600">Управление типами тренировок</p>
+                            </div>
+                            <button
+                                onClick={() => setShowCreateModal(true)}
+                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                            >
+                                + Добавить тренировку
+                            </button>
+                        </div>
+
+                        <div className="mb-6 flex gap-8">
+
+                            <div className="flex-1 flex">
+                                <input
+                                    type="text"
+                                    placeholder="Поиск по названию..."
+                                    value={searchValue}
+                                    onChange={(e) => setSearchValue(e.target.value)}
+                                    className="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg"
+                                />
+                                <span onClick={() => handleSearch(searchValue)} className="w-14 flex justify-center items-center bg-blue-500 rounded-r-lg cursor-pointer">
+                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M28.7075 27.2925L22.4488 21.035C24.2628 18.8572 25.1674 16.0638 24.9743 13.236C24.7813 10.4081 23.5054 7.76361 21.4122 5.85251C19.319 3.9414 16.5696 2.91086 13.7359 2.97526C10.9023 3.03966 8.20249 4.19404 6.19827 6.19827C4.19404 8.20249 3.03966 10.9023 2.97526 13.7359C2.91086 16.5696 3.9414 19.319 5.85251 21.4122C7.76361 23.5054 10.4081 24.7813 13.236 24.9743C16.0638 25.1674 18.8572 24.2628 21.035 22.4488L27.2925 28.7075C27.3855 28.8005 27.4958 28.8742 27.6171 28.9244C27.7385 28.9747 27.8686 29.0006 28 29.0006C28.1314 29.0006 28.2615 28.9747 28.3829 28.9244C28.5043 28.8742 28.6146 28.8005 28.7075 28.7075C28.8005 28.6146 28.8742 28.5043 28.9244 28.3829C28.9747 28.2615 29.0006 28.1314 29.0006 28C29.0006 27.8686 28.9747 27.7385 28.9244 27.6171C28.8742 27.4958 28.8005 27.3855 28.7075 27.2925ZM5.00004 14C5.00004 12.22 5.52788 10.48 6.51681 8.99991C7.50575 7.51987 8.91136 6.36631 10.5559 5.68513C12.2004 5.00394 14.01 4.82571 15.7559 5.17297C17.5017 5.52024 19.1053 6.37741 20.364 7.63608C21.6227 8.89475 22.4798 10.4984 22.8271 12.2442C23.1744 13.9901 22.9961 15.7997 22.315 17.4442C21.6338 19.0887 20.4802 20.4943 19.0002 21.4833C17.5201 22.4722 15.7801 23 14 23C11.6139 22.9974 9.32626 22.0483 7.639 20.3611C5.95175 18.6738 5.00269 16.3862 5.00004 14Z" fill="#fff" />
+                                    </svg>
+                                </span>
+                            </div>
+                            <select
+                                value={selectedCategory}
+                                onChange={(e) => handleCategoryChange(e.target.value)}
+                                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="">Все категории</option>
+                                {categories.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>
+                                        {cat.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <select
+                                value={selectedIntensity}
+                                onChange={(e) => handleIntensivityChange(e.target.value)}
+                                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="">Все уровни интенсивности</option>
+                                <option value="1">1 - Низкая</option>
+                                <option value="2">2 - Средняя</option>
+                                <option value="3">3 - Высокая</option>
+                            </select>
+                        </div>
+
+                        <WorkoutTypeTable
+                            workoutTypes={workoutTypes}
+                            onEdit={(type) => {
+                                setSelectedType(type)
+                                setShowEditModal(true)
+                            }}
+                        />
+
+                        <Pagination items={workoutTypes} />
+                    </div>
+                </main>
+            </div>
+
+            <WorkoutTypeFormModal
+                show={showCreateModal}
+                onClose={() => setShowCreateModal(false)}
+                workoutType={null}
+                categories={categories}
+                title="Создание типа тренировки"
+            />
+
+            <WorkoutTypeFormModal
+                show={showEditModal}
+                onClose={() => {
+                    setShowEditModal(false)
+                    setSelectedType(null)
+                }}
+                workoutType={selectedType}
+                categories={categories}
+                title="Редактирование типа тренировки"
+            />
+        </>
+    )
+}

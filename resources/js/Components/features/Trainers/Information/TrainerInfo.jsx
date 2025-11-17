@@ -11,7 +11,7 @@ export default function TrainerInfo({ trainer }) {
             <div className="flex-shrink-0">
                 {trainer.trainer_info.photo ? (
                     <img
-                        src={trainer.trainer_info.photo}
+                        src={`/storage/${trainer.trainer_info.photo}`}
                         alt={`${trainer.first_name} ${trainer.last_name}`}
                         className="w-80 h-80 object-cover object-top rounded-lg"
                     />

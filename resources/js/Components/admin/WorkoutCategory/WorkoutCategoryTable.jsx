@@ -1,9 +1,10 @@
 import { router } from "@inertiajs/react"
 
-export default function MembershipTypeTable({ membershipTypes, onEdit }) {
+export default function WorkoutCategoryTable({ categories, onEdit }) {
+
     const handleDelete = (id) => {
-        if (window.confirm("Вы уверены, что хотите удалить этот тип абонемента?")) {
-            router.delete(route("admin.membership-types.destroy", id))
+        if (window.confirm("Вы уверены, что хотите удалить эту категорию?")) {
+            router.delete(route("admin.workout-categories.destroy", id))
         }
     }
 
@@ -15,30 +16,26 @@ export default function MembershipTypeTable({ membershipTypes, onEdit }) {
                         <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">ID</th>
                         <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Название</th>
                         <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Слаг</th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Описание</th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Цена</th>
                         <th className="px-6 py-3 text-right text-sm font-semibold text-gray-900">Действия</th>
                     </tr>
                 </thead>
                 <tbody className="divide-y">
-                    {membershipTypes.data && membershipTypes.data.length > 0 ? (
-                        membershipTypes.data.map((type) => (
-                            <tr key={type.id} className="hover:bg-gray-50 transition">
-                                <td className="px-6 py-4 text-sm text-gray-900">#{type.id}</td>
-                                <td className="px-6 py-4 text-sm text-gray-900 font-medium">{type.name}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{type.slug}</td>
-                                <td className="px-6 py-4 text-sm text-gray-600">{type.description}</td>
-                                <td className="px-6 py-4 text-sm text-gray-900 font-medium">{type.price}</td>
+                    {categories.data && categories.data.length > 0 ? (
+                        categories.data.map((category) => (
+                            <tr key={category.id} className="hover:bg-gray-50 transition">
+                                <td className="px-6 py-4 text-sm text-gray-900">#{category.id}</td>
+                                <td className="px-6 py-4 text-sm text-gray-900 font-medium">{category.name}</td>
+                                <td className="px-6 py-4 text-sm text-gray-600">{category.slug}</td>
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-2">
                                         <button
-                                            onClick={() => onEdit(type)}
+                                            onClick={() => onEdit(category)}
                                             className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition"
                                         >
                                             Редактировать
                                         </button>
                                         <button
-                                            onClick={() => handleDelete(type.id)}
+                                            onClick={() => handleDelete(category.id)}
                                             className="px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700 transition"
                                         >
                                             Удалить
@@ -49,8 +46,8 @@ export default function MembershipTypeTable({ membershipTypes, onEdit }) {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="6" className="px-6 py-8 text-center text-gray-500">
-                                Типы абонементов не найдены
+                            <td colSpan="4" className="px-6 py-8 text-center text-gray-500">
+                                Категории не найдены
                             </td>
                         </tr>
                     )}

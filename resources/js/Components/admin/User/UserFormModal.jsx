@@ -1,5 +1,5 @@
 import { useForm } from "@inertiajs/react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Modal from "@/Components/ui/Modal"
 
 export default function UserFormModal({ show, onClose, user, title }) {
@@ -11,7 +11,13 @@ export default function UserFormModal({ show, onClose, user, title }) {
         password: "",
         password_confirmation: "",
         role: "client",
+        description: "",
+        experience_years: "",
+        photo: null,
     })
+
+    const [photoPreview, setPhotoPreview] = useState(null)
+    const [isExistingTrainer, setIsExistingTrainer] = useState(false)
 
     useEffect(() => {
         if (user) {
@@ -23,33 +29,59 @@ export default function UserFormModal({ show, onClose, user, title }) {
                 password: "",
                 password_confirmation: "",
                 role: user.role || "client",
+                description: user.trainer_info?.description || "",
+                experience_years: user.trainer_info?.experience_years || "",
+                photo: null,
             })
+            setIsExistingTrainer(user.role === "trainer" && user.trainer_info)
+            setPhotoPreview(user.trainer_info?.photo ? `/storage/${user.trainer_info.photo}` : null)
         } else {
             reset()
+            setPhotoPreview(null)
+            setIsExistingTrainer(false)
         }
         clearErrors()
     }, [user, show])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(user)
 
         if (user) {
-            put(route("admin.users.update", user.id), {
-                onSuccess: () => {
-                    reset()
-                    onClose()
-                },
-            })
+            if (user.role === "trainer") {
+                post(route("admin.users.update.trainer", user.id), {
+                    onSuccess: () => {
+                        reset()
+                        onClose()
+                    },
+                })
+            } else {
+                put(route("admin.users.update", user.id), {
+                        onSuccess: () => {
+                        reset()
+                        onClose()
+                    },
+                })
+            }
         } else {
-            post(route("admin.users.store"), {
-                onSuccess: () => {
-                    reset()
-                    onClose()
-                },
-            })
+            if (data.role === "trainer") {
+                post(route("admin.users.store.trainer"), {
+                    onSuccess: () => {
+                        reset()
+                        onClose()
+                    },
+                })
+            } else {
+                post(route("admin.users.store"), {
+                    onSuccess: () => {
+                        reset()
+                        onClose()
+                    },
+                })
+            }
         }
     }
+
+    const showTrainerFields = (data.role === "trainer") || isExistingTrainer
 
     return (
         <Modal show={show} onClose={onClose} title={title} maxWidth="md">
@@ -125,6 +157,64 @@ export default function UserFormModal({ show, onClose, user, title }) {
                     </select>
                     {errors.role && <p className="mt-1 text-sm text-red-600">{errors.role}</p>}
                 </div>
+
+                {showTrainerFields && (
+                    <>
+                        <hr className="my-4" />
+                        <h3 className="text-lg font-semibold text-gray-900">Информация о тренере</h3>
+
+                        {/* Опыт */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Опыт (лет)</label>
+                            <input
+                                type="number"
+                                name="experience_years"
+                                value={data.experience_years}
+                                onChange={(e) => setData("experience_years", e.target.value)}
+                                placeholder="5"
+                                min="0"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                            />
+                            {errors.experience_years && (
+                                <p className="mt-1 text-sm text-red-600">{errors.experience_years}</p>
+                            )}
+                        </div>
+
+                        {/* Описание */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Описание</label>
+                            <textarea
+                                name="description"
+                                value={data.description}
+                                onChange={(e) => setData("description", e.target.value)}
+                                placeholder="Расскажите о тренере..."
+                                rows="3"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                            />
+                            {errors.description && (
+                                <p className="mt-1 text-sm text-red-600">{errors.description}</p>
+                            )}
+                        </div>
+
+                        {/* Фото */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Фото</label>
+                            <input
+                                type="file"
+                                name="photo"
+                                onChange={(e) => setData("photo", e.target.files[0])}
+                                accept="image/*"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+                            />
+                            {photoPreview && (
+                                <div className="mt-2">
+                                    <img src={photoPreview || "/placeholder.svg"} alt="Preview" className="h-32 w-32 object-cover rounded" />
+                                </div>
+                            )}
+                            {errors.photo && <p className="mt-1 text-sm text-red-600">{errors.photo}</p>}
+                        </div>
+                    </>
+                )}
 
                 {/* Пароль */}
                 <div>

@@ -48,8 +48,7 @@ export default function Index({ memberships, membershipTypes, filters, users }) 
 
     const saveExport = () => {
         const queryString = new URLSearchParams(form.data).toString();
-        console.log(queryString)
-        window.location.href = `/admin/users/export?${queryString}`;
+        window.location.href = `/admin/memberships/export?${queryString}`;
     }
 
     return (
@@ -114,7 +113,7 @@ export default function Index({ memberships, membershipTypes, filters, users }) 
                                     </option>
                                 ))}
                             </select>
-                            <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                            <button onClick={saveExport} className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
                                 Создать отчет
                             </button>
                         </div>

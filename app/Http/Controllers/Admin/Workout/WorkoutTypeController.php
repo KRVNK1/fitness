@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\WorkoutType;
 use App\Models\WorkoutCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class WorkoutTypeController extends Controller
@@ -26,7 +27,7 @@ class WorkoutTypeController extends Controller
             $query->where('intensivity_level', $request->input('intensivity_level'));
         }
 
-        $workoutTypes = $query->orderBy('created_at', 'desc')->paginate(7);
+        $workoutTypes = $query->orderBy('created_at', 'asc')->paginate(7)->appends($request->query());
         $categories = WorkoutCategory::all();
 
         return Inertia::render('Admin/WorkoutTypes/Index', [
@@ -40,12 +41,18 @@ class WorkoutTypeController extends Controller
     {
         $validated = $request->validate([
             'workout_category_id' => 'required|exists:workout_categories,id',
-            'name' => 'required|string|max:255|unique:workout_types,name',
-            'slug' => 'required|string|max:255|unique:workout_types,slug',
-            'description' => 'nullable|string',
-            'duration_minutes' => 'required|integer|min:1',
-            'intensivity_level' => 'required|integer',
+            'name'                => 'required|string|max:255|unique:workout_types,name',
+            'slug'                => 'required|string|max:255|unique:workout_types,slug',
+            'description'         => 'nullable|string',
+            'duration_minutes'    => 'required|integer|min:1',
+            'intensivity_level'   => 'required|integer',
+            'photo'               => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('Workout/WorkoutTypePhotos', 'public');
+            $validated['photo'] = $photoPath;
+        }
 
         WorkoutType::create($validated);
 
@@ -56,12 +63,21 @@ class WorkoutTypeController extends Controller
     {
         $validated = $request->validate([
             'workout_category_id' => 'required|exists:workout_categories,id',
-            'name' => 'required|string|max:255|unique:workout_types,name,' . $workoutType->id,
-            'slug' => 'required|string|max:255|unique:workout_types,slug,' . $workoutType->id,
-            'description' => 'nullable|string',
-            'duration_minutes' => 'required|integer|min:1',
-            'intensivity_level' => 'required|integer',
+            'name'                => 'required|string|max:255|unique:workout_types,name,' . $workoutType->id,
+            'slug'                => 'required|string|max:255|unique:workout_types,slug,' . $workoutType->id,
+            'description'         => 'nullable|string',
+            'duration_minutes'    => 'required|integer|min:1',
+            'intensivity_level'   => 'required|integer',
+            'photo'               => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
+
+        if ($request->hasFile('photo')) {
+            if ($workoutType->photo) {
+                Storage::disk('public')->delete($workoutType->photo);
+            }
+            $photoPath = $request->file('photo')->store('Workout/WorkoutTypePhotos', 'public');
+            $validated['photo'] = $photoPath;
+        }
 
         $workoutType->update($validated);
 

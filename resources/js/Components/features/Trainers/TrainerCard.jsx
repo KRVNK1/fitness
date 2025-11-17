@@ -9,10 +9,10 @@ export default function TrainerCard({ trainer }) {
   return (
     <div onClick={redirectToTrainer} className="bg-white cursor-pointer rounded-lg shadow-sm border hover:shadow-md transition-shadow">
       <div className="relative">
-        {trainer.trainer_info.photo ? (
+        {trainer.trainer_info?.photo ? (
           <div className="w-full h-80">
             <img
-              src={trainer.trainer_info.photo}
+              src={`/storage/${trainer.trainer_info.photo}`}
               alt={`${trainer.first_name} ${trainer.last_name}`}
               className="w-full h-80 object-cover object-top rounded-t-lg"
             />
@@ -46,7 +46,7 @@ export default function TrainerCard({ trainer }) {
         </h3>
 
         {/* Описание */}
-        {trainer.trainer_info.description && (
+        {trainer.trainer_info?.description && (
           <p className="text-gray-600 text-sm mb-4 line-clamp-3">{trainer.trainer_info.description}</p>
         )}
 

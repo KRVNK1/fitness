@@ -9,19 +9,12 @@ use Inertia\Inertia;
 
 class WorkoutCategoryController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $query = WorkoutCategory::query();
-
-        if ($request->filled('search')) {
-            $query->where('name', 'like', "%{$request->input('search')}%");
-        }
-
-        $categories = $query->orderBy('created_at', 'desc')->paginate(7);
+        $categories = WorkoutCategory::orderBy('created_at', 'asc')->paginate(7);
 
         return Inertia::render('Admin/WorkoutCategories/Index', [
             'categories' => $categories,
-            'filters' => $request->only(['search']),
         ]);
     }
 

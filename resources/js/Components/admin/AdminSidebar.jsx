@@ -10,7 +10,6 @@ export default function AdminSidebar() {
         { label: "Абонементы", href: '/admin/memberships' },
         { label: "Типы абонементов", href: '/admin/membership-types' },
         { label: "Тренеры", href: '/admin/trainers' },
-        { label: "Специализация тренеров", href: '/admin/trainer-specializations' },
         { label: "Категории тренировок", href: '/admin/workout-categories' },
         { label: "Типы тренировок", href: '/admin/workout-types' },
         { label: "Расписание тренировок", href: '/admin/workout-schedules' },

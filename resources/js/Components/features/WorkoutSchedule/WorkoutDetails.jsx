@@ -15,7 +15,7 @@ export default function WorkoutDetails({ auth, workout, format }) {
             <div className="mb-4">
                 <img
                     className="object-cover rounded-xl"
-                    src={workout.workout_type.photo}
+                    src={`/storage/${workout.workout_type.photo}`}
                     alt={workout.workout_type.name}
                 />
             </div>
@@ -60,7 +60,7 @@ export default function WorkoutDetails({ auth, workout, format }) {
                     <div>
                         <p className="text-sm font-medium text-gray-700 mb-1">Тренер</p>
                         <p className="text-gray-700 text-sm leading-relaxed flex items-center gap-2">
-                            <img className="w-8 h-8 rounded-xl mr-2" src={workout.trainer.trainer_info.photo} alt="" />
+                            <img className="w-8 h-8 rounded-xl mr-2" src={`/storage/${workout.trainer.trainer_info.photo}`} alt="" />
                             {workout.trainer.first_name} {workout.trainer.last_name}
                         </p>
                     </div>

@@ -14,7 +14,7 @@ export default function WorkoutCard({ workout }) {
                     {workout.photo ? (
                         <div className="w-full h-60">
                             <img
-                                src={workout.photo}
+                                src={`/storage/${workout.photo}`}
                                 alt={workout.name}
                                 className="w-full h-60 object-cover rounded-t-lg"
                             />
