@@ -26,6 +26,14 @@ class BookingService
             ->first();
     }
 
+    public function getTrainerWorkout($trainerId, $requestedDate)
+    {
+        return WorkoutSchedule::where('trainer_id', $trainerId)
+            ->where('start_time', '<', Carbon::parse($requestedDate)->addMinutes(60)) // конец тренировки
+            ->where('end_time', '>', Carbon::parse($requestedDate)) // начало тренировки
+            ->exists();
+    }
+
     /**
      * Создать бронирование на тренировку
      */
@@ -139,6 +147,13 @@ class BookingService
             return [
                 'success' => false,
                 'message' => 'У вас нет активного абонемента. Пожалуйста, приобретите абонемент.'
+            ];
+        }
+
+        if ($this->getTrainerWorkout($trainerId, $requestedDate)) {
+            return [
+                'success' => false,
+                'message' => 'Тренер занят в это время. Пожалуйста, выберите другое время.'
             ];
         }
 

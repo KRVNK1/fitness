@@ -8,21 +8,12 @@ import OverviewTab from "./Tabs/Global/OverviewTab"
 import HistoryTab from "./Tabs/Global/HistoryTab"
 import ProfileTab from "./Tabs/Global/ProfileTab"
 import SecurityTab from "./Tabs/Global/SecurityTab"
+import useFormatDate from "@/hooks/global/useFormatDate"
 
 export default function Dashboard({ auth, user, stats, recentBookings, workoutHistory, requests }) {
     const [activeTab, setActiveTab] = useState("overview")
 
-    const formatDate = (dateString) => {
-        if (!dateString) return "Не указано"
-        const date = new Date(dateString)
-        return date.toLocaleDateString("ru-RU", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-        })
-    }
+    const formatDate = useFormatDate()
 
     const getStatusBadge = (status) => {
         const variants = {
@@ -50,7 +41,7 @@ export default function Dashboard({ auth, user, stats, recentBookings, workoutHi
             <Head title="Личный кабинет" />
 
             <div className="py-12">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <div className="mx-auto min-h-[55vh] max-w-7xl px-6 lg:px-8">
                     {/* Приветствие */}
                     <div className="mb-8">
                         <h1 className="text-3xl font-bold text-gray-900">Привет, {user.first_name}!</h1>
