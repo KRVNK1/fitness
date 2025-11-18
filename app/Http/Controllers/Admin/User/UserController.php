@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin\User;
 use App\Http\Controllers\Controller;
 use App\Models\TrainerInfo;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
@@ -106,6 +108,12 @@ class UserController extends Controller
             'role' => 'required|in:client,trainer,admin',
         ]);
 
+        $currentUser = Auth::user();
+
+        if ($currentUser->role === 'admin' && $currentUser->id === $user->id) {
+            return back()->with('error', 'Вы не можете менять свою роль.');
+        }
+
         $user->update($validated);
 
         return back()->with('success', 'Пользователь успешно обновлен');
@@ -118,13 +126,19 @@ class UserController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'phone' => 'required|string|max:20',
-            'role' => 'required|in:trainer',
+            'role' => 'required|in:client,trainer,admin',
             'description' => 'nullable|string',
             'experience_years' => 'required|integer|min:1',
             'photo' => 'nullable|image|max:2048',
         ]);
 
         try {
+            $currentUser = Auth::user();
+
+            if ($currentUser->role === 'admin' && $currentUser->id === $user->id) {
+                return back()->with('error', 'Вы не можете удалить себя.');
+            }
+            
             $user->update([
                 'first_name' => $validated['first_name'],
                 'last_name' => $validated['last_name'],
@@ -161,6 +175,12 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        $currentUser = Auth::user();
+
+        if ($currentUser->role === 'admin' && $currentUser->id === $user->id) {
+            return back()->with('error', 'Вы не можете удалить себя.');
+        }
+
         $user->delete();
         return back()->with('success', 'Пользователь успешно удален');
     }
