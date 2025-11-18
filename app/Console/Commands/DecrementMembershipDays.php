@@ -35,10 +35,8 @@ class DecrementMembershipDays extends Command
         $expiredCount = 0;
 
         foreach ($activeMemberships as $membership) {
-            // Уменьшаем remaining_days на 1
             $membership->remaining_days -= 1;
 
-            // Если дни закончились, меняем статус на EXPIRED
             if ($membership->remaining_days <= 0) {
                 $membership->status = MembershipStatusEnum::EXPIRED;
                 $expiredCount++;
