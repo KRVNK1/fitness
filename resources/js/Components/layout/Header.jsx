@@ -129,7 +129,7 @@ export default function Header({ user }) {
             </div>
             {user ? (
               <div className="flex flex-col gap-4">
-                <a href="/my-applications" className="rounded-lg hover:bg-gray-100 transition-colors">
+                <a href="/requests/my-applications" className="rounded-lg hover:bg-gray-100 transition-colors">
                   Мои заявки
                 </a>
                 <a href="/dashboard" className="rounded-lg hover:bg-gray-100 transition-colors">
