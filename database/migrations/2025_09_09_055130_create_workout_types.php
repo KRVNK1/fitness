@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('workout_types', function (Blueprint $table) {
             $table->id();
             $table->foreignId('workout_category_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('name', 45);
+            $table->string('slug', 45)->unique();
             $table->text('description')->nullable();
-            $table->integer('duration_minutes');
-            $table->integer('intensivity_level')->default(1); // 1-3 уровня
+            $table->unsignedTinyInteger('duration_minutes');
+            $table->unsignedTinyInteger('intensivity_level')->default(1); // 1-3 уровня
             $table->timestamps();
         });
     }
